@@ -34,6 +34,8 @@
     <link rel="stylesheet" href="{{ asset('clients/assets/css/slick.min.css') }}">
     <!-- Main Style -->
     <link rel="stylesheet" href="{{ asset('clients/assets/css/style.css') }}">
+    <!-- Tailwind css -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     {{-- boxicons --}}
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
