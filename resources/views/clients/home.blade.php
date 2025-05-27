@@ -17,7 +17,7 @@
                 </div>
             </div>
         </div>
-        <div class="row justify-content-center">
+        {{-- <div class="row justify-content-center">
             @foreach ($tours as $tour)
                 <div class="col-xxl-3 col-xl-4 col-md-6" style="margin-bottom: 30px">
                     <div class="destination-item block_tours" data-aos="fade-up" data-aos-duration="1500"
@@ -43,7 +43,7 @@
                     </div>
                 </div>
             @endforeach
-        </div>
+        </div> --}}
     </div>
 </section>
 <!-- Destinations Area end -->
@@ -89,16 +89,16 @@
                     </div>
                     <div class="shape"><img src="{{ asset('clients/assets/images/about/shape2.png') }}" alt="Shape">
                     </div>
-                    <div class="shape"><img src="{{ asset('clients/assets/images/about/shape3.png') }}"
-                            alt="Shape"></div>
-                    <div class="shape"><img src="{{ asset('clients/assets/images/about/shape4.png') }}"
-                            alt="Shape"></div>
-                    <div class="shape"><img src="{{ asset('clients/assets/images/about/shape5.png') }}"
-                            alt="Shape"></div>
-                    <div class="shape"><img src="{{ asset('clients/assets/images/about/shape6.png') }}"
-                            alt="Shape"></div>
-                    <div class="shape"><img src="{{ asset('clients/assets/images/about/shape7.png') }}"
-                            alt="Shape"></div>
+                    <div class="shape"><img src="{{ asset('clients/assets/images/about/shape3.png') }}" alt="Shape">
+                    </div>
+                    <div class="shape"><img src="{{ asset('clients/assets/images/about/shape4.png') }}" alt="Shape">
+                    </div>
+                    <div class="shape"><img src="{{ asset('clients/assets/images/about/shape5.png') }}" alt="Shape">
+                    </div>
+                    <div class="shape"><img src="{{ asset('clients/assets/images/about/shape6.png') }}" alt="Shape">
+                    </div>
+                    <div class="shape"><img src="{{ asset('clients/assets/images/about/shape7.png') }}" alt="Shape">
+                    </div>
                     <img src="{{ asset('clients/assets/images/about/about.png') }}" alt="About">
                 </div>
             </div>
@@ -122,7 +122,7 @@
                     </div>
                 </div>
             </div>
-            <div class="container">
+            {{-- <div class="container">
                 <div class="row justify-content-center">
                     @php $count = 0; @endphp
                     @foreach ($toursPopular as $tour)
@@ -156,7 +156,7 @@
                 @endforeach
             </div>
         </div>
-    </div>
+            </div> --}}
     </div>
 </section>
 <!-- Popular Destinations Area end -->

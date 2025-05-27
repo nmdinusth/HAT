@@ -24,7 +24,7 @@ class HomeController extends Controller
     public function index()
     {
         $title = 'Trang chủ';
-        $tours = $this->hometours->getHomeTours();
+        // $tours = $this->hometours->getHomeTours();
 
         $userId = $this->getUserId();
         if ($userId) {
@@ -56,11 +56,12 @@ class HomeController extends Controller
 
             // dd($toursPopular);
         }else {
-            $toursPopular = $this->tours->toursPopular(6);
+            // $toursPopular = $this->tours->toursPopular(6);
         }
 
         // dd($toursPopular);
-        return view('clients.home', compact('title', 'tours', 'toursPopular'));
+        // return view('clients.home', compact('title', 'tours', 'toursPopular'));
+        return view('clients.home', compact('title'));
     }
 
 
