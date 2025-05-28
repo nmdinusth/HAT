@@ -55,10 +55,10 @@ Route::post('/login', [LoginController::class, 'login'])->name('user-login');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('activate-account/{token}', [LoginController::class, 'activateAccount'])->name('activate.account');
 
-//Handle Login Old
+//Handle Login New
 Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::get('/register', [AuthController::class, 'index'])->name('register');
-Route::post('/login', [AuthController::class, 'login'])->name('handle-login');
+Route::post('/login', [AuthController::class, 'login'])->name('handle_login');
 
 //Login with google
 Route::get('auth/google', [LoginGoogleController::class, 'redirectToGoogle'])->name('login-google');

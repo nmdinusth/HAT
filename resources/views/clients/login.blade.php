@@ -109,7 +109,7 @@
                             </div>
                         @endif
                         {{-- <form class="mt-4" method="POST" action="{{route('login')}}"> --}}
-                        <form class="mt-4" method="POST" action="/login">
+                        <form class="mt-4" method="POST" action="{{ route('handle_login') }}">
                             @csrf
                             <div class="mb-3">
                                 <label class="mb-1.5 block text-xs font-semibold">Tên người dùng</label>
