@@ -49,16 +49,40 @@ class AuthController extends Controller
             ]);
         } 
 
+        $user_id = $this->user->getUserId($username);
         $is_2fa_enabled = $this->login->checkTwofaEnable($user_login);
         if($is_2fa_enabled == false) {
             $request->session()->put('username', $username);
+            $request->session()->put('user_id', $user_id);
             // $request->session()->put('avatar', $user->avatar);
-            toastr()->success("Đăng nhập thành công!",'Thông báo');
-            return response()->json([
-                'success' => true,
-                'message' => 'Đăng nhập thành công!',
-                'redirectUrl' => route('home'),  // Optional: dynamic home route
-            ]);
+            toastr()->success("Đăng nhập thành côngg!",'Thông báo');
+            return redirect()->route('home');
         }
+    }
+
+    // Xử lý người dùng đăng xuất
+    public function logout (Request $request) {
+        // Xóa session lưu trữ thông tin người dùng đã đăng nhập
+        $request->session()->forget('username');
+        $request->session()->forget('userId');
+        toastr()->success("Đăng xuất thành côngg!",'Thông báo');
+        return redirect()->route('home');
+    }
+
+    // Hiển thị trang xác thực 2 bước
+    public function showOtpForm () {
+
+        // return view('otp-verification');
+        echo "helloo";
+    }
+
+    // Xử lý OTP được gửi về
+    public function verifyOtp (Request $request) {
+        $request->validate(['otpCode' => 'required|digits:6']);
+        // Xử lý, xác nhận otp trong server, xem đã hết hạn chưa,....
+
+        $user = $this->user->find( $request->userID);
+        $serveOTP = $user->otp; // Mã otp đã gửi cho user
+        $otpCode = $request->otpCode; //Mã otp được gửi từ user
     }
 }

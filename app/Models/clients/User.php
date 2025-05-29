@@ -16,13 +16,13 @@ class User extends Model
     public function getUserId($username)
     {
         return DB::table($this->table)
-            ->select('userId')
-            ->where('username', $username)->value('userId');
+            ->select('id')
+            ->where('username', $username)->value('id');
     }
     public function getUser($id)
     {
         $users = DB::table($this->table)
-            ->where('userId', $id)->first();
+            ->where('id', $id)->first();
 
         return $users;
     }

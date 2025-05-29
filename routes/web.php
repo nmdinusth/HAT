@@ -49,18 +49,20 @@ Route::get('/destination', [DestinationController::class, 'index'])->name('desti
 Route::get('/travel-guides', [TravelGuidesController::class, 'index'])->name('team');
 
 //Handle Login Old
-Route::get('/login', [LoginController::class, 'index'])->name('login');
-Route::post('/register', [LoginController::class, 'register'])->name('register');
-Route::post('/login', [LoginController::class, 'login'])->name('user-login');
-Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
-Route::get('activate-account/{token}', [LoginController::class, 'activateAccount'])->name('activate.account');
+// Route::get('/login', [LoginController::class, 'index'])->name('login');
+// Route::post('/register', [LoginController::class, 'register'])->name('register');
+// Route::post('/login', [LoginController::class, 'login'])->name('user-login');
+// Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+// Route::get('activate-account/{token}', [LoginController::class, 'activateAccount'])->name('activate.account');
 
 //Handle Login New
-Route::get('/login', [AuthController::class, 'index'])->name('login');
-Route::get('/register', [AuthController::class, 'index'])->name('register');
+Route::get('/dang-nhap', [AuthController::class, 'index'])->name('login');
+Route::get('/dang-ky', [AuthController::class, 'index'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('handle_login');
+Route::get('/logout', [AuthController::class, 'logout'])->name('handle_logout');
+Route::get('/xac-thuc-2-buoc', [AuthController::class, 'showOtpForm'])->name('2fa_show');
+Route::post('/two-factor-auth', [AuthController::class, 'verifyOtp'])->name('2fa_verify');  
 
-//Login with google
 Route::get('auth/google', [LoginGoogleController::class, 'redirectToGoogle'])->name('login-google');
 Route::get('auth/google/callback', [LoginGoogleController::class, 'handleGoogleCallback']);
 

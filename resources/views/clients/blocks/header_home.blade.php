@@ -11,6 +11,7 @@
 
     <!-- Title -->
     <title>Travela - {{ $title }}</title>
+    
     <!-- Favicon Icon -->
     <link rel="shortcut icon" href="{{ asset('clients/assets/images/logos/favicon.png') }}" type="image/x-icon">
     <!-- Google Fonts -->
@@ -91,7 +92,7 @@
                                 <div class="navbar-collapse collapse clearfix">
                                     <ul class="navigation clearfix">
                                         <li class="{{ Request::url() == route('home') ? 'active' : '' }}"><a
-                                                href="{{ route('home') }}">Trang chủ</a></li>
+                                                href="{{ route('home') }}" >Trang chủ</a></li>
                                         <li class="{{ Request::url() == route('about') ? 'active' : '' }}"><a
                                                 href="{{ route('about') }}">Giới thiệu</a></li>
                                         <li
@@ -153,7 +154,7 @@
                                         @if (session()->has('username'))
                                             <li><a href="{{ route('user-profile') }}">Thông tin cá nhân</a></li>
                                             <li><a href="{{ route('my-tours') }}">Tour đã đặt</a></li>
-                                            <li><a href="{{ route('logout') }}">Đăng xuất</a></li>
+                                            <li><a href="{{ route('handle_logout') }}">Đăng xuất</a></li>
                                         @else
                                             <li><a href="{{ route('login') }}">Đăng nhập</a></li>
                                         @endif

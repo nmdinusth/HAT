@@ -2,8 +2,10 @@
 
 namespace App\Models\clients;
 
+use App\Mail\OtpNofitication;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -40,6 +42,7 @@ class Login extends Model
         }
 
         if($status === 'pending') {
+            dd('Trang sẽ được đén trang xác nhận email');
             return 0;
         }
 
@@ -49,8 +52,28 @@ class Login extends Model
     // Kiểm tra xác thực 2 bước 2fa
     public function checkTwofaEnable ($account) {
         $status = $account->is_2fa_enabled;
+        $email = $account->email;
         if ($status == true) {
-            return 0; // trang otp
+            $otp_code = str_pad(random_int(0, 999999), 6, '0', pad_type: STR_PAD_LEFT); //Tạo otp 6 số random
+            $otpExpiresAt = now()->addMinutes(15); // Thời gian hết hạn
+            
+            // Lưu otp và thời gian hết hạn vào email
+            DB::table($this->table)->where('email', $email)
+            ->update([
+                'otp_code' => $otp_code,
+                'otp_expires_at' => $otpExpiresAt,
+            ]);
+            // $account->otp_code = $otp_code;
+            // $account->otp_expires_at = $otpExpiresAt;
+            // $account->save();
+
+            // Gửi otp về email
+            Mail::to($email)->send(new OtpNofitication(
+                $otp_code, 
+                $otpExpiresAt
+            ));
+            
+            return redirect()->route('2fa_show');
         }
         return false;
     }
