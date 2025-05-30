@@ -177,6 +177,8 @@
 <!-- Custom script by Dev dien-->
 <script src="{{ asset('clients/assets/js/custom-js.js') }}"></script>
 <script src="{{ asset('clients/assets/js/jquery.datetimepicker.full.min.js') }}"></script>
+<!-- Custom script by Dev matcha-->
+<script src="{{ asset('clients/assets/js/custom-js-v2.js') }}"></script>
 
 </body>
 
