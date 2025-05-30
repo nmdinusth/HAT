@@ -26,6 +26,11 @@ class User extends Model
 
         return $users;
     }
+
+    public function getUserByEmail ($email) {
+        $user = DB::table($this->table)->where('email', $email)->first();
+        return $user;
+    }
     // Hash 50% cái email này lại nào
     public function maskEmail($email) {
    
@@ -46,7 +51,7 @@ class User extends Model
     public function updateUser($id, $data)
     {
         $update = DB::table($this->table)
-            ->where('userid', $id)
+            ->where('id', $id)
             ->update($data);
 
         return $update;

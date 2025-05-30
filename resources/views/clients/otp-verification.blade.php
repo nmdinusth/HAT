@@ -7,7 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @vite(['resources/css/app.css'])
-    <title>Xác thực 2 bước</title>
+    <title>Travela - Xác thực 2 bước</title>
+    <!-- Import CSS for Toastr -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 </head>
 <body class="bg-gray-100 flex flex-col items-center justify-center h-screen w-full dark:bg-gray-200">
     <div class="w-full max-w-md px-8 py-12 bg-white rounded-lg shadow-md bg-white-950 dark:text-gray-900">
@@ -60,11 +62,11 @@
 
         // Gửi xác nhận OTP (AJAX)
         function handleOTPComplete() {
-            const userID = @json(session('user_id'));
+            const email = @json(session('email'));
             // Chuyển các giá trị input sang dạng mảng sau đó gộp lại thành chuỗi
             const otpCode = Array.from(inputs).map(input => input.value).join('');
             if (otpCode.length === 6) {
-                fetch('/otp-verify', {
+                fetch('/two-factor-auth', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -72,19 +74,36 @@
                     },
                     body: JSON.stringify({ 
                         otpCode: otpCode,
-                        userID: userID,
+                        email: email,
                     })
                 })
                 .then(response => response.json())
                 .then(data => {
-                    if (data.success) {
-                        // Xác thực thành công -> chuyển hướng
-                        window.location.href = '/';
-                    } else {
-                        alert('Mã OTP không hợp lệ'); // Hiển thị lỗi
-                        showOtpFeedback('❌ Mã OTP không hợp lệ!', 'error');
-                        inputs.forEach(input => input.value = ''); // Reset các ô
-                        inputs[0].focus(); // Quay lại ô đầu tiên
+                    switch (data.status) {
+                        case 'success':
+                            // toastr.success(data.message, 'Thành công'); -> chưa sử dụng đưuọc hoặc phải dùng cách khác
+                            window.location.href = data.redirect;
+                            break;
+                        case 'user_not_found':
+                            showOtpFeedback('⚠️ Người dùng không tồn tại.', 'error');
+                            inputs.forEach(input => input.value = '');
+                            inputs[0].focus();
+                            break;
+                        case 'otp_expired':
+                            showOtpFeedback('⌛ Mã OTP đã hết hạn. Vui lòng yêu cầu mã mới.', 'error');
+                            inputs.forEach(input => input.value = '');
+                            inputs[0].focus();
+                            break;
+                        case 'otp_invalid':
+                            showOtpFeedback('❌ Mã OTP không chính xác.', 'error');
+                            inputs.forEach(input => input.value = '');
+                            inputs[0].focus();
+                            break;
+                        default:
+                            showOtpFeedback('⚠️ Có lỗi xảy ra. Vui lòng thử lại.', 'error');
+                            inputs.forEach(input => input.value = '');
+                            inputs[0].focus();
+                            break;
                     }
                 })   
                 .catch(error => {
@@ -92,6 +111,7 @@
                     // alert("Lỗi kết nối đến server. Vui lòng thử lại!");
                     showOtpFeedback('⚠️ Đã xảy ra lỗi. Vui lòng thử lại sau.', 'error');
                     inputs.forEach(input => input.value = '');
+                    inputs[0].focus();
                     inputs[0].focus();
                     // location.reload(); // Reload lại trang
                 })       
@@ -136,10 +156,14 @@
                 method: 'POST',
                 data: { _token: '{{ csrf_token() }}' },
                 success: function () {
-                    showOtpFeedback('📩 Mã OTP đã được gửi lại.', 'success');
+                    showOtpFeedback('📩 Mã OTP đã được gửi. Vui lòng kiểm tra lại email!', 'success');
+                    inputs.forEach(input => input.value = '');
+                    inputs[0].focus();
                 },
                 error: function () {
                     showOtpFeedback('⚠️ Không thể gửi lại mã. Vui lòng thử lại.', 'error');
+                    inputs.forEach(input => input.value = '');
+                    inputs[0].focus();
                 }
             });
         });

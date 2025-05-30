@@ -70,7 +70,9 @@ class AuthController extends Controller
     public function logout (Request $request) {
         // Xóa session lưu trữ thông tin người dùng đã đăng nhập
         $request->session()->forget('username');
-        $request->session()->forget('userId');
+        $request->session()->forget('user_id');
+        $request->session()->forget('email');
+        $request->session()->forget('email_masked');
         toastr()->success("Đăng xuất thành côngg!",'Thông báo');
         return redirect()->route('home');
     }
@@ -85,15 +87,65 @@ class AuthController extends Controller
     public function sendOtp2fa (Request $request) {
         $email = session('email');
         $this->login->sendOtp2fa($email);
+        // toastr()->success("Đã gửi lại mã OTP!",'Thông báo');
+        // return redirect()->back();
     }
 
     // Xử lý OTP được gửi về
     public function verifyOtp (Request $request) {
-        $request->validate(['otpCode' => 'required|digits:6']);
+        $request->validate(['otpCode' => 'required|digits:6']); //otp phải đủ 6 số
         // Xử lý, xác nhận otp trong server, xem đã hết hạn chưa,....
-
-        $user = $this->user->find( $request->userID);
-        $serveOTP = $user->otp; // Mã otp đã gửi cho user
         $otpCode = $request->otpCode; //Mã otp được gửi từ user
+        $email = $request->email; //Mã email được gửi từ user
+        
+        $user = $this->user->getUserByEmail( $email);
+        if (!$user) {
+            return response()->json([
+                'status' => 'user_not_found',
+                'message' => 'Người dùng không tồn tại.'
+            ], 404);
+        }
+
+        $effect = now()->lt($user->otp_expires_at); //true nếu còn hiệu lực
+        $effect = now()->gt($user->otp_expires_at); //true nếu hết hạn
+        if ($effect || !$user->otp_expires_at) {
+           return response()->json([
+                'status' => 'otp_expired',
+                'message' => 'Mã OTP đã hết hạn.'
+            ], 400);
+        }
+
+        $serveOTP = $user->otp_code; // Mã otp đã gửi cho user
+        $compare =  $otpCode === $serveOTP ;
+        if (!$compare) {
+            return response()->json([
+                'status' => 'otp_invalid',
+                'message' => 'Mã OTP không hợp lệ.'
+            ], 400);
+        }
+
+        session()->put('user_id', $user->id);
+        session()->put('username', $user->username);
+
+        $data = [
+            'otp_code' => null,
+            'otp_expires_at' => null,
+        ];
+        $this->user->updateUser($user->id, $data);
+
+        // toastr()->success('Xác thực OTP và đăng nhập thành công!', 'Thành công');
+        // return redirect()->route('home');
+        
+        return response()->json([
+            // 'debug' => [
+            //     'serveOTP' => $user->otp_code,
+            //     'otpCode' => $otpCode,
+            //     'compare' => $compare
+            // ],
+            'status' => 'success',
+            'message' => 'Xác thực OTP thành công.',
+            'redirect' => route('home'), // gửi URL cho frontend
+        ]);
+
     }
 }
