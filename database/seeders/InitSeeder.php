@@ -34,14 +34,14 @@ class InitSeeder extends Seeder
                 'is_2fa_enabled' => false,
                 'role_id' => CUSTOMER_ROLE_ID,
             ],
-            [
-                'username' => 'minhDuc', 
-                'email' => 'nguyendinhduc.yb.k03@gmail.com',
-                'password' => Hash::make('123456'),
-                'status' => 'active',
-                'is_2fa_enabled' => true,
-                'role_id' => CUSTOMER_ROLE_ID,
-            ],
+            // [
+            //     'username' => 'minhDuc', 
+            //     'email' => 'dien email của anh vaooo',
+            //     'password' => Hash::make('dien mat khau vao day '),
+            //     'status' => 'active', // de active mà dang nhap, dang ky em chua lam
+            //     'is_2fa_enabled' => true, // true thì xác thực 2 bước đưuọc gửi otp qua mail, false thì đăng nhập thẳng
+            //     'role_id' => CUSTOMER_ROLE_ID,
+            // ],
         ]);
     }
 }

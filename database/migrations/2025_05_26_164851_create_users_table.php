@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('username')->unique(); //Tên người dùng 
-            // $table->string('email')->unique(); 
-            $table->string('email'); 
+            $table->string('email')->unique(); 
+            // $table->string('email'); 
             $table->string('password');
 
             $table->string('email_verification_token')->nullable(); // đoạn token xác nhận email được dùng dể gửi đén email đã đăng ký
