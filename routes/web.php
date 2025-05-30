@@ -62,6 +62,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('handle_login');
 Route::get('/logout', [AuthController::class, 'logout'])->name('handle_logout');
 Route::get('/xac-thuc-2-buoc', [AuthController::class, 'showOtpForm'])->name('2fa_show');
 Route::post('/two-factor-auth', [AuthController::class, 'verifyOtp'])->name('2fa_verify');  
+Route::post('/send-otp-2fa', [AuthController::class, 'sendOtp2fa'])->name('send_otp_2fa');  
 
 Route::get('auth/google', [LoginGoogleController::class, 'redirectToGoogle'])->name('login-google');
 Route::get('auth/google/callback', [LoginGoogleController::class, 'handleGoogleCallback']);

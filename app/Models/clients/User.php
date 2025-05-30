@@ -26,6 +26,22 @@ class User extends Model
 
         return $users;
     }
+    // Hash 50% cái email này lại nào
+    public function maskEmail($email) {
+   
+    $parts = explode('@', $email); // Tách email thành 2 phần tại ký tự '@'
+    $userName = $parts[0];// Phần trước @ (username)
+    $domain = $parts[1] ?? '';// Phần sau @ (domain), nếu không có thì gán bằng chuỗi rỗng
+
+    // Che giấu username:
+    // - Giữ lại 3 ký tự đầu
+    // - Thay các ký tự còn lại bằng dấu *
+    // - Đảm bảo ít nhất 1 dấu * được thêm vào
+    $maskedUsername = substr($userName, 0, 3) . str_repeat('*', max(strlen($userName) - 3, 1));
+    
+    // Ghép username đã che giấu với domain
+    return $maskedUsername . '@' . $domain;
+}
 
     public function updateUser($id, $data)
     {

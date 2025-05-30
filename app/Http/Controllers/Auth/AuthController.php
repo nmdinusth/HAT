@@ -50,6 +50,8 @@ class AuthController extends Controller
         } 
 
         $user_id = $this->user->getUserId($username);
+        $email = $user_login->email;
+        $email_masked = $this->user->maskEmail($email);
         $is_2fa_enabled = $this->login->checkTwofaEnable($user_login);
         if($is_2fa_enabled == false) {
             $request->session()->put('username', $username);
@@ -57,6 +59,10 @@ class AuthController extends Controller
             // $request->session()->put('avatar', $user->avatar);
             toastr()->success("Đăng nhập thành côngg!",'Thông báo');
             return redirect()->route('home');
+        } else {
+            $request->session()->put('email', $email);
+            $request->session()->put('email_masked', $email_masked);
+            return redirect()->route('2fa_show'); //->with('email', $email);
         }
     }
 
@@ -70,10 +76,15 @@ class AuthController extends Controller
     }
 
     // Hiển thị trang xác thực 2 bước
-    public function showOtpForm () {
+    public function showOtpForm(Request $request) {
+        $email_masked = session('email_masked'); // Lấy email từ session
+        return view('clients.otp-verification', compact('email_masked'));
+    }
 
-        // return view('otp-verification');
-        echo "helloo";
+    // Xử lý gửi lại otp 2fa
+    public function sendOtp2fa (Request $request) {
+        $email = session('email');
+        $this->login->sendOtp2fa($email);
     }
 
     // Xử lý OTP được gửi về

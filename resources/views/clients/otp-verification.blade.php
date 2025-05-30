@@ -7,12 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @vite(['resources/css/app.css'])
-    <title>Xác thực mã OTP</title>
+    <title>Xác thực 2 bước</title>
 </head>
 <body class="bg-gray-100 flex flex-col items-center justify-center h-screen w-full dark:bg-gray-200">
     <div class="w-full max-w-md px-8 py-12 bg-white rounded-lg shadow-md bg-white-950 dark:text-gray-900">
-        <h1 class="text-2xl font-semibold text-center mb-5">Xác thực OTP</h1>
-        <p class="text-gray-600 text-center mb-4">Mã được gửi đến Email: {{ session('email')}}</p>
+        <h1 class="text-2xl font-semibold text-center mb-5">Xác thực 2 bước</h1>
+        <p class="text-gray-600 text-center mb-4">Mã OTP được gửi đến Email: {{ session('email_masked')}}</p>
         <div class="grid grid-cols-6 gap-x-4 mt-2 mb-5" id="otp-container">
             @for ($i = 0; $i < 6; $i++)
             <input type="text" maxlength="1" class="otp-input rounded-lg bg-gray-100 cursor-text dark:bg-gray-300 w-14 aspect-square flex items-center justify-center text-center text-xl">
@@ -24,13 +24,17 @@
                 <button
                     class="px-3 py-2 text-sm font-medium text-center rounded text-gray-500 hover:text-blue-500">Thay đổi địa chỉ Email
                 </button>
-                <button
+                <button id="resend-otp-button"
                     class="px-3 py-2 text-sm font-medium text-center rounded text-gray-500 hover:text-blue-500">Gửi lại mã 
                 </button>
             </div>
+            <!-- THÔNG BÁO PHẢN HỒI -->
+            <div id="otp-feedback" class="text-center text-sm font-medium hidden"></div>
         </div>
         <button class="w-full px-4 py-2 text-lg font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700">Xác nhận</button>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
         // const a = JSON.stringify({ otp: otpCode });
@@ -78,13 +82,15 @@
                         window.location.href = '/';
                     } else {
                         alert('Mã OTP không hợp lệ'); // Hiển thị lỗi
+                        showOtpFeedback('❌ Mã OTP không hợp lệ!', 'error');
                         inputs.forEach(input => input.value = ''); // Reset các ô
                         inputs[0].focus(); // Quay lại ô đầu tiên
                     }
                 })   
                 .catch(error => {
                     console.error('fetch error: '. error);
-                    alert("Lỗi kết nối đến server. Vui lòng thử lại!");
+                    // alert("Lỗi kết nối đến server. Vui lòng thử lại!");
+                    showOtpFeedback('⚠️ Đã xảy ra lỗi. Vui lòng thử lại sau.', 'error');
                     inputs.forEach(input => input.value = '');
                     inputs[0].focus();
                     // location.reload(); // Reload lại trang
@@ -113,6 +119,31 @@
                 handleOTPComplete();
             }
         });
+
+        // Hiển thị thông báo (JQuery)
+        function showOtpFeedback(message, type = 'error') {
+            const feedbackEl = $('#otp-feedback');
+            feedbackEl
+                .removeClass('hidden text-red-500 text-green-500')
+                .addClass(type === 'success' ? 'text-green-500' : 'text-red-500')
+                .text(message);
+        }
+
+        //Gửi lại otp (AJAX JQuery)
+        $('#resend-otp-button').on('click', function () {
+            $.ajax({
+                url: '/send-otp-2fa',
+                method: 'POST',
+                data: { _token: '{{ csrf_token() }}' },
+                success: function () {
+                    showOtpFeedback('📩 Mã OTP đã được gửi lại.', 'success');
+                },
+                error: function () {
+                    showOtpFeedback('⚠️ Không thể gửi lại mã. Vui lòng thử lại.', 'error');
+                }
+            });
+        });
+
 
         //  - Hiện tại paste được nhưng chưa tối ưu
         //  - paste 5 số thì nó con trỏ đang ko ở số 5 

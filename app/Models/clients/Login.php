@@ -73,10 +73,30 @@ class Login extends Model
                 $otpExpiresAt
             ));
             
-            return redirect()->route('2fa_show');
+            return true;
         }
         return false;
     }
+
+    // Xử lý gửi OTP
+    public function sendOtp2fa ($email) {
+        $otp_code = str_pad(random_int(0, 999999), 6, '0', pad_type: STR_PAD_LEFT); //Tạo otp 6 số random
+        $otpExpiresAt = now()->addMinutes(15); // Thời gian hết hạn
+        
+        // Lưu otp và thời gian hết hạn vào email
+        DB::table($this->table)->where('email', $email)
+        ->update([
+            'otp_code' => $otp_code,
+            'otp_expires_at' => $otpExpiresAt,
+        ]);
+        
+        Mail::to($email)->send(new OtpNofitication(
+            $otp_code, 
+            $otpExpiresAt
+        ));
+    }
+
+    
 
     //Đăng ký người dùng mới
     public function registerAcount($data)
