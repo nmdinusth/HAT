@@ -59,10 +59,18 @@ Route::get('/travel-guides', [TravelGuidesController::class, 'index'])->name('te
 Route::get('/dang-nhap', [AuthController::class, 'index'])->name('login');
 Route::get('/dang-ky', [AuthController::class, 'index'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('handle_login');
+Route::post('/register', [AuthController::class, 'register'])->name('handle_register');
 Route::get('/logout', [AuthController::class, 'logout'])->name('handle_logout');
+
 Route::get('/xac-thuc-2-buoc', [AuthController::class, 'showOtpForm'])->name('2fa_show');
 Route::post('/two-factor-auth', [AuthController::class, 'verifyOtp'])->name('2fa_verify');  
-Route::post('/send-otp-2fa', [AuthController::class, 'sendOtp2fa'])->name('send_otp_2fa');  
+Route::post('/send-otp-2fa', [AuthController::class, 'sendOtp2fa'])->name('send_otp_2fa'); 
+
+Route::get('activate-account/{token}', [AuthController::class, 'activateAccount'])->name('activate.account');
+Route::get('/kich-hoat-tai-khoan', [AuthController::class, 'showActivateNotification'])->name('activate.notification');
+Route::post('/send-mail-activate', [AuthController::class, 'sendMailActivate'])->name('send_mail_activate'); 
+
+
 
 Route::get('auth/google', [LoginGoogleController::class, 'redirectToGoogle'])->name('login-google');
 Route::get('auth/google/callback', [LoginGoogleController::class, 'handleGoogleCallback']);

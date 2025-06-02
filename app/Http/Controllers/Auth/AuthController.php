@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Support\Str;
 use App\Models\clients\User;
 use Illuminate\Http\Request;
 use App\Models\clients\Login;
 use App\Http\Controllers\Controller;
+use App\Models\clients\UserInformation;
 
 class AuthController extends Controller
 {
@@ -16,11 +18,109 @@ class AuthController extends Controller
     {
         $this->login = new Login();
         $this->user = new User();
+        $this->user_information = new UserInformation();
     }
     public function index()
     {
         $title = 'Đăng nhập';
         return view('clients.login', compact('title'));
+    }
+
+    public function register (Request $request) {
+        $name = $request->name;
+        $username = $request->username;
+        $email = $request->email;
+        $password = $request->password;
+
+        // Kiểm tra tên người dùng hoặc email đã tồn tại hay chưa
+        $checkAccountExist = $this->login->checkUserExist($username, $email);
+        if ($checkAccountExist) {
+            return response()->json([
+                'debug' => [
+                    'name'      => $name,
+                    'username'  => $username,
+                    'email'     => $email,
+                    'password'  => $password,
+                    'checkAccountExist' => $checkAccountExist,
+                ],
+                'success' => false,
+                'message' => 'Tên người dùng hoặc email đã tồn tại!'
+            ]);
+        }
+
+        $email_verification_token = Str::random(60); //Tạo token 
+        $email_verification_expires_at = now()->addMinutes(15); //Tạo thời gian hết hạn token 
+
+        // Thực hiện đăng ký tài khoản
+        $data = [
+            'username'                  => $username,
+            'email'                     => $email,
+            'password'                  => bcrypt($password),
+            'email_verification_token'  => $email_verification_token,
+            'email_verification_expires_at'  => $email_verification_expires_at
+        ];
+        $user = $this->login->registerAcount($data);
+
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Có lỗi xảy ra khi tạo người dùng',
+            ]);
+        }
+
+        // Gửi token xác nhận
+        $this->login->sendActivationEmail(
+            $email, 
+            $email_verification_token, 
+            $email_verification_expires_at
+        );
+        session()->put('email', $email);
+
+        return redirect()->route('activate.notification');
+    } 
+
+    // Trang thông báo kích hoạt tài khoản
+    public function showActivateNotification () {
+        $title = 'Kích hoạt tài khoản';
+        $email = session('email');
+        return view('clients.token-verification', compact('title', 'email'));
+    }
+
+    //Xử lý gửi mail xác thực
+    public function sendMailActivate () {
+        $email = session('email');
+        $email_verification_token = Str::random(60); //Tạo token 
+        $email_verification_expires_at = now()->addMinutes(15); //Tạo thời gian hết hạn token 
+
+        $user = $this->user->getUserByEmail($email);
+        $user_id = $user->id;
+
+        $data = [
+            'email_verification_token' => $email_verification_token,
+            'email_verification_expires_at' => $email_verification_expires_at,
+        ];
+
+        $this->user->updateUser($user_id, $data);
+
+        // Gửi token xác nhận
+        $this->login->sendActivationEmail(
+            $email, 
+            $email_verification_token, 
+            $email_verification_expires_at
+        );
+    }
+
+    // Xác nhận lại token
+    public function activateAccount($token)
+    {
+        $user = $this->login->getUserByToken($token);
+        if ($user) {
+            $this->login->activateUserAccount($token);
+
+            return redirect('/dang-nhap')->with('message', 'Tài khoản của bạn đã được kích hoạt!');
+        } else {
+            return redirect('/dang-nhap')->with('error', 'Mã kích hoạt không hợp lệ!');
+        }
     }
 
     //Xử lý người dùng đăng nhập

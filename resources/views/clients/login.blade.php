@@ -161,8 +161,15 @@
         <div class="flex flex-wrap min-h-screen w-full content-center justify-center bg-gray-200 py-10">
             <!-- Login component -->
             <div class="flex shadow-md">
+                <!-- Login banner -->
+                <div class="flex flex-wrap content-center justify-center rounded-l-md"
+                    style="width: 24rem; height: 32rem;">
+                    <img class="w-full h-full bg-center bg-no-repeat bg-cover rounded-l-md"
+                        src="{{ asset('clients/assets/images/login/signup-image.jpg') }}">
+                </div>
+
                 <!-- Login form -->
-                <div class="flex flex-wrap content-center justify-center rounded-l-md bg-white"
+                <div class="flex flex-wrap content-center justify-center rounded-r-md bg-white"
                     style="width: 24rem; height: 32rem;">
                     <div class="w-72">
                         <!-- Heading -->
@@ -234,17 +241,9 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Login banner -->
-                <div class="flex flex-wrap content-center justify-center rounded-r-md"
-                    style="width: 24rem; height: 32rem;">
-                    <img class="w-full h-full bg-center bg-no-repeat bg-cover rounded-r-md"
-                        src="https://i.imgur.com/9l1A4OS.jpeg">
-                </div>
             </div>
         </div>
     </div>
 </div>
-
 
 @include('clients.blocks.footer')
