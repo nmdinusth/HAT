@@ -1,63 +1,43 @@
-{{-- <p>Xin chào,</p>
-<p>Vui lòng nhấn vào liên kết dưới đây để kích hoạt tài khoản của bạn ở website Travela:</p>
-<button>
-    <a href="{{ $link }}">Kích hoạt tài khoản</a>
-</button>
-<p>Trân trọng,<br>Nguyễn Minh Diện.</p> --}}
-
 <!doctype html>
-<html lang="en">
+<html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Verificación de Correo</title>
-<style>
-    body {
-        background-color: #f7f7f7;
-        font-family: 'Roboto', sans-serif;
-        margin: 0;
-        padding: 0;
-    }
-    .container {
-        max-width: 800px;
-        margin: 30px auto;
-        padding: 40px; /* Aumentado el padding para más espacio */
-        background-color: #ffffff;
-        border: 1px solid #ddd;
-        text-align: left; /* Alinea el texto a la izquierda */
-        box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-        border-radius: 5px;
-    }
-    .button {
-        display: inline-block;
-        padding: 10px 20px;
-        margin: 20px 0;
-        background-color: #26c6da; /* Color del botón */
-        color: #ffffff;
-        text-decoration: none;
-        border-radius: 5px;
-        font-weight: bold;
-    }
-    .footer {
-        font-size: 12px;
-        color: #777777;
-        margin-top: 20px;
-    }
-    .header {
-        font-weight: bold; /* Hace el título en negritas */
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xác thực email</title>
+    @vite(['resources/css/app.css'])
 </head>
-<body>
-<div class="container">
-    <img src="https://emprenderconactitud.com/img/nety.png" alt="Logo" style="height: 100px; margin: 0 auto 20px; display: block;">
-    <h1 class="header">¡Ya casi estás listo/a!</h1>
-    <p>Hola, [Nombre de Usuario]:</p>
-    <p>Para completar la configuración de tu cuenta y comenzar a disfrutar de los beneficios de [Nombre de la Plataforma], necesitamos confirmar que tenemos tu dirección de correo electrónico correcta.</p>
-    <a href="{{ $link }}" class="button">Kích hoạt tài khoản</a>
-    <p class="footer">Si tienes alguna pregunta o necesitas asistencia, no dudes en ponerte en contacto con nuestro equipo de soporte.</p>
-    <p class="footer">Atentamente,</p>
-    <p class="footer">Nety</p>
-</div>
+<body class="bg-gray-100 font-sans">
+    <div class="max-w-xl mx-auto mt-10 bg-white shadow-md rounded-lg p-8">
+        <div class="flex justify-center">
+            <img src="https://emprenderconactitud.com/img/nety.png" alt="Logo" class="h-24 mb-6">
+        </div>
+
+        <h1 class="text-2xl font-bold text-gray-800 mb-2">Xác nhận địa chỉ email của bạn</h1>
+
+        <p class="text-gray-600 mb-4">Xin chào <strong>{{ $user->name ?? 'bạn' }}</strong>,</p>
+
+        <p class="text-gray-600 mb-4">
+            Cảm ơn bạn đã đăng ký tài khoản tại <strong>Travela</strong>. Vui lòng nhấn vào nút bên dưới để kích hoạt tài khoản của bạn.
+        </p>
+
+        <div class="text-center my-6">
+            <a href="{{ $link }}" class="inline-block bg-teal-500 text-white px-6 py-2 rounded-md font-semibold hover:bg-teal-600 transition duration-200">
+                Kích hoạt tài khoản
+            </a>
+        </div>
+
+        <p class="text-sm text-gray-500 mb-4">
+            Liên kết kích hoạt này sẽ hết hạn sau <strong>{{ $expiresAt }}</strong> kể từ khi email được gửi.
+        </p>
+
+        <p class="text-sm text-gray-500 mt-6">
+            Nếu bạn không đăng ký tài khoản, hãy bỏ qua email này. Nếu cần hỗ trợ, xin vui lòng liên hệ với chúng tôi.
+        </p>
+
+        <p class="text-sm text-gray-500 mt-6">
+            Trân trọng,<br>
+            Đội ngũ Travela
+        </p>
+    </div>
 </body>
 </html>

@@ -68,6 +68,8 @@ Route::post('/send-otp-2fa', [AuthController::class, 'sendOtp2fa'])->name('send_
 
 Route::get('activate-account/{token}', [AuthController::class, 'activateAccount'])->name('activate.account');
 Route::get('/kich-hoat-tai-khoan', [AuthController::class, 'showActivateNotification'])->name('activate.notification');
+Route::post('/send-mail-activate', [AuthController::class, 'sendMailActivate'])->name('send_mail_activate'); 
+
 
 
 Route::get('auth/google', [LoginGoogleController::class, 'redirectToGoogle'])->name('login-google');

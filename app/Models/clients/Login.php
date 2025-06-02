@@ -98,11 +98,12 @@ class Login extends Model
     }
 
     //Xử lý gửi mail xác thực token
-    public function sendActivationEmail($email, $token) {
+    public function sendActivationEmail($email, $token, $expiresAt) {
         $activation_link = route('activate.account', ['token' => $token]);
 
         Mail::to($email)->send(new TokenNofitication(
             $activation_link,
+            $expiresAt
         ));
     }
 
@@ -133,7 +134,7 @@ class Login extends Model
     {
         return DB::table($this->table)
             ->where('email_verification_token', $token)
-            ->update(['email_verification_token' => null, 'status' => 'active']);
+            ->update(['email_verification_token' => null, 'email_verification_expires_at' => null, 'status' => 'active']);
     }
 
 

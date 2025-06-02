@@ -49,13 +49,15 @@ class AuthController extends Controller
         }
 
         $email_verification_token = Str::random(60); //Tạo token 
+        $email_verification_expires_at = now()->addMinutes(15); //Tạo thời gian hết hạn token 
 
         // Thực hiện đăng ký tài khoản
         $data = [
             'username'                  => $username,
             'email'                     => $email,
             'password'                  => bcrypt($password),
-            'email_verification_token'  => $email_verification_token
+            'email_verification_token'  => $email_verification_token,
+            'email_verification_expires_at'  => $email_verification_expires_at
         ];
         $user = $this->login->registerAcount($data);
 
@@ -67,7 +69,12 @@ class AuthController extends Controller
         }
 
         // Gửi token xác nhận
-        $this->login->sendActivationEmail($email, $email_verification_token);
+        $this->login->sendActivationEmail(
+            $email, 
+            $email_verification_token, 
+            $email_verification_expires_at
+        );
+        session()->put('email', $email);
 
         return redirect()->route('activate.notification');
     } 
@@ -75,7 +82,32 @@ class AuthController extends Controller
     // Trang thông báo kích hoạt tài khoản
     public function showActivateNotification () {
         $title = 'Kích hoạt tài khoản';
-        return view('clients.token-verification', compact('title'));
+        $email = session('email');
+        return view('clients.token-verification', compact('title', 'email'));
+    }
+
+    //Xử lý gửi mail xác thực
+    public function sendMailActivate () {
+        $email = session('email');
+        $email_verification_token = Str::random(60); //Tạo token 
+        $email_verification_expires_at = now()->addMinutes(15); //Tạo thời gian hết hạn token 
+
+        $user = $this->user->getUserByEmail($email);
+        $user_id = $user->id;
+
+        $data = [
+            'email_verification_token' => $email_verification_token,
+            'email_verification_expires_at' => $email_verification_expires_at,
+        ];
+
+        $this->user->updateUser($user_id, $data);
+
+        // Gửi token xác nhận
+        $this->login->sendActivationEmail(
+            $email, 
+            $email_verification_token, 
+            $email_verification_expires_at
+        );
     }
 
     // Xác nhận lại token

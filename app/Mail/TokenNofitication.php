@@ -14,14 +14,16 @@ class TokenNofitication extends Mailable
     use Queueable, SerializesModels;
 
     public $link;
+    public $expiresAt;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($link)
+    public function __construct($link, $expiresAt)
     {
         $this->link = $link;
+        $this->expiresAt = $expiresAt->format('H:i d/m/Y');
     }
 
     /**
