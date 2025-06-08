@@ -28,17 +28,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="fromPlace" class="form-label fw-bold">Từ</label>
-                                        <select class="form-select shadow-none" id="fromPlace" name="from" required>
-                                            <option value="">Chọn điểm đi</option>
-                                        </select>
+                                        <select id="fromPlace" name="from" required></select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="toPlace" class="form-label fw-bold">Đến</label>
-                                        <select class="form-select shadow-none" id="toPlace" name="to" required>
-                                            <option value="">Chọn điểm đến</option>
-                                        </select>
+                                        <select id="toPlace" name="to" required></select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -73,7 +69,7 @@
         </div>
 
         <div class="row justify-content-center">
-            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
+            <div class="col-lg-4 col-md-6">
                 <div class="airplane-item">
                     <div class="image">
                         <img src="{{ asset('clients/assets/images/airplane_booking/baynoidia.png') }}" alt="Domestic Flights">
@@ -81,11 +77,6 @@
                     <div class="content">
                         <h4><a href="#">Chuyến bay nội địa</a></h4>
                         <p>Khám phá Việt Nam với các chuyến bay nội địa tiện lợi và thoải mái.</p>
-                        <ul class="features">
-                            <li><i class="fas fa-check"></i> Nhiều hãng hàng không</li>
-                            <li><i class="fas fa-check"></i> Giá vé cạnh tranh</li>
-                            <li><i class="fas fa-check"></i> Đặt vé dễ dàng</li>
-                        </ul>
                         <button class="theme-btn style-two" onclick="goToBooking('domestic')">
                             <span data-hover="Đặt vé">Đặt vé</span>
                             <i class="fal fa-arrow-right"></i>
@@ -93,7 +84,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1500" data-aos-offset="50">
+            <div class="col-lg-4 col-md-6">
                 <div class="airplane-item">
                     <div class="image">
                         <img src="{{ asset('clients/assets/images/airplane_booking/bayquocte.png') }}" alt="International Flights">
@@ -101,11 +92,6 @@
                     <div class="content">
                         <h4><a href="#">Chuyến bay quốc tế</a></h4>
                         <p>Khám phá thế giới với các chuyến bay quốc tế chất lượng cao.</p>
-                        <ul class="features">
-                            <li><i class="fas fa-check"></i> Hãng hàng không uy tín</li>
-                            <li><i class="fas fa-check"></i> Giá vé hấp dẫn</li>
-                            <li><i class="fas fa-check"></i> Hỗ trợ 24/7</li>
-                        </ul>
                         <button class="theme-btn style-two" onclick="goToBooking('international')">
                             <span data-hover="Đặt vé">Đặt vé</span>
                             <i class="fal fa-arrow-right"></i>
@@ -116,24 +102,17 @@
         </div>
     </div>
 </section>
-<!-- Airplane Services Area end -->
 
 @include('clients.blocks.new_letter')
 @include('clients.blocks.footer')
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+
 <style>
-.booking-form { display: none; }
-.booking-form.active { display: block; }
-.booking-form .close-booking-form {
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  background: none;
-  border: none;
-  font-size: 2rem;
-  color: #888;
-  cursor: pointer;
-  z-index: 10;
+.choices__inner::after, .choices__inner::before {
+  display: none !important;
 }
 </style>
 
@@ -154,107 +133,18 @@ const places = {
     { value: 'singapore', label: 'Singapore' }
   ]
 };
-
-let currentType = 'domestic';
-let fromSelect;
-let toSelect;
-
-function updatePlaceOptions(type) {
-  fromSelect = document.getElementById('fromPlace');
-  toSelect = document.getElementById('toPlace');
-  // Xóa hết options cũ
-  fromSelect.options.length = 0;
-  toSelect.options.length = 0;
-
-  // Thêm option mặc định
-  fromSelect.add(new Option('Chọn điểm đi', ''));
-  toSelect.add(new Option('Chọn điểm đến', ''));
-
-  let list = [];
-  if (type === 'domestic') {
-    list = places.domestic;
-  } else if (type === 'international') {
-    list = places.domestic.concat(places.international);
-  }
-
-  list.forEach(place => {
-    fromSelect.add(new Option(place.label, place.value));
-    toSelect.add(new Option(place.label, place.value));
-  });
-
-  updateToOptions();
-}
-
-function updateToOptions() {
-  Array.from(toSelect.options).forEach(opt => {
-    opt.disabled = opt.value === fromSelect.value && opt.value !== '';
-  });
-  if (toSelect.value === fromSelect.value) {
-    for (let i = 0; i < toSelect.options.length; i++) {
-      if (!toSelect.options[i].disabled && toSelect.options[i].value !== '') {
-        toSelect.selectedIndex = i;
-        break;
-      }
-    }
-  }
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById('departDate').min = today;
-  document.getElementById('returnDate').min = today;
-
-  document.getElementById('departDate').addEventListener('change', function() {
-    document.getElementById('returnDate').min = this.value;
-  });
-
-  fromSelect = document.getElementById('fromPlace');
-  toSelect = document.getElementById('toPlace');
-  fromSelect.addEventListener('change', updateToOptions);
-  toSelect.addEventListener('change', updateToOptions);
-
-  document.getElementById('airplaneBookingForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const formData = new FormData(this);
-    fetch('{{ route("airplane-booking") }}', {
-      method: 'POST',
-      body: formData,
-      headers: {
-        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-      }
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        alert(data.message);
-        const modal = new bootstrap.Modal(document.getElementById('bookingModal'));
-        modal.hide();
-        this.reset();
-      } else {
-        alert('Có lỗi xảy ra. Vui lòng thử lại.');
-      }
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      alert('Có lỗi xảy ra. Vui lòng thử lại.');
-    });
-  });
-
-  // Gán sự kiện cho nút đặt vé
-  document.querySelectorAll('.open-booking-modal').forEach(btn => {
-    btn.addEventListener('click', function() {
-      currentType = this.getAttribute('data-type');
-      updatePlaceOptions(currentType);
-      const modal = new bootstrap.Modal(document.getElementById('bookingModal'));
-      modal.show();
-    });
-  });
+document.addEventListener('DOMContentLoaded', function () {
+  const type = "domestic";
+  const fromSelect = document.getElementById('fromPlace');
+  const toSelect = document.getElementById('toPlace');
+  const list = (type === 'domestic') ? places.domestic : [...places.domestic, ...places.international];
+  const fromChoices = new Choices(fromSelect, { searchEnabled: false, shouldSort: false, itemSelectText: '' });
+  const toChoices = new Choices(toSelect, { searchEnabled: false, shouldSort: false, itemSelectText: '' });
+  fromChoices.setChoices(list, 'value', 'label', true);
+  toChoices.setChoices(list, 'value', 'label', true);
 });
 
 function goToBooking(type) {
-    window.location.href = '/airplane-booking?type=' + type;
+  window.location.href = '/airplane-booking?type=' + type;
 }
 </script>
-
-<!-- Bootstrap JS (bắt buộc cho modal hoạt động) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

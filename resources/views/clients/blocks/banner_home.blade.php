@@ -1,3 +1,20 @@
+@include('clients.blocks.header_home')
+@include('clients.blocks.banner')
+
+<style>
+select {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+select::-ms-expand {
+  display: none;
+}
+</style>
+
 <!-- Hero Area Start -->
 <section class="hero-area bgc-black pt-200 rpt-120 rel z-2">
     <div class="container-fluid">

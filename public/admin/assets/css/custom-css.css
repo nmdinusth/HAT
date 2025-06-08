@@ -62,3 +62,72 @@
 .mail_view{
     display: none;
 }
+
+
+/********************************************
+* Airplane Booking                         *
+********************************************/
+.trip-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.trip-option .circle {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #007bff;
+}
+
+.trip-option .form-check-label {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.trip-option .form-check-input {
+    width: 20px;
+    height: 20px;
+}
+
+.trip-option .form-check-input:checked + .form-check-label {
+    color: #007bff;
+}
+
+.trip-option .form-check-input:checked + .form-check-label .circle {
+    background-color: #007bff;
+}
+
+.radio-circle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-weight: 500;
+    position: relative;
+  }
+  
+  .radio-circle input[type="radio"] {
+    display: none;
+  }
+  
+  .radio-circle .circle {
+    width: 22px;
+    height: 22px;
+    border: 2px solid #000;
+    border-radius: 50%;
+    position: relative;
+  }
+  
+  .radio-circle input[type="radio"]:checked + .circle::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 10px;
+    height: 10px;
+    background: #000;
+    border-radius: 50%;
+  }
+  
+
+
