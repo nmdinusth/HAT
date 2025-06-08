@@ -29,6 +29,9 @@ use Illuminate\Support\Facades\Schema;
 use App\Http\Controllers\Client\TransportController;
 use App\Http\Controllers\Client\AirplaneController;
 use App\Http\Controllers\Client\AirplaneBookingController;
+use App\Http\Controllers\Client\AirplaneFlightController;
+use App\Http\Controllers\Client\AirplaneSeatController;
+use App\Http\Controllers\Client\AirplanePaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -171,3 +174,12 @@ Route::get('/transport', [TransportController::class, 'index'])->name('transport
 Route::get('/airplane', [AirplaneController::class, 'index'])->name('airplane');
 Route::post('/airplane-booking', [AirplaneController::class, 'createBooking'])->name('airplane-booking');
 Route::get('/airplane-booking', [AirplaneBookingController::class, 'showBookingForm'])->name('airplane-booking.form');
+Route::get('/airplane-booking/success', function() {
+    return view('clients.airplane-booking-success');
+})->name('airplane-booking.success');
+
+Route::get('/airplane-flights', [AirplaneFlightController::class, 'index'])->name('airplane-flights');
+Route::get('/airplane-seat-select', [AirplaneSeatController::class, 'index'])->name('airplane-seat-select');
+
+Route::get('/airplane-payment', [AirplanePaymentController::class, 'index'])->name('airplane-payment');
+Route::post('/airplane-payment/process', [AirplanePaymentController::class, 'process'])->name('airplane-payment.process');

@@ -2,14 +2,19 @@
     "type": "module",
     "private": true,
     "scripts": {
-      "dev": "vite",
-      "build": "vite build"
+        "dev": "vite",
+        "build": "vite build"
     },
     "devDependencies": {
-      "axios": "^1.1.2",
-      "laravel-vite-plugin": "^1.2.0",
-      "lodash": "^4.17.19",
-      "postcss": "^8.1.14",
-      "vite": "^6.3.2"
+        "autoprefixer": "^10.4.21",
+        "axios": "^1.1.2",
+        "laravel-vite-plugin": "^1.2.0",
+        "lodash": "^4.17.19",
+        "postcss": "^8.5.3",
+        "tailwindcss": "^4.1.8",
+        "vite": "^6.3.2"
+    },
+    "dependencies": {
+        "choices.js": "^11.1.0"
     }
-  }
+}
