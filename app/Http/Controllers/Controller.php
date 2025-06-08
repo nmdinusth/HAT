@@ -21,13 +21,13 @@ class Controller extends BaseController
 
     protected function getUserId()
     {
-        if (!session()->has('userId')) {
+        if (!session()->has('user_id')) {
             $username = session()->get('username');
             if ($username) {
                 $userId = $this->user->getUserId($username);
-                session()->put('userId', $userId);
+                session()->put('user_id', $userId);
             }
         }
-        return session()->get('userId');
+        return session()->get('user_id');
     }
 }

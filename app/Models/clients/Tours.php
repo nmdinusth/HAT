@@ -270,49 +270,49 @@ class Tours extends Model
     }
 
     //Get tour có số lượng booking và hoàn thành nhiều nhất để gợi ý
-    public function toursPopular($quantity)
-    {
-        $toursPopular = DB::table('booking')
-            ->select(
-                'tours.tourID',
-                'tours.title',
-                'tours.description',
-                'tours.priceAdult',
-                'tours.priceChild',
-                'tours.startDate',
-                'tours.endDate',
-                'tours.destination',
-                'tours.quantity',
-                DB::raw('COUNT(booking.tourId) as totalBookings')
-            )
-            ->join('tours', 'booking.tourID', '=', 'tours.tourID')
-            ->where('booking.bookingStatus', 'f') // Chỉ lấy các booking đã hoàn thành
-            ->groupBy(
-                'tours.tourID',
-                'tours.title',
-                'tours.description',
-                'tours.priceAdult',
-                'tours.priceChild',
-                'tours.startDate',
-                'tours.endDate',
-                'tours.destination',
-                'tours.quantity'
-            )
-            ->orderBy('totalBookings', 'DESC')
-            ->take($quantity)
-            ->get();
+    // public function toursPopular($quantity)
+    // {
+    //     $toursPopular = DB::table('booking')
+    //         ->select(
+    //             'tours.tourID',
+    //             'tours.title',
+    //             'tours.description',
+    //             'tours.priceAdult',
+    //             'tours.priceChild',
+    //             'tours.startDate',
+    //             'tours.endDate',
+    //             'tours.destination',
+    //             'tours.quantity',
+    //             DB::raw('COUNT(booking.tourId) as totalBookings')
+    //         )
+    //         ->join('tours', 'booking.tourID', '=', 'tours.tourID')
+    //         ->where('booking.bookingStatus', 'f') // Chỉ lấy các booking đã hoàn thành
+    //         ->groupBy(
+    //             'tours.tourID',
+    //             'tours.title',
+    //             'tours.description',
+    //             'tours.priceAdult',
+    //             'tours.priceChild',
+    //             'tours.startDate',
+    //             'tours.endDate',
+    //             'tours.destination',
+    //             'tours.quantity'
+    //         )
+    //         ->orderBy('totalBookings', 'DESC')
+    //         ->take($quantity)
+    //         ->get();
 
 
-        foreach ($toursPopular as $tour) {
-            // Lấy danh sách hình ảnh thuộc về tour
-            $tour->images = DB::table('images')
-                ->where('tourID', $tour->tourID)
-                ->pluck('imageURl');
-            // Lấy số lượng đánh giá và số sao trung bình của tour
-            $tour->rating = $this->reviewStats($tour->tourID)->averageRating;
-        }
-        return $toursPopular;
-    }
+    //     foreach ($toursPopular as $tour) {
+    //         // Lấy danh sách hình ảnh thuộc về tour
+    //         $tour->images = DB::table('images')
+    //             ->where('tourID', $tour->tourID)
+    //             ->pluck('imageURl');
+    //         // Lấy số lượng đánh giá và số sao trung bình của tour
+    //         $tour->rating = $this->reviewStats($tour->tourID)->averageRating;
+    //     }
+    //     return $toursPopular;
+    // }
 
     //Get id search tours
     public function toursSearch($ids)

@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Facade;
 
 return [
+    // Định nghĩa biến hằng
+    define('ADMIN_ROLE_ID', 1),
+    define('CUSTOMER_ROLE_ID', 2),
 
     /*
     |--------------------------------------------------------------------------

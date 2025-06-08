@@ -91,7 +91,7 @@ class LoginController extends Controller
 
         $data_login = [
             'username' => $username,
-            'password' => md5($password)
+            'password' => md5($password) // hash md5 - mã hóa mật khẩu cố định có thể xem ở md5decrypt.net
         ];
 
         $user_login = $this->login->login($data_login);

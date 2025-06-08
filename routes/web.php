@@ -1,33 +1,32 @@
 <?php
 
-use App\Http\Controllers\admin\AdminManagementController;
-use App\Http\Controllers\admin\BookingManagementController;
-use App\Http\Controllers\admin\ContactManagementController;
-use App\Http\Controllers\admin\DashboardController;
-use App\Http\Controllers\admin\LoginAdminController;
-use App\Http\Controllers\admin\ToursManagementController;
-use App\Http\Controllers\admin\UserManagementController;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Schema;
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\clients\HomeController;
 use App\Http\Controllers\clients\AboutController;
-use App\Http\Controllers\clients\ServicesController;
-use App\Http\Controllers\clients\ToursController;
-use App\Http\Controllers\clients\TourDetailController;
-use App\Http\Controllers\clients\DestinationController;
-use App\Http\Controllers\clients\BookingController;
-use App\Http\Controllers\clients\TravelGuidesController;
-use App\Http\Controllers\clients\ContactController;
-use App\Http\Controllers\clients\UserProfileController;
 use App\Http\Controllers\clients\LoginController;
-use App\Http\Controllers\clients\LoginGoogleController;
+use App\Http\Controllers\clients\ToursController;
 use App\Http\Controllers\clients\MyTourController;
 use App\Http\Controllers\clients\PayPalController;
 use App\Http\Controllers\clients\SearchController;
-use App\Http\Controllers\clients\TourBookedController;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
-use App\Http\Controllers\Client\TransportController;
+use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\Client\AirplaneController;
+use App\Http\Controllers\clients\BookingController;
+use App\Http\Controllers\clients\ContactController;
+use App\Http\Controllers\admin\LoginAdminController;
+use App\Http\Controllers\Client\TransportController;
+use App\Http\Controllers\clients\ServicesController;
+use App\Http\Controllers\clients\TourBookedController;
+use App\Http\Controllers\clients\TourDetailController;
+use App\Http\Controllers\clients\DestinationController;
+use App\Http\Controllers\clients\LoginGoogleController;
+use App\Http\Controllers\clients\UserProfileController;
+use App\Http\Controllers\admin\UserManagementController;
+use App\Http\Controllers\clients\TravelGuidesController;
+use App\Http\Controllers\admin\AdminManagementController;
+use App\Http\Controllers\admin\ToursManagementController;
 use App\Http\Controllers\Client\AirplaneBookingController;
 use App\Http\Controllers\Client\AirplaneFlightController;
 use App\Http\Controllers\Client\AirplaneSeatController;
@@ -50,14 +49,30 @@ Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/destination', [DestinationController::class, 'index'])->name('destination');
 Route::get('/travel-guides', [TravelGuidesController::class, 'index'])->name('team');
 
-//Handle Login
-Route::get('/login', [LoginController::class, 'index'])->name('login');
-Route::post('/register', [LoginController::class, 'register'])->name('register');
-Route::post('/login', [LoginController::class, 'login'])->name('user-login');
-Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
-Route::get('activate-account/{token}', [LoginController::class, 'activateAccount'])->name('activate.account');
+//Handle Login Old
+// Route::get('/login', [LoginController::class, 'index'])->name('login');
+// Route::post('/register', [LoginController::class, 'register'])->name('register');
+// Route::post('/login', [LoginController::class, 'login'])->name('user-login');
+// Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+// Route::get('activate-account/{token}', [LoginController::class, 'activateAccount'])->name('activate.account');
 
-//Login with google
+//Handle Login New
+Route::get('/dang-nhap', [AuthController::class, 'index'])->name('login');
+Route::get('/dang-ky', [AuthController::class, 'index'])->name('register');
+Route::post('/login', [AuthController::class, 'login'])->name('handle_login');
+Route::post('/register', [AuthController::class, 'register'])->name('handle_register');
+Route::get('/logout', [AuthController::class, 'logout'])->name('handle_logout');
+
+Route::get('/xac-thuc-2-buoc', [AuthController::class, 'showOtpForm'])->name('2fa_show');
+Route::post('/two-factor-auth', [AuthController::class, 'verifyOtp'])->name('2fa_verify');  
+Route::post('/send-otp-2fa', [AuthController::class, 'sendOtp2fa'])->name('send_otp_2fa'); 
+
+Route::get('activate-account/{token}', [AuthController::class, 'activateAccount'])->name('activate.account');
+Route::get('/kich-hoat-tai-khoan', [AuthController::class, 'showActivateNotification'])->name('activate.notification');
+Route::post('/send-mail-activate', [AuthController::class, 'sendMailActivate'])->name('send_mail_activate'); 
+
+
+
 Route::get('auth/google', [LoginGoogleController::class, 'redirectToGoogle'])->name('login-google');
 Route::get('auth/google/callback', [LoginGoogleController::class, 'handleGoogleCallback']);
 

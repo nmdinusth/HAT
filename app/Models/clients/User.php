@@ -16,21 +16,42 @@ class User extends Model
     public function getUserId($username)
     {
         return DB::table($this->table)
-            ->select('userId')
-            ->where('username', $username)->value('userId');
+            ->select('id')
+            ->where('username', $username)->value('id');
     }
     public function getUser($id)
     {
         $users = DB::table($this->table)
-            ->where('userId', $id)->first();
+            ->where('id', $id)->first();
 
         return $users;
     }
 
+    public function getUserByEmail ($email) {
+        $user = DB::table($this->table)->where('email', $email)->first();
+        return $user;
+    }
+    // Hash 50% cái email này lại nào
+    public function maskEmail($email) {
+   
+    $parts = explode('@', $email); // Tách email thành 2 phần tại ký tự '@'
+    $userName = $parts[0];// Phần trước @ (username)
+    $domain = $parts[1] ?? '';// Phần sau @ (domain), nếu không có thì gán bằng chuỗi rỗng
+
+    // Che giấu username:
+    // - Giữ lại 3 ký tự đầu
+    // - Thay các ký tự còn lại bằng dấu *
+    // - Đảm bảo ít nhất 1 dấu * được thêm vào
+    $maskedUsername = substr($userName, 0, 3) . str_repeat('*', max(strlen($userName) - 3, 1));
+    
+    // Ghép username đã che giấu với domain
+    return $maskedUsername . '@' . $domain;
+}
+
     public function updateUser($id, $data)
     {
         $update = DB::table($this->table)
-            ->where('userid', $id)
+            ->where('id', $id)
             ->update($data);
 
         return $update;
