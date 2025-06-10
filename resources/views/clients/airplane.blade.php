@@ -106,44 +106,9 @@
 @include('clients.blocks.new_letter')
 @include('clients.blocks.footer')
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
-
-<style>
-.choices__inner::after, .choices__inner::before {
-  display: none !important;
-}
-</style>
 
 <script>
-const places = {
-  domestic: [
-    { value: 'hanoi', label: 'Hà Nội' },
-    { value: 'danang', label: 'Đà Nẵng' },
-    { value: 'hochiminh', label: 'Hồ Chí Minh City' },
-    { value: 'nhatrang', label: 'Nha Trang' },
-    { value: 'phuquoc', label: 'Phú Quốc' }
-  ],
-  international: [
-    { value: 'newyork', label: 'New York' },
-    { value: 'tokyo', label: 'Tokyo' },
-    { value: 'paris', label: 'Paris' },
-    { value: 'london', label: 'London' },
-    { value: 'singapore', label: 'Singapore' }
-  ]
-};
-document.addEventListener('DOMContentLoaded', function () {
-  const type = "domestic";
-  const fromSelect = document.getElementById('fromPlace');
-  const toSelect = document.getElementById('toPlace');
-  const list = (type === 'domestic') ? places.domestic : [...places.domestic, ...places.international];
-  const fromChoices = new Choices(fromSelect, { searchEnabled: false, shouldSort: false, itemSelectText: '' });
-  const toChoices = new Choices(toSelect, { searchEnabled: false, shouldSort: false, itemSelectText: '' });
-  fromChoices.setChoices(list, 'value', 'label', true);
-  toChoices.setChoices(list, 'value', 'label', true);
-});
-
 function goToBooking(type) {
   window.location.href = '/airplane-booking?type=' + type;
 }
