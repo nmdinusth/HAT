@@ -1,47 +1,6 @@
 @include('clients.blocks.header_home')
 @include('clients.blocks.banner')
 
-<style>
-/* Chỉ giữ lại style cho Choices.js, loại bỏ style select cũ */
-.choices__inner::after, .choices__inner::before {
-  display: none !important;
-}
-
-/* Loại bỏ mũi tên mặc định của trình duyệt */
-select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-}
-
-/* Loại bỏ mọi background image mặc định */
-.choices__inner,
-.choices[data-type*='select-one']:after {
-  background-image: none !important;
-}
-
-/* Xóa mũi tên mặc định của Choices.js */
-.choices[data-type*='select-one']:after {
-  border: none !important;
-}
-
-/* Tạo mũi tên tùy chỉnh */
-.choices[data-type*='select-one']::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  right: 15px;
-  width: 6px;
-  height: 6px;
-  border: solid #888;
-  border-width: 0 2px 2px 0;
-  transform: translateY(-50%) rotate(45deg);
-  pointer-events: none;
-}
-
-
-</style>
-
 <section class="airplane-booking-area py-100 rel z-1">
     <div class="container">
         <div class="row justify-content-center mb-4">
@@ -71,16 +30,38 @@ select {
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="fromPlace" class="form-label fw-bold">Từ</label>
-                                <select id="fromPlace" name="from" required>
+                                <select id="fromPlace" name="from" required
+                                    class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
                                     <option value="" selected disabled hidden>Chọn điểm đi</option>
+                                    <option value="hanoi">Hà Nội</option>
+                                    <option value="danang">Đà Nẵng</option>
+                                    <option value="hochiminh">Hồ Chí Minh City</option>
+                                    <option value="nhatrang">Nha Trang</option>
+                                    <option value="phuquoc">Phú Quốc</option>
+                                    <option value="newyork">New York</option>
+                                    <option value="tokyo">Tokyo</option>
+                                    <option value="paris">Paris</option>
+                                    <option value="london">London</option>
+                                    <option value="singapore">Singapore</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="toPlace" class="form-label fw-bold">Đến</label>
-                                <select id="toPlace" name="to" required>
+                                <select id="toPlace" name="to" required
+                                    class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
                                     <option value="" selected disabled hidden>Chọn điểm đến</option>
+                                    <option value="hanoi">Hà Nội</option>
+                                    <option value="danang">Đà Nẵng</option>
+                                    <option value="hochiminh">Hồ Chí Minh City</option>
+                                    <option value="nhatrang">Nha Trang</option>
+                                    <option value="phuquoc">Phú Quốc</option>
+                                    <option value="newyork">New York</option>
+                                    <option value="tokyo">Tokyo</option>
+                                    <option value="paris">Paris</option>
+                                    <option value="london">London</option>
+                                    <option value="singapore">Singapore</option>
                                 </select>
                             </div>
                         </div>
@@ -118,66 +99,14 @@ select {
 @include('clients.blocks.new_letter')
 @include('clients.blocks.footer')
 
-<!-- Choices.js -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
-<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
-
 <script>
-const places = {
-  domestic: [
-    { value: 'hanoi', label: 'Hà Nội' },
-    { value: 'danang', label: 'Đà Nẵng' },
-    { value: 'hochiminh', label: 'Hồ Chí Minh City' },
-    { value: 'nhatrang', label: 'Nha Trang' },
-    { value: 'phuquoc', label: 'Phú Quốc' }
-  ],
-  international: [
-    { value: 'newyork', label: 'New York' },
-    { value: 'tokyo', label: 'Tokyo' },
-    { value: 'paris', label: 'Paris' },
-    { value: 'london', label: 'London' },
-    { value: 'singapore', label: 'Singapore' }
-  ]
-};
-
-document.addEventListener('DOMContentLoaded', function () {
-  const type = "{{ $type }}";
-  const fromSelect = document.getElementById('fromPlace');
-  const toSelect = document.getElementById('toPlace');
-  const list = (type === 'domestic') ? places.domestic : [...places.domestic, ...places.international];
-
-  const fromChoices = new Choices(fromSelect, {
-    searchEnabled: false,
-    shouldSort: false,
-    itemSelectText: '',
-    position: 'auto'
-  });
-
-  const toChoices = new Choices(toSelect, {
-    searchEnabled: false,
-    shouldSort: false,
-    itemSelectText: '',
-    position: 'auto'
-  });
-
-  fromChoices.setChoices(list, 'value', 'label', false);
-  toChoices.setChoices(list, 'value', 'label', false);
-
-  // Tự động đóng dropdown ngay khi chọn để cập nhật giao diện lập tức
-  fromSelect.addEventListener('choice', function () {
-    fromChoices.hideDropdown();
-  });
-
-  toSelect.addEventListener('choice', function () {
-    toChoices.hideDropdown();
-  });
-
-  // Kiểm tra trùng điểm đi và đến
-  document.getElementById('airplaneBookingForm').addEventListener('submit', function (e) {
-    if (fromSelect.value === toSelect.value) {
-      alert("Điểm đi và điểm đến không được giống nhau!");
-      e.preventDefault();
+// Kiểm tra không cho chọn cùng điểm đi và điểm đến
+document.getElementById('airplaneBookingForm').addEventListener('submit', function (e) {
+    const from = document.getElementById('fromPlace').value;
+    const to = document.getElementById('toPlace').value;
+    if (from === to) {
+        alert("Điểm đi và điểm đến không được giống nhau!");
+        e.preventDefault();
     }
-  });
 });
 </script>
