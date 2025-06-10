@@ -25,7 +25,7 @@
                     <p>Điền thông tin để tìm chuyến bay phù hợp</p>
                 </div>
                 <form id="airplaneBookingForm" method="POST" action="{{ route('airplane-booking') }}">
-                    @csrf
+                    @csrf   
                     <div class="row g-3">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -38,11 +38,13 @@
                                     <option value="hochiminh">Hồ Chí Minh City</option>
                                     <option value="nhatrang">Nha Trang</option>
                                     <option value="phuquoc">Phú Quốc</option>
+                                    @if($type === 'international')
                                     <option value="newyork">New York</option>
                                     <option value="tokyo">Tokyo</option>
                                     <option value="paris">Paris</option>
                                     <option value="london">London</option>
                                     <option value="singapore">Singapore</option>
+                                    @endif
                                 </select>
                             </div>
                         </div>
@@ -57,11 +59,13 @@
                                     <option value="hochiminh">Hồ Chí Minh City</option>
                                     <option value="nhatrang">Nha Trang</option>
                                     <option value="phuquoc">Phú Quốc</option>
+                                    @if($type === 'international')
                                     <option value="newyork">New York</option>
                                     <option value="tokyo">Tokyo</option>
                                     <option value="paris">Paris</option>
                                     <option value="london">London</option>
                                     <option value="singapore">Singapore</option>
+                                    @endif
                                 </select>
                             </div>
                         </div>
@@ -102,11 +106,21 @@
 <script>
 // Kiểm tra không cho chọn cùng điểm đi và điểm đến
 document.getElementById('airplaneBookingForm').addEventListener('submit', function (e) {
+    e.preventDefault(); // Prevent default form submission
+    
     const from = document.getElementById('fromPlace').value;
     const to = document.getElementById('toPlace').value;
+    
     if (from === to) {
         alert("Điểm đi và điểm đến không được giống nhau!");
-        e.preventDefault();
+        return;
     }
+
+    // Get form data
+    const formData = new FormData(this);
+    
+    // Redirect to airplane-flights with query parameters
+    const queryParams = new URLSearchParams(formData).toString();
+    window.location.href = `/airplane-flights?${queryParams}`;
 });
 </script>

@@ -68,21 +68,21 @@
                     <div class="form-check mb-2">
                         <input class="form-check-input" type="radio" name="payment_method" id="vnpay" value="vnpay" required>
                         <label class="form-check-label" for="vnpay">
-                            <img src="{{ asset('clients/assets/images/booking/vnpay.png') }}" alt="VNPay" style="height: 30px;">
+                            <img src="{{ asset('clients/assets/images/booking/vnpay.jpg') }}" alt="VNPay" style="height: 50px;">
                             VNPay
                         </label>
                     </div>
                     <div class="form-check mb-2">
                         <input class="form-check-input" type="radio" name="payment_method" id="momo" value="momo">
                         <label class="form-check-label" for="momo">
-                            <img src="{{ asset('clients/assets/images/booking/thanh-toan-momo.jpg') }}" alt="Momo" style="height: 30px;">
+                            <img src="{{ asset('clients/assets/images/booking/momopay.jpg') }}" alt="Momo" style="height: 50px;">
                             Momo
                         </label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="payment_method" id="paypal" value="paypal">
                         <label class="form-check-label" for="paypal">
-                            <img src="{{ asset('clients/assets/images/booking/cong-thanh-toan-paypal.jpg') }}" alt="PayPal" style="height: 30px;">
+                            <img src="{{ asset('clients/assets/images/booking/paypalpay.jpg') }}" alt="PayPal" style="height: 60px;">
                             PayPal
                         </label>
                     </div>

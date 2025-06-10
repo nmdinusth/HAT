@@ -105,9 +105,6 @@
 </div>
 @include('clients.blocks.footer')
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
-<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
-
 <style>
 select.form-select {
   appearance: none !important;
@@ -120,17 +117,4 @@ select.form-select {
 select.form-select::-ms-expand {
   display: none;
 }
-</style>
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const fromSelect = document.getElementById('fromPlace');
-    const toSelect = document.getElementById('toPlace');
-    if (fromSelect) new Choices(fromSelect, { searchEnabled: false, shouldSort: false });
-    if (toSelect) new Choices(toSelect, { searchEnabled: false, shouldSort: false });
-    if (window.Choices) {
-        new Choices('#fromPlace', { searchEnabled: false, shouldSort: false });
-        new Choices('#toPlace', { searchEnabled: false, shouldSort: false });
-    }
-});
-</script> 
+</style> 

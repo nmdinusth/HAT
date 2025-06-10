@@ -176,7 +176,7 @@
 <script src="{{ asset('clients/assets/js/custom-js-v2.js') }}"></script>
 {{-- paypal-payment  --}}
 <script src="https://www.paypal.com/sdk/js?client-id={{ env('PAYPAL_SANDBOX_CLIENT_ID') }}"></script>
-<!-- Custom script by Dev dien-->
+<!-- Custom script by Dev nmd-->
 <script src="{{ asset('clients/assets/js/custom-js.js') }}"></script>
 <script src="{{ asset('clients/assets/js/jquery.datetimepicker.full.min.js') }}"></script>
 

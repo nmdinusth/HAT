@@ -27,7 +27,10 @@ class AirplaneController extends Controller
             'payment_method' => 'required|in:vnpay,momo,paypal',
         ]);
 
-        $booking = AirplaneBooking::create($validated);
+      
+        session()->put('booking_info', $validated);
+        return redirect()->route('airplane-flights.blade.php');
+
 
         // Gửi email xác nhận
         Mail::to($booking->email)->send(new \App\Mail\BookingConfirmed($booking));
