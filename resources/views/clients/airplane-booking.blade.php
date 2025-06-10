@@ -38,11 +38,13 @@
                                     <option value="hochiminh">Hồ Chí Minh City</option>
                                     <option value="nhatrang">Nha Trang</option>
                                     <option value="phuquoc">Phú Quốc</option>
+                                    @if($type === 'international')
                                     <option value="newyork">New York</option>
                                     <option value="tokyo">Tokyo</option>
                                     <option value="paris">Paris</option>
                                     <option value="london">London</option>
                                     <option value="singapore">Singapore</option>
+                                    @endif
                                 </select>
                             </div>
                         </div>
@@ -57,11 +59,13 @@
                                     <option value="hochiminh">Hồ Chí Minh City</option>
                                     <option value="nhatrang">Nha Trang</option>
                                     <option value="phuquoc">Phú Quốc</option>
+                                    @if($type === 'international')
                                     <option value="newyork">New York</option>
                                     <option value="tokyo">Tokyo</option>
                                     <option value="paris">Paris</option>
                                     <option value="london">London</option>
                                     <option value="singapore">Singapore</option>
+                                    @endif
                                 </select>
                             </div>
                         </div>
