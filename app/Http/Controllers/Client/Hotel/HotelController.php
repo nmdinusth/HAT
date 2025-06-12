@@ -17,4 +17,8 @@ class HotelController extends Controller
 
         return view('clients.hotels.home', compact('title'));
     }
+
+    public function findHotel (Request $request) {
+        dd($request->all());
+    }
 }

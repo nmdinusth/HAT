@@ -79,6 +79,7 @@ Route::get('auth/google/callback', [LoginGoogleController::class, 'handleGoogleC
 // Các route liên quan đến xử lý đặt phòng khách sạn
 Route::prefix('khach-san')->group( function () {
     Route::get('/', [HotelController::class, 'index'])->name('hotel.home');
+    Route::post('/findHotel', [HotelController::class, 'findHotel'])->name('hotel.find');
     
 });
 
