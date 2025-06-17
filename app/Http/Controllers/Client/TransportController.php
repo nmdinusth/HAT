@@ -12,4 +12,10 @@ class TransportController extends Controller
         $title = 'Transport';
         return view('clients.transport', compact('title'));
     }
+
+    public function bookingForm()
+    {
+        $title = 'Booking Transport';
+        return view('clients.booking_transport', compact('title'));
+    }
 } 

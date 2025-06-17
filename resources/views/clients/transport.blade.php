@@ -27,7 +27,7 @@
                             <li><i class="fas fa-transporter"></i> Tài xế chuyên nghiệp</li>
                             <li><i class="fas fa-badge-percent""></i> Giá cả hợp lý</li>
                         </ul>
-                        <a href="#" class="theme-btn style-two">
+                        <a href="{{ route('booking.transport') }}" class="theme-btn style-two">
                             <span data-hover="Đặt ngay">Đặt ngay</span>
                             <i class="fal fa-arrow-right"></i>
                         </a>
