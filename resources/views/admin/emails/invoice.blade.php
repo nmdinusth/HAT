@@ -1,5 +1,5 @@
 <p style="font-size: 16px; font-family: Arial, sans-serif; color: #333;">Chào {{ $invoice_booking->fullName }},</p>
-<p style="font-size: 16px; font-family: Arial, sans-serif; color: #333;">Cảm ơn bạn đã đặt tour tại Travela. Vui lòng xem chi tiết hóa đơn trong file đính kèm.</p>
+<p style="font-size: 16px; font-family: Arial, sans-serif; color: #333;">Cảm ơn bạn đã đặt tour tại HAT. Vui lòng xem chi tiết hóa đơn trong file đính kèm.</p>
 <p style="font-size: 16px; font-family: Arial, sans-serif; color: #333;">Chúc bạn một chuyến đi vui vẻ!</p>
 
 <div class="invoice_booking" style="border: 1px solid #ddd; padding: 20px; background-color: #f9f9f9;">
@@ -33,7 +33,7 @@
                 <div class="col-sm-4 invoice-col" style="font-size: 14px;">
                     Đến
                     <address>
-                        <strong>Công ty Travela</strong><br>
+                        <strong>Công ty HAT</strong><br>
                         470 Trần Đại Nghĩa<br>
                         Ngũ Hành Sơn, Đà Nẵng<br>
                         Phone: 1 (804) 123-9876<br>

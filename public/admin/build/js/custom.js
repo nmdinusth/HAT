@@ -1007,7 +1007,7 @@ function init_autocomplete() {
         CF: "Central African Republic",
         CG: "Congo - Brazzaville",
         CH: "Switzerland",
-        CI: "Côte d’Ivoire",
+        CI: "Côte d'Ivoire",
         CK: "Cook Islands",
         CL: "Chile",
         CM: "Cameroon",
@@ -2368,7 +2368,7 @@ function init_SmartWizard() {
     if ($("#myDropzone").length) {
         // Khởi tạo Dropzone cho bước 2
         var myDropzone = new Dropzone("#myDropzone", {
-            url: "http://travela:8000/admin/add-images-tours",
+            url: "http://HAT:8000/admin/add-images-tours",
             paramName: "image",
             maxFilesize: 5,
             acceptedFiles: "image/*",
