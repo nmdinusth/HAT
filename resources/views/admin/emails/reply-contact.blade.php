@@ -31,7 +31,7 @@
 </head>
 <body>
     <div class="email-content">
-        <h1>Phản hồi từ Quản trị viên Website Travela</h1>
+        <h1>Phản hồi từ Quản trị viên Website HAT</h1>
         <p class="message">
             {!! $messageContent !!}
         </p>

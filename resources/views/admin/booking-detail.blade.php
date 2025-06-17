@@ -57,7 +57,7 @@
                                             <div class="col-sm-4 invoice-col">
                                                 Đến
                                                 <address>
-                                                    <strong>Công ty Travela</strong>
+                                                    <strong>Công ty HAT</strong>
                                                     <br>470 Trần Đại Nghĩa
                                                     <br>Ngũ Hành Sơn, Đà Nẵng
                                                     <br>Phone: 1 (804) 123-9876

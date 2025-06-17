@@ -11,7 +11,7 @@
             <div class="col-lg-12">
                 <div class="section-title text-white text-center counter-text-wrap mb-70" data-aos="fade-up"
                     data-aos-duration="1500" data-aos-offset="50">
-                    <h2>Khám phá kho báu việt nam cùng Travela</h2>
+                    <h2>Khám phá kho báu việt nam cùng HAT</h2>
                     <p>Website<span class="count-text plus" data-speed="3000" data-stop="24080">0</span>
                         phổ biến nhất mà bạn sẽ nhớ</p>
                 </div>

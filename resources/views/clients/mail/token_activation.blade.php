@@ -17,7 +17,7 @@
         <p class="text-gray-600 mb-4">Xin chào <strong>{{ $user->name ?? 'bạn' }}</strong>,</p>
 
         <p class="text-gray-600 mb-4">
-            Cảm ơn bạn đã đăng ký tài khoản tại <strong>Travela</strong>. Vui lòng nhấn vào nút bên dưới để kích hoạt tài khoản của bạn.
+            Cảm ơn bạn đã đăng ký tài khoản tại <strong>HAT</strong>. Vui lòng nhấn vào nút bên dưới để kích hoạt tài khoản của bạn.
         </p>
 
         <div class="text-center my-6">
@@ -36,7 +36,7 @@
 
         <p class="text-sm text-gray-500 mt-6">
             Trân trọng,<br>
-            Đội ngũ Travela
+            Đội ngũ HAT
         </p>
     </div>
 </body>
