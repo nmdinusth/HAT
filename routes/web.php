@@ -199,3 +199,5 @@ Route::get('/airplane-seat-select', [AirplaneSeatController::class, 'index'])->n
 
 Route::get('/airplane-payment', [AirplanePaymentController::class, 'index'])->name('airplane-payment');
 Route::post('/airplane-payment/process', [AirplanePaymentController::class, 'process'])->name('airplane-payment.process');
+
+Route::get('/booking/transport', [App\Http\Controllers\Client\TransportController::class, 'bookingForm'])->name('booking.transport');
