@@ -185,7 +185,7 @@ Route::get('/db-check', function () {
     }
 });
 
-Route::get('/transport', [TransportController::class, 'index'])->name('transport');
+//Airplane Booking
 Route::get('/airplane', [AirplaneController::class, 'index'])->name('airplane');
 Route::post('/airplane-booking', [AirplaneController::class, 'createBooking'])->name('airplane-booking');
 Route::get('/airplane-booking', [AirplaneBookingController::class, 'showBookingForm'])->name('airplane-booking.form');
@@ -200,4 +200,7 @@ Route::get('/airplane-seat-select', [AirplaneSeatController::class, 'index'])->n
 Route::get('/airplane-payment', [AirplanePaymentController::class, 'index'])->name('airplane-payment');
 Route::post('/airplane-payment/process', [AirplanePaymentController::class, 'process'])->name('airplane-payment.process');
 
+
+//Transport Booking
+Route::get('/transport', [TransportController::class, 'index'])->name('transport');
 Route::get('/booking/transport', [App\Http\Controllers\Client\TransportController::class, 'bookingForm'])->name('booking.transport');
