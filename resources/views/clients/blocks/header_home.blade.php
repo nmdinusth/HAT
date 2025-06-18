@@ -45,6 +45,18 @@
     <link rel="stylesheet" href="{{ asset('clients/assets/css/custom-css.css') }}" />
     <!-- Import CSS for Toastr -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <style>
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1050;
+        }
+        .header-spacer {
+            height: 150px; /* Điều chỉnh đúng chiều cao header thực tế nếu khác */
+        }
+    </style>
 </head>
 
 <body>
