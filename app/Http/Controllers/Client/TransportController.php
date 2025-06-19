@@ -16,6 +16,6 @@ class TransportController extends Controller
     public function bookingForm()
     {
         $title = 'Booking Transport';
-        return view('clients.partials.Transport_booking.booking_transport', compact('title'));
+        return view('clients.partials.Transport_booking.transport_booking', compact('title'));
     }
 } 
