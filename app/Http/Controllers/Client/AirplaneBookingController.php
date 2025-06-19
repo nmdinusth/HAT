@@ -11,6 +11,6 @@ class AirplaneBookingController extends Controller
     {
         $type = $request->query('type', 'domestic');
         $title = 'Đặt vé máy bay';
-        return view('clients.airplane-booking', compact('type', 'title'));
+        return view('clients.partials.Airplane_booking.airplane-booking', compact('type', 'title'));
     }
 } 

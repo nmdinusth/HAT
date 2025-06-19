@@ -20,7 +20,7 @@ class AirplanePaymentController extends Controller
         $total_price = $request->query('total_price');
         $title = 'Thanh toán vé máy bay';
 
-        return view('clients.airplane-payment', compact(
+        return view('clients.partials.Airplane_booking.airplane-payment', compact(
             'from',
             'to', 
             'depart',
