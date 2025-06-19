@@ -191,7 +191,7 @@ Route::post('/airplane-booking', [AirplaneController::class, 'createBooking'])->
 Route::get('/airplane-booking', [AirplaneBookingController::class, 'showBookingForm'])->name('airplane-booking.form');
 Route::get('/airplane-booking/success', function() 
 {
-    return view('clients.airplane-booking-success');
+    return view('clients.partials.Airplane_booking.airplane-booking-success');
 })->name('airplane-booking.success');
 
 Route::get('/airplane-flights', [AirplaneFlightController::class, 'index'])->name('airplane-flights');

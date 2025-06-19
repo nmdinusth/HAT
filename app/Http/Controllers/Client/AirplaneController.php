@@ -66,7 +66,7 @@ class AirplaneController extends Controller
 
     public function index()
     {
-        return view('clients.airplane', [
+        return view('clients.partials.Airplane_booking.airplane', [
             'title' => 'Dịch vụ hàng không'
         ]);
     }

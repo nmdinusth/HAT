@@ -50,6 +50,6 @@ class AirplaneFlightController extends Controller
         ];
 
         $title = 'Danh Sách Chuyến Bay';
-        return view('clients.airplane-flights', compact('flights', 'from', 'to', 'depart', 'return', 'passenger', 'title'));
+        return view('clients.partials.Airplane_booking.airplane-flights', compact('flights', 'from', 'to', 'depart', 'return', 'passenger', 'title'));
     }
 }

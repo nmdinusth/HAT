@@ -10,13 +10,13 @@
                 <div class="contact-info-content mb-30 rmb-55" data-aos="fade-up" data-aos-duration="1500"
                     data-aos-offset="50">
                     <div class="section-title mb-30">
-                        <h2>Hãy nói chuyện với các hướng dẫn viên du lịch chuyên nghiệp của chúng tôi</h2>
+                        <h2>Hãy nói chuyện với các chuyên viên của chúng tôi</h2>
                     </div>
                     <p>Đội ngũ hỗ trợ tận tâm của chúng tôi luôn sẵn sàng hỗ trợ bạn giải đáp mọi thắc mắc hoặc vấn đề,
                         cung cấp
                         các giải pháp nhanh chóng và được cá nhân hóa để đáp ứng nhu cầu của bạn.</p>
                     <div class="features-team-box mt-40">
-                        <h6>85+ Thành viên nhóm chuyên gia</h6>
+                        <h6>10+ Thành viên nhóm chuyên gia</h6>
                         <div class="feature-authors">
                             <img src="{{ asset('clients/assets/images/features/feature-author1.jpg') }}" alt="Author">
                             <img src="{{ asset('clients/assets/images/features/feature-author2.jpg') }}" alt="Author">

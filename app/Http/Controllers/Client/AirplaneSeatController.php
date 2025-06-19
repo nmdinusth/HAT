@@ -24,6 +24,6 @@ class AirplaneSeatController extends Controller
         ];
 
         $title = 'Chọn Ghế Máy Bay';
-        return view('clients.airplane-seat-select', compact('from', 'to', 'depart', 'return', 'passenger', 'flight_code', 'type', 'seat_prices', 'title'));
+        return view('clients.partials.Airplane_booking.airplane-seat-select', compact('from', 'to', 'depart', 'return', 'passenger', 'flight_code', 'type', 'seat_prices', 'title'));
     }
 }
