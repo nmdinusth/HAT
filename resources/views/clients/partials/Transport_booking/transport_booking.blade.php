@@ -141,7 +141,7 @@
                         </div>
                     </div>
 
-                    <button class="btn btn-warning w-100">Tìm chuyến xe</button>
+                    <button id="find-trip-btn" class="btn btn-warning w-100">Tìm chuyến xe</button>
                 </div>
             </div>
 
@@ -157,6 +157,7 @@
     </div>
 
     @include('clients.partials.Transport_booking.transport_bookinginfo')
+    @include('clients.partials.Transport_booking.transport_booking_confirmation')
 </div>
 
 <!-- Flatpickr CSS -->
@@ -412,6 +413,47 @@ document.getElementById('search-results-list').addEventListener('click', functio
     const steps = document.querySelectorAll('.step');
     steps[0].classList.remove('active');
     steps[1].classList.add('active');
+});
+
+document.getElementById('btn-step2-next').addEventListener('click', function() {
+    // 1. Get data from Step 1 (selected trip)
+    const tripDetailsHTML = document.getElementById('summary-trip-details').innerHTML;
+    const tripPrice = document.getElementById('summary-trip-price').textContent;
+    const pickupTime = document.getElementById('airport-dropoff-time').value || document.getElementById('airport-pickup-time').value;
+
+    // 2. Get data from Step 2 (contact info)
+    const salutation = document.getElementById('contact-salutation').value;
+    const contactName = document.getElementById('contact-name').value;
+    const contactAddress = document.getElementById('contact-address').value;
+    const phoneCode = document.getElementById('contact-phone-code').value;
+    const phoneNumber = document.getElementById('contact-phone').value;
+    const contactEmail = document.getElementById('contact-email').value;
+    const contactNotes = document.getElementById('contact-notes').value;
+
+    // 3. Populate Step 3 (confirmation)
+    document.getElementById('confirm-car-type').innerHTML = tripDetailsHTML;
+    document.getElementById('confirm-total-price').textContent = tripPrice;
+    
+    document.getElementById('confirm-contact-name').textContent = `${salutation} ${contactName}`;
+    document.getElementById('confirm-contact-phone').textContent = `${phoneCode} ${phoneNumber}`;
+    document.getElementById('confirm-contact-email').textContent = contactEmail;
+    document.getElementById('confirm-contact-address').textContent = contactAddress;
+    document.getElementById('confirm-contact-notes').textContent = contactNotes;
+    document.getElementById('confirm-notes-details').value = contactNotes;
+
+    // Populate summary on the right
+    document.getElementById('summary-pickup-time-step3').textContent = pickupTime;
+    document.getElementById('summary-trip-details-step3').innerHTML = tripDetailsHTML;
+    document.getElementById('summary-trip-price-step3').textContent = tripPrice;
+
+    // 4. Hide Step 2 and Show Step 3
+    document.querySelector('.booking-step.step-2').classList.add('d-none');
+    document.querySelector('.booking-step.step-3').classList.remove('d-none');
+
+    // 5. Update stepper
+    const steps = document.querySelectorAll('.step');
+    steps[1].classList.remove('active');
+    steps[2].classList.add('active');
 });
 </script>
 
