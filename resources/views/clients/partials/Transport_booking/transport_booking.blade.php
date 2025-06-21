@@ -38,7 +38,7 @@
                                         <div class="mt-3">
                                             <div class="mb-3">
                                                 <label class="form-label fw-bold">Giờ đón khách tại điểm đón <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" placeholder="HH:MM | D/MM/YYYY">
+                                                <input type="text" id="airport-dropoff-time" class="form-control" placeholder="Chọn ngày và giờ">
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label fw-bold">Điểm đón khách <span class="text-danger">*</span></label>
@@ -65,7 +65,7 @@
                                         <div class="mt-3">
                                             <div class="mb-3">
                                                 <label class="form-label fw-bold">Giờ đón khách tại sân bay <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" placeholder="HH:MM | D/MM/YYYY" disabled>
+                                                <input type="text" id="airport-pickup-time" class="form-control" placeholder="Chọn ngày và giờ" disabled>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label fw-bold">Điểm trả khách <span class="text-danger">*</span></label>
@@ -89,7 +89,7 @@
                         <div class="p-3 bg-light rounded">
                             <div class="mb-3">
                                 <label class="form-label fw-bold">Giờ đón khách <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" placeholder="HHMM | D/MM/YYYY">
+                                <input type="text" id="fixedpoint-time" class="form-control" placeholder="Chọn ngày và giờ">
                             </div>
 
                             <div class="mb-3">
@@ -131,9 +131,9 @@
                     <div class="mb-3 mt-3">
                         <label class="form-label">Loại xe <span class="text-danger">*</span></label>
                         <select class="form-select">
-                            <option value="">Sedan (Standard)</option>
-                            <option value="">SUV</option>
-                            <option value="">Minivan</option>
+                            <option value="">5 seats (Standard)</option>
+                            <option value="">7 seats</option>
+                            <option value="">10 seats</option>
                         </select>
                         <div class="mt-2">
                             <span class="me-3"><i class="fas fa-user-friends"></i> 3</span>
@@ -148,15 +148,20 @@
             <div class="col-md-4">
                 <div class="card p-3">
                     <div class="fw-bold mb-2">Kết quả tìm kiếm</div>
-                    <div class="border-bottom py-2 d-flex justify-content-between align-items-center">
-                        <span><span class="badge bg-warning text-dark">Logo hãng</span> Xanh Plus</span>
-                        <span class="text-warning fw-bold">300.000</span>
+                    <div id="search-results-list">
+                        <!-- Search results will appear here -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    @include('clients.partials.Transport_booking.transport_bookinginfo')
 </div>
+
+<!-- Flatpickr CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/airbnb.css">
 
 <style>
 .step {
@@ -304,6 +309,7 @@
 }
 </style>
 
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
 document.querySelectorAll('.btn-toggle').forEach(btn => {
     btn.addEventListener('click', function() {
@@ -337,6 +343,76 @@ function toggleCardFields() {
 document.getElementById('airport-dropoff').addEventListener('change', toggleCardFields);
 document.getElementById('airport-pickup').addEventListener('change', toggleCardFields);
 toggleCardFields();
+
+flatpickr("#airport-dropoff-time", {
+    enableTime: true,
+    dateFormat: "d/m/Y, H:i",
+});
+flatpickr("#airport-pickup-time", {
+    enableTime: true,
+    dateFormat: "d/m/Y, H:i",
+});
+flatpickr("#fixedpoint-time", {
+    enableTime: true,
+    dateFormat: "d/m/Y, H:i",
+});
+
+document.getElementById('find-trip-btn').addEventListener('click', function(e) {
+    e.preventDefault(); // Prevent form submission
+
+    // Mock search results
+    const results = [
+        { name: 'Xanh Plus', price: '300.000', logo: 'Logo hãng', logoBg: 'bg-warning text-dark' },
+        { name: 'GrabCar 7 chỗ', price: '450.000', logo: 'Logo Grab', logoBg: 'bg-success text-white' }
+    ];
+
+    const resultsContainer = document.getElementById('search-results-list');
+    resultsContainer.innerHTML = ''; // Clear previous results
+
+    results.forEach(result => {
+        const resultEl = document.createElement('div');
+        resultEl.className = 'border-bottom py-2 d-flex justify-content-between align-items-center trip-option';
+        resultEl.style.cursor = 'pointer';
+        resultEl.dataset.name = result.name;
+        resultEl.dataset.price = result.price;
+        resultEl.dataset.logo = result.logo;
+        resultEl.dataset.logobg = result.logoBg;
+
+        resultEl.innerHTML = `
+            <span><span class="badge ${result.logoBg} me-2">${result.logo}</span> ${result.name}</span>
+            <span class="text-warning fw-bold">${result.price}</span>
+        `;
+        resultsContainer.appendChild(resultEl);
+    });
+});
+
+document.getElementById('search-results-list').addEventListener('click', function(e) {
+    const selectedTrip = e.target.closest('.trip-option');
+    if (!selectedTrip) return;
+
+    const name = selectedTrip.dataset.name;
+    const price = selectedTrip.dataset.price;
+    const logo = selectedTrip.dataset.logo;
+    const logoBg = selectedTrip.dataset.logobg;
+
+    // Update summary in step 2
+    const summaryDetails = document.getElementById('summary-trip-details');
+    const summaryPrice = document.getElementById('summary-trip-price');
+    
+    if (summaryDetails && summaryPrice) {
+        summaryDetails.innerHTML = `<span class="badge ${logoBg} me-2">${logo}</span>${name}<br><small class="ms-5 ps-1">Trọn gói</small>`;
+        summaryPrice.textContent = price;
+    }
+
+    // Hide step 1 and show step 2
+    document.querySelector('.booking-step.step-1').classList.add('d-none');
+    document.querySelector('.booking-step.step-2').classList.remove('d-none');
+
+    // Update stepper
+    const steps = document.querySelectorAll('.step');
+    steps[0].classList.remove('active');
+    steps[1].classList.add('active');
+});
 </script>
 
 @include('clients.blocks.footer')
