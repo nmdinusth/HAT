@@ -8,7 +8,7 @@
                 <div class="row">
                     <div class="col-md-4 mb-3">
                         <label class="form-label">Danh xưng <span class="text-danger">*</span></label>
-                        <select class="form-select">
+                        <select id="contact-salutation" class="form-select">
                             <option>Chọn</option>
                             <option>Ông</option>
                             <option>Bà</option>
@@ -16,34 +16,34 @@
                     </div>
                     <div class="col-md-8 mb-3">
                         <label class="form-label">Tên liên hệ <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" placeholder="HỌ VÀ TÊN">
+                        <input type="text" id="contact-name" class="form-control" placeholder="HỌ VÀ TÊN">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 mb-3">
                         <label class="form-label">Địa chỉ</label>
-                        <input type="text" class="form-control" placeholder="Địa chỉ">
+                        <input type="text" id="contact-address" class="form-control" placeholder="Địa chỉ">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Số điện thoại <span class="text-danger">*</span></label>
                         <div class="input-group">
-                            <select class="form-select flex-grow-0" style="width: 100px;">
+                            <select id="contact-phone-code" class="form-select flex-grow-0" style="width: 100px;">
                                 <option>+84</option>
                                 <option>+1</option>
                             </select>
-                            <input type="text" class="form-control" placeholder="Số điện thoại">
+                            <input type="text" id="contact-phone" class="form-control" placeholder="Số điện thoại">
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">E-mail</label>
-                        <input type="email" class="form-control" placeholder="E-mail">
+                        <input type="email" id="contact-email" class="form-control" placeholder="E-mail">
                     </div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Ghi chú</label>
-                    <textarea class="form-control" rows="3" placeholder="Ghi chú"></textarea>
+                    <textarea id="contact-notes" class="form-control" rows="3" placeholder="Ghi chú"></textarea>
                 </div>
             </div>
 
@@ -142,7 +142,7 @@
                 </div>
             </div>
 
-            <button class="btn btn-warning w-100">Tiếp theo</button>
+            <button id="btn-step2-next" class="btn btn-warning w-100">Tiếp theo</button>
         </div>
 
         <div class="col-md-4">
