@@ -8,7 +8,8 @@
                 <div class="row">
                     <div class="col-md-4 mb-3">
                         <label class="form-label">Danh xưng <span class="text-danger">*</span></label>
-                        <select id="contact-salutation" class="form-select">
+                        <select id="contact-salutation" name="contact_salutation" required
+                            class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
                             <option>Chọn</option>
                             <option>Ông</option>
                             <option>Bà</option>
@@ -20,21 +21,9 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12 mb-3">
-                        <label class="form-label">Địa chỉ</label>
-                        <input type="text" id="contact-address" class="form-control" placeholder="Địa chỉ">
-                    </div>
-                </div>
-                <div class="row">
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Số điện thoại <span class="text-danger">*</span></label>
-                        <div class="input-group">
-                            <select id="contact-phone-code" class="form-select flex-grow-0" style="width: 100px;">
-                                <option>+84</option>
-                                <option>+1</option>
-                            </select>
-                            <input type="text" id="contact-phone" class="form-control" placeholder="Số điện thoại">
-                        </div>
+                        <input type="text" id="contact-phone" class="form-control" placeholder="Số điện thoại">
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">E-mail</label>
@@ -44,66 +33,6 @@
                 <div class="mb-3">
                     <label class="form-label">Ghi chú</label>
                     <textarea id="contact-notes" class="form-control" rows="3" placeholder="Ghi chú"></textarea>
-                </div>
-            </div>
-
-            <!-- Billing Information -->
-            <div class="card mb-3">
-                <div class="card-header bg-white p-3" data-bs-toggle="collapse" href="#billingInfo" role="button" aria-expanded="true" aria-controls="billingInfo">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="fw-bold mb-0">Thông tin xuất hóa đơn</h5>
-                        <i class="fa fa-chevron-up"></i>
-                    </div>
-                </div>
-                <div class="collapse show" id="billingInfo">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <label class="form-label">Tên doanh nghiệp</label>
-                                <input type="text" class="form-control" placeholder="Tên doanh nghiệp">
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label class="form-label">Mã số thuế</label>
-                                <input type="text" class="form-control" placeholder="Mã số thuế">
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label class="form-label">Số điện thoại</label>
-                                <div class="input-group">
-                                    <select class="form-select flex-grow-0" style="width: 100px;">
-                                        <option>+84</option>
-                                    </select>
-                                    <input type="text" class="form-control" placeholder="Số điện thoại">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Địa chỉ</label>
-                            <input type="text" class="form-control" placeholder="Địa chỉ">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Mã bưu điện</label>
-                            <input type="text" class="form-control" placeholder="Mã bưu điện">
-                        </div>
-                        <div class="row">
-                           <div class="col-md-8 mb-3">
-                                <label class="form-label">Tên người nhận</label>
-                                <input type="text" class="form-control" placeholder="HỌ VÀ TÊN">
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label class="form-label">Số điện thoại</label>
-                                <div class="input-group">
-                                    <select class="form-select flex-grow-0" style="width: 100px;">
-                                        <option>+84</option>
-                                    </select>
-                                    <input type="text" class="form-control" placeholder="Số điện thoại">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Địa chỉ</label>
-                            <input type="text" class="form-control" placeholder="Địa chỉ">
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -120,7 +49,8 @@
                         <div class="row">
                             <div class="col-md-12 mb-3">
                                 <label class="form-label">Người đặt <span class="text-danger">*</span></label>
-                                <select class="form-select">
+                                <select name="contact_type" required
+                                    class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
                                     <option>Tên người - tên tài khoản</option>
                                 </select>
                             </div>
@@ -142,32 +72,78 @@
                 </div>
             </div>
 
-            <button id="btn-step2-next" class="btn btn-warning w-100">Tiếp theo</button>
+            <button id="btn-step2-next" class="btn btn-warning w-100">Cập nhật</button>
         </div>
 
         <div class="col-md-4">
-            <div class="card p-3">
-                <div class="mb-3">
-                    <h6 class="fw-bold">Đưa khách đến sân bay</h6>
-                    <div class="text-muted small">Sân bay <span class="text-danger">*</span></div>
-                    <div class="p-2 bg-light rounded mt-1">Cảng hàng không Quốc tế Nội Bài</div>
-                </div>
-                <div class="mb-3">
-                    <h6 class="fw-bold">Giờ đón khách tại điểm đón <span class="text-danger">*</span></h6>
-                    <div class="p-2 bg-light rounded mt-1">15:30 15/11/2025</div>
-                </div>
-                 <div class="mb-3">
-                    <h6 class="fw-bold">Điểm đón khách <span class="text-danger">*</span></h6>
-                    <div class="p-2 bg-light rounded mt-1">
-                        <div class="fw-bold">Highlands Nguyễn Hoàng</div>
-                        <div class="text-muted small">Số 6, đường Nguyễn Hoàng, Phường Mỹ Đình 2, quận Nam Từ Liêm, Tp. Hà Nội</div>
+            <!-- Summary cho Đưa đón sân bay -->
+            <div id="summary-airport" style="display:none">
+                <div class="card p-3">
+                    <div class="mb-3">
+                        <h6 class="fw-bold">Đưa khách đến sân bay</h6>
+                        <div class="text-muted small">Sân bay <span class="text-danger">*</span></div>
+                        <div class="p-2 bg-light rounded mt-1 summary-airport"></div>
+                    </div>
+                    <div class="mb-3">
+                        <h6 class="fw-bold">Giờ đón khách tại điểm đón <span class="text-danger">*</span></h6>
+                        <div class="p-2 bg-light rounded mt-1 summary-pickup-time"></div>
+                    </div>
+                    <div class="mb-3">
+                        <h6 class="fw-bold">Điểm đón khách <span class="text-danger">*</span></h6>
+                        <div class="p-2 bg-light rounded mt-1">
+                            <div class="fw-bold summary-pickup-point"></div>
+                        </div>
+                    </div>
+                    <h6 class="fw-bold">Xe đưa đón</h6>
+                    <div class="py-2 d-flex justify-content-between align-items-center">
+                        <span class="summary-car-type"></span>
+                        <span class="summary-car-price text-warning fw-bold"></span>
                     </div>
                 </div>
-                <div class="border-top pt-3">
+            </div>
+            <!-- Summary cho Đưa đón điểm cố định -->
+            <div id="summary-fixedpoint" style="display:none">
+                <div class="card p-3">
+                    <div class="mb-3">
+                        <h6 class="fw-bold">Đưa đón điểm cố định</h6>
+                        <div class="text-muted small">Điểm xuất phát <span class="text-danger">*</span></div>
+                        <div class="p-2 bg-light rounded mt-1 summary-fixedpoint-start"></div>
+                    </div>
+                    <div class="mb-3">
+                        <h6 class="fw-bold">Giờ đón khách <span class="text-danger">*</span></h6>
+                        <div class="p-2 bg-light rounded mt-1 summary-fixedpoint-time"></div>
+                    </div>
+                    <div class="mb-3">
+                        <h6 class="fw-bold">Điểm kết thúc <span class="text-danger">*</span></h6>
+                        <div class="p-2 bg-light rounded mt-1 summary-fixedpoint-end"></div>
+                    </div>
                     <h6 class="fw-bold">Xe đưa đón</h6>
-                     <div class="py-2 d-flex justify-content-between align-items-center">
-                        <span id="summary-trip-details"></span>
-                        <span id="summary-trip-price" class="text-warning fw-bold"></span>
+                    <div class="py-2 d-flex justify-content-between align-items-center">
+                        <span class="summary-fixedpoint-car-type"></span>
+                        <span class="summary-fixedpoint-car-price text-warning fw-bold"></span>
+                    </div>
+                </div>
+            </div>
+            <!-- Summary cho Trả khách từ sân bay -->
+            <div id="summary-airport-return" style="display:none">
+                <div class="card p-3">
+                    <div class="mb-3">
+                        <h6 class="fw-bold">Trả khách từ sân bay</h6>
+                        <div class="text-muted small">Sân bay <span class="text-danger">*</span></div>
+                        <div class="p-2 bg-light rounded mt-1 summary-airport-return"></div>
+                    </div>
+                    <div class="mb-3">
+                        <h6 class="fw-bold">Giờ đón khách tại sân bay <span class="text-danger">*</span></h6>
+                        <div class="p-2 bg-light rounded mt-1 summary-pickup-time-return"></div>
+                    </div>
+                    <div class="mb-3">
+                        <h6 class="fw-bold">Điểm trả khách <span class="text-danger">*</span></h6>
+                        <div class="p-2 bg-light rounded mt-1 summary-dropoff-point-return"></div>
+                    </div>
+                    <h6 class="fw-bold">Xe đưa đón</h6>
+                    <div class="py-2 d-flex justify-content-between align-items-center">
+                        <span class="summary-car-type-return"></span>
+                        <span class="summary-car-price-return text-warning fw-bold"></span>
                     </div>
                 </div>
             </div>
