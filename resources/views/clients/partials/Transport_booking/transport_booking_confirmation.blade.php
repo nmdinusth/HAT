@@ -6,13 +6,11 @@
                 <div class="row">
                     <div class="col-md-6">
                         <h5 class="fw-bold mb-3">Thông tin đặt xe</h5>
-                        <p class="mb-1 text-muted" id="confirm-trip-type">Đưa khách đến sân bay</p>
+                        <p class="mb-1 text-muted" id="confirm-trip-type"></p>
                         <p class="mb-1"><span class="fw-bold">Điểm đón khách:</span></p>
-                        <p class="text-muted ms-3" id="confirm-pickup-address">#1 Highlands Nguyễn Hoàng<br>Số 6, đường Nguyễn Hoàng, phường Mỹ Đình 2, quận Nam Từ Liêm, Tp. Hà Nội</p>
+                        <p class="text-muted ms-3" id="confirm-pickup-address"></p>
                         <p class="mb-1"><span class="fw-bold">Loại xe:</span></p>
-                        <div id="confirm-car-type" class="d-flex align-items-center ms-3">
-                            <!-- Populated by JS -->
-                        </div>
+                        <div id="confirm-car-type" class="d-flex align-items-center ms-3"></div>
                     </div>
                     <div class="col-md-6">
                         <h5 class="fw-bold mb-3">Thông tin liên hệ</h5>
@@ -45,31 +43,7 @@
         </div>
 
         <div class="col-md-4">
-            <div class="card p-3">
-                <div class="mb-3">
-                    <h6 class="fw-bold" id="summary-title-step3">Đưa khách đến sân bay</h6>
-                    <div class="text-muted small">Sân bay <span class="text-danger">*</span></div>
-                    <div class="p-2 bg-light rounded mt-1">Cảng hàng không Quốc tế Nội Bài</div>
-                </div>
-                <div class="mb-3">
-                    <h6 class="fw-bold">Giờ đón khách tại điểm đón <span class="text-danger">*</span></h6>
-                    <div class="p-2 bg-light rounded mt-1" id="summary-pickup-time-step3"></div>
-                </div>
-                 <div class="mb-3">
-                    <h6 class="fw-bold">Điểm đón khách <span class="text-danger">*</span></h6>
-                    <div class="p-2 bg-light rounded mt-1">
-                        <div class="fw-bold" id="summary-pickup-point-step3">Highlands Nguyễn Hoàng</div>
-                        <div class="text-muted small" id="summary-pickup-address-step3">Số 6, đường Nguyễn Hoàng, Phường Mỹ Đình 2, quận Nam Từ Liêm, Tp. Hà Nội</div>
-                    </div>
-                </div>
-                <div class="border-top pt-3">
-                    <h6 class="fw-bold">Xe đưa đón</h6>
-                     <div class="py-2 d-flex justify-content-between align-items-center">
-                        <span id="summary-trip-details-step3"></span>
-                        <span id="summary-trip-price-step3" class="text-warning fw-bold"></span>
-                    </div>
-                </div>
-            </div>
+            @include('clients.partials.Transport_booking.transport_booking_summary')
         </div>
     </div>
 </div> 

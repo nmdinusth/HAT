@@ -90,21 +90,13 @@
                                 <label class="form-label fw-bold">Giờ đón khách <span class="text-danger">*</span></label>
                                 <input type="text" id="fixedpoint-time" class="form-control" placeholder="Chọn ngày và giờ">
                             </div>
-
                             <div class="mb-3">
                                 <label class="form-label fw-bold">Điểm xuất phát <span class="text-danger">*</span></label>
-                                <div class="p-2 bg-white border rounded">
-                                    <div class="fw-bold">Highlands Nguyễn Hoàng</div>
-                                    <div class="small">Số 6, đường Nguyễn Hoàng, phường Mỹ Đình 2, quận Nam Từ Liêm, Tp. Hà Nội</div>
-                                </div>
+                                <input type="text" id="fixedpoint-start" name="fixedpoint_start" class="form-control" placeholder="Nhập địa chỉ điểm xuất phát" required>
                             </div>
-
                             <div class="mb-3">
                                 <label class="form-label fw-bold">Điểm kết thúc <span class="text-danger">*</span></label>
-                                <div class="p-2 bg-white border rounded">
-                                    <div class="fw-bold">Highlands Nguyễn Hoàng</div>
-                                    <div class="small">Số 6, đường Nguyễn Hoàng, Nam Từ Liêm, Tp. Hà Nội</div>
-                                </div>
+                                <input type="text" id="fixedpoint-end" name="fixedpoint_end" class="form-control" placeholder="Nhập địa chỉ điểm kết thúc" required>
                             </div>
                         </div>
                     </div>
@@ -122,9 +114,9 @@
                         <label class="form-label">Loại xe <span class="text-danger">*</span></label>
                         <select name="car_type" required
                             class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
-                            <option value="">5 seats (Standard)</option>
-                            <option value="">7 seats</option>
-                            <option value="">10 seats</option>
+                            <option value="5">5 seats (Standard)</option>
+                            <option value="7">7 seats</option>
+                            <option value="10">10 seats</option>
                         </select>
                         <div class="mt-2">
                             <span class="me-3"><i class="fas fa-user-friends"></i> 3</span>
@@ -429,6 +421,8 @@ document.getElementById('find-trip-btn').addEventListener('click', function(e) {
         `;
         resultsContainer.appendChild(resultEl);
     });
+
+    
 });
 
 document.getElementById('search-results-list').addEventListener('click', function(e) {
@@ -462,70 +456,96 @@ document.getElementById('search-results-list').addEventListener('click', functio
     updateStep2Summary();
 });
 
-document.getElementById('btn-step2-next').addEventListener('click', function() {
-    // 1. Get data from Step 1 (selected trip)
-    const tripDetailsHTML = document.getElementById('summary-trip-details').innerHTML;
-    const tripPrice = document.getElementById('summary-trip-price').textContent;
-    const pickupTime = document.getElementById('airport-dropoff-time').value || document.getElementById('airport-pickup-time').value;
-
-    // 2. Get data from Step 2 (contact info)
-    const salutation = document.getElementById('contact-salutation').value;
-    const contactName = document.getElementById('contact-name').value;
-    const contactAddress = document.getElementById('contact-address').value;
-    const phoneCode = document.getElementById('contact-phone-code').value;
-    const phoneNumber = document.getElementById('contact-phone').value;
-    const contactEmail = document.getElementById('contact-email').value;
-    const contactNotes = document.getElementById('contact-notes').value;
-
-    // 3. Populate Step 3 (confirmation)
-    document.getElementById('confirm-car-type').innerHTML = tripDetailsHTML;
-    document.getElementById('confirm-total-price').textContent = tripPrice;
-    
-    document.getElementById('confirm-contact-name').textContent = `${salutation} ${contactName}`;
-    document.getElementById('confirm-contact-phone').textContent = `${phoneCode} ${phoneNumber}`;
-    document.getElementById('confirm-contact-email').textContent = contactEmail;
-    document.getElementById('confirm-contact-address').textContent = contactAddress;
-    document.getElementById('confirm-contact-notes').textContent = contactNotes;
-    document.getElementById('confirm-notes-details').value = contactNotes;
-
-    // Populate summary on the right
-    document.getElementById('summary-pickup-time-step3').textContent = pickupTime;
-    document.getElementById('summary-trip-details-step3').innerHTML = tripDetailsHTML;
-    document.getElementById('summary-trip-price-step3').textContent = tripPrice;
-
-    // 4. Hide Step 2 and Show Step 3
-    document.querySelector('.booking-step.step-2').classList.add('d-none');
-    document.querySelector('.booking-step.step-3').classList.remove('d-none');
-
-    // 5. Update stepper
-    const steps = document.querySelectorAll('.step');
-    steps[1].classList.remove('active');
-    steps[2].classList.add('active');
+// Thêm sự kiện click cho stepper
+function goToStep(step) {
+    // Ẩn tất cả các bước
+    document.querySelectorAll('.booking-step').forEach(function(el) {
+        el.classList.add('d-none');
+    });
+    // Hiện bước được chọn
+    var stepDiv = document.querySelector('.booking-step.step-' + step);
+    if (stepDiv) stepDiv.classList.remove('d-none');
+    // Cập nhật trạng thái stepper
+    document.querySelectorAll('.step').forEach(function(el, idx) {
+        if (idx === step - 1) el.classList.add('active');
+        else el.classList.remove('active');
+    });
+    // Nếu là bước 3 thì cập nhật dữ liệu động
+    if (step === 3) fillConfirmationStep();
+}
+document.querySelectorAll('.step').forEach(function(el) {
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', function() {
+        var step = parseInt(this.getAttribute('data-step'));
+        goToStep(step);
+    });
 });
 
+// --- BỔ SUNG: TỰ ĐỘNG ĐỔ DỮ LIỆU SANG BƯỚC 3 ---
+function fillConfirmationStep() {
+    // Lấy loại chuyến
+    let tripType = '';
+    let pickupAddress = '';
+    let carType = '';
+    let totalPrice = '';
+    let airportSelect = document.getElementById('form-for-select');
+    let carTypeSelect = document.querySelector('select[name="car_type"]');
+    let isAirport = document.getElementById('airport-section') && !document.getElementById('airport-section').classList.contains('d-none');
+    let isFixedPoint = document.getElementById('fixedpoint-section') && !document.getElementById('fixedpoint-section').classList.contains('d-none');
+    let isDropoff = document.getElementById('airport-dropoff').checked;
+    // Loại chuyến
+    if (isAirport) {
+        if (isDropoff) {
+            tripType = 'Đưa khách đến sân bay';
+            pickupAddress = document.querySelector('input[name="airport_pickup"]').value;
+        } else {
+            tripType = 'Trả khách từ sân bay';
+            pickupAddress = document.querySelector('input[name="airport_dropoff"]').value;
+        }
+    } else if (isFixedPoint) {
+        tripType = 'Đưa đón điểm cố định';
+        pickupAddress = document.querySelector('input[name="fixedpoint_start"]').value + ' → ' + document.querySelector('input[name="fixedpoint_end"]').value;
+    }
+    // Loại xe
+    if (carTypeSelect) {
+        carType = carTypeSelect.options[carTypeSelect.selectedIndex].text;
+    }
+    // Tổng tiền
+    let priceEl = document.getElementById('summary-trip-price');
+    if (priceEl) totalPrice = priceEl.textContent;
+    // Thông tin liên hệ
+    let contactName = document.getElementById('contact-name').value;
+    let contactPhone = document.getElementById('contact-phone').value;
+    let contactEmail = document.getElementById('contact-email').value;
+    let contactNotes = document.getElementById('contact-notes').value;
+    // Gán dữ liệu sang bước 3
+    document.getElementById('confirm-trip-type').textContent = tripType;
+    document.getElementById('confirm-pickup-address').textContent = pickupAddress;
+    document.getElementById('confirm-car-type').textContent = carType;
+    document.getElementById('confirm-total-price').textContent = totalPrice;
+    document.getElementById('confirm-contact-name').textContent = contactName;
+    document.getElementById('confirm-contact-phone').textContent = contactPhone;
+    document.getElementById('confirm-contact-email').textContent = contactEmail;
+    document.getElementById('confirm-contact-notes').textContent = contactNotes;
+    // Địa chỉ liên hệ (nếu có thể lấy)
+    let contactAddress = '';
+    if (isAirport && isDropoff) {
+        contactAddress = pickupAddress;
+    } else if (isAirport && !isDropoff) {
+        contactAddress = document.querySelector('input[name="airport_dropoff"]').value;
+    } else if (isFixedPoint) {
+        contactAddress = document.querySelector('input[name="fixedpoint_end"]').value;
+    }
+    document.getElementById('confirm-contact-address').textContent = contactAddress;
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-    // Step navigation logic
-    const steps = document.querySelectorAll('.step');
-    const stepForms = document.querySelectorAll('.booking-step');
-    steps.forEach(function(step) {
-        step.addEventListener('click', function() {
-            const stepNum = this.getAttribute('data-step');
-            // Ẩn tất cả các bước
-            stepForms.forEach(function(formStep) {
-                formStep.classList.add('d-none');
-            });
-            // Hiện bước được chọn
-            const showStep = document.querySelector('.booking-step.step-' + stepNum);
-            if (showStep) showStep.classList.remove('d-none');
-            // Cập nhật trạng thái active
-            steps.forEach(function(s) { s.classList.remove('active'); });
-            this.classList.add('active');
-            // Khi sang bước 2, cập nhật summary đúng loại booking
-            if (stepNum === '2') {
-                updateStep2Summary();
-            }
+    var btnStep2Next = document.getElementById('btn-step2-next');
+    if (btnStep2Next) {
+        btnStep2Next.addEventListener('click', function() {
+            goToStep(3);
         });
-    });
+    }
 });
 </script>
 
