@@ -71,19 +71,6 @@
                     data-aos-offset="50">
                     <div class="footer-widget footer-links">
                         <div class="footer-title">
-                            <h5>Điểm đến</h5>
-                        </div>
-                        <ul class="list-style-three">
-                            <li><a href="{{ route('destination') }}">Miền Bắc</a></li>
-                            <li><a href="{{ route('destination') }}">Miền Trung</a></li>
-                            <li><a href="{{ route('destination') }}">Miền Nam</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col col-small" data-aos="fade-up" data-aos-delay="150" data-aos-duration="1500"
-                    data-aos-offset="50">
-                    <div class="footer-widget footer-links">
-                        <div class="footer-title">
                             <h5>Thể loại</h5>
                         </div>
                         <ul class="list-style-three">

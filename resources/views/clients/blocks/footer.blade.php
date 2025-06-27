@@ -44,9 +44,6 @@
                             <h5>Điểm đến</h5>
                         </div>
                         <ul class="list-style-three">
-                            <li><a href="{{ route('destination') }}">Miền Bắc</a></li>
-                            <li><a href="{{ route('destination') }}">Miền Trung</a></li>
-                            <li><a href="{{ route('destination') }}">Miền Nam</a></li>
                         </ul>
                     </div>
                 </div>

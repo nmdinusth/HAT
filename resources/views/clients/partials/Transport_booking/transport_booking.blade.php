@@ -34,6 +34,9 @@
                                     <option value="">Chọn sân bay</option>
                                     <option value="noibai">Sân bay Nội Bài</option>
                                     <option value="tansonnhat">Sân bay Tân Sơn Nhất</option>
+                                    <option value="danang">Sân bay Đà Nẵng</option>
+                                    <option value="camranh">Sân bay Cam Ranh</option>
+                                    <option value="phuquoc">Sân bay Phú Quốc</option>
                                 </select>
                             </div>
                         </div>
@@ -101,13 +104,13 @@
                         </div>
                     </div>
 
-                    <div class="form-check form-check-inline mt-3">
-                        <input class="form-check-input" type="checkbox" checked>
-                        <label class="form-check-label">Tất cả</label>
+                    <div class="custom-checkbox-group mt-3">
+                        <input type="checkbox" id="all-checkbox" class="custom-checkbox" checked hidden>
+                        <label for="all-checkbox" class="custom-checkbox-label"><span class="custom-checkbox-box"></span> Tất cả</label>
                     </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox">
-                        <label class="form-check-label">Sử dụng mã khuyến mại</label>
+                    <div class="custom-checkbox-group">
+                        <input type="checkbox" id="promo-checkbox" class="custom-checkbox" hidden>
+                        <label for="promo-checkbox" class="custom-checkbox-label"><span class="custom-checkbox-box"></span> Sử dụng mã khuyến mại</label>
                     </div>
 
                     <div class="mb-3 mt-3">

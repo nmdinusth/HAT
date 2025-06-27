@@ -20,7 +20,6 @@ use App\Http\Controllers\Client\TransportController;
 use App\Http\Controllers\clients\ServicesController;
 use App\Http\Controllers\clients\TourBookedController;
 use App\Http\Controllers\clients\TourDetailController;
-use App\Http\Controllers\clients\DestinationController;
 use App\Http\Controllers\clients\LoginGoogleController;
 use App\Http\Controllers\clients\UserProfileController;
 use App\Http\Controllers\admin\UserManagementController;
@@ -46,7 +45,6 @@ use App\Http\Controllers\Client\AirplanePaymentController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
-Route::get('/destination', [DestinationController::class, 'index'])->name('destination');
 Route::get('/travel-guides', [TravelGuidesController::class, 'index'])->name('team');
 
 //Handle Login Old
