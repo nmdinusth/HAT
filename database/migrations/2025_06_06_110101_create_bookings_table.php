@@ -16,12 +16,13 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Người đặt phòng
             $table->foreignId('hotel_id')->constrained()->onDelete('cascade'); // Khách sạn
-            $table->date('booking_date')->default(DB::raw('CURRENT_DATE')); // Ngày đặt phòng
+            $table->timestamp('booking_date')->useCurrent(); // Ngày đặt phòng
             $table->date('check_in_date'); // Ngày đến
             $table->date('check_out_date'); // Ngày đi
 
             $table->unsignedTinyInteger('adults')->default(1); // Số người lớn
             $table->unsignedTinyInteger('children')->default(0); // Số trẻ em
+            $table->integer('rooms'); // Số phòng thuê
 
             $table->enum('status', ['pending', 'confirmed', 'cancelled', 'checked_in', 'completed'])->default('pending'); // Trạng thái booking
 

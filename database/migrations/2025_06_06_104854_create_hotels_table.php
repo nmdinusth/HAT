@@ -14,19 +14,6 @@ return new class extends Migration {
     {
         Schema::create('hotels', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
-        });
-    }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::create('hotels', function (Blueprint $table) {
-            $table->id();
             $table->string('hotel_name'); // Tên khách sạn
             $table->string('slug')->unique(); // Slug để tạo URL thân thiện
             $table->text('description')->nullable(); // Mô tả khách sạn
@@ -44,5 +31,15 @@ return new class extends Migration {
             $table->boolean('is_active')->default(true); // Trạng thái hoạt động
             $table->timestamps();
         });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('hotels');
     }
 };

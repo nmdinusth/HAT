@@ -15,6 +15,7 @@ return new class extends Migration {
         Schema::create('booking_rooms', function (Blueprint $table) {
             $table->id();
             $table->foreignId('booking_id')->constrained()->onDelete('cascade'); // Booking nào
+            $table->foreignId('room_id')->constrained()->onDelete('cascade'); // Booking nào
             $table->string('room_name'); // Tên phòng đã đặt
             $table->unsignedTinyInteger('adults')->default(1); // Người lớn/phòng
             $table->unsignedTinyInteger('children')->default(0); // Trẻ em/phòng
