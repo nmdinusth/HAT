@@ -80,6 +80,12 @@ Route::get('auth/google/callback', [LoginGoogleController::class, 'handleGoogleC
 Route::prefix('khach-san')->group( function () {
     Route::get('/', [HotelController::class, 'index'])->name('hotel.home');
     Route::post('/findHotel', [HotelController::class, 'findHotel'])->name('hotel.find');
+
+    Route::get('/ket-qua-tim-phong', [HotelController::class, 'roomSearchResult']);
+    Route::get('/danh-sach-phong', [HotelController::class, 'roomSearchResultList']);
+    Route::get('/chi-tiet-phong', [HotelController::class, 'roomDetail']);
+    Route::get('/gio-hang', [HotelController::class, 'cart']);
+    Route::get('/thanh-toan', [HotelController::class, 'checkout']);
     
 });
 

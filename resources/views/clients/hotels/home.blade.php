@@ -1,4 +1,4 @@
-@include('clients.blocks.header_hotel');
+@include('clients.blocks.header_hotel')
 
     <!-- ================================
     START HERO-WRAPPER AREA
