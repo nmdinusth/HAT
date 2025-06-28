@@ -163,13 +163,17 @@
 <script src="{{ asset('clients/assets/js/skill.bars.jquery.min.js') }}"></script>
 <!-- Jquery UI -->
 <script src="{{ asset('clients/assets/js/jquery-ui.min.js') }}"></script>
+<!-- Date Rangerpicker -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <!-- Isotope -->
 <script src="{{ asset('clients/assets/js/isotope.pkgd.min.js') }}"></script>
 <!--  AOS Animation -->
 <script src="{{ asset('clients/assets/js/aos.js') }}"></script>
 <!-- Custom script -->
 <script src="{{ asset('clients/assets/js/script.js') }}"></script>
-{{-- jquery-toast  --}}
+{{-- jquery-toast --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 <!-- Custom script by Dev matcha-->

@@ -13,6 +13,7 @@ class AuthController extends Controller
 {
     private $login;
     protected $user;
+    protected $user_information;
 
     public function __construct()
     {

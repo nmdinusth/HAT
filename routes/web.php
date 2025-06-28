@@ -18,6 +18,7 @@ use App\Http\Controllers\clients\ContactController;
 use App\Http\Controllers\admin\LoginAdminController;
 use App\Http\Controllers\Client\TransportController;
 use App\Http\Controllers\clients\ServicesController;
+use App\Http\Controllers\Client\Hotel\HotelController;
 use App\Http\Controllers\clients\TourBookedController;
 use App\Http\Controllers\clients\TourDetailController;
 use App\Http\Controllers\clients\DestinationController;
@@ -72,9 +73,21 @@ Route::get('/kich-hoat-tai-khoan', [AuthController::class, 'showActivateNotifica
 Route::post('/send-mail-activate', [AuthController::class, 'sendMailActivate'])->name('send_mail_activate'); 
 
 
-
 Route::get('auth/google', [LoginGoogleController::class, 'redirectToGoogle'])->name('login-google');
 Route::get('auth/google/callback', [LoginGoogleController::class, 'handleGoogleCallback']);
+
+// Các route liên quan đến xử lý đặt phòng khách sạn
+Route::prefix('khach-san')->group( function () {
+    Route::get('/', [HotelController::class, 'index'])->name('hotel.home');
+    Route::post('/findHotel', [HotelController::class, 'findHotel'])->name('hotel.find');
+
+    Route::get('/ket-qua-tim-phong', [HotelController::class, 'roomSearchResult']);
+    Route::get('/danh-sach-phong', [HotelController::class, 'roomSearchResultList']);
+    Route::get('/chi-tiet-phong', [HotelController::class, 'roomDetail']);
+    Route::get('/gio-hang', [HotelController::class, 'cart']);
+    Route::get('/thanh-toan', [HotelController::class, 'checkout']);
+    
+});
 
 //Handle Get tours , filter Tours
 Route::get('/tours', [ToursController::class, 'index'])->name('tours');
