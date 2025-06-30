@@ -4,24 +4,16 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\clients\HomeController;
-use App\Http\Controllers\clients\AboutController;
-use App\Http\Controllers\clients\LoginController;
 use App\Http\Controllers\clients\PayPalController;
-use App\Http\Controllers\clients\SearchController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\Client\Airplane\AirplaneController;
 use App\Http\Controllers\clients\BookingController;
-use App\Http\Controllers\clients\ContactController;
 use App\Http\Controllers\admin\LoginAdminController;
 use App\Http\Controllers\Client\Transport\TransportController;
-use App\Http\Controllers\clients\ServicesController;
 use App\Http\Controllers\Client\Hotel\HotelController;
-use App\Http\Controllers\clients\DestinationController;
 use App\Http\Controllers\clients\LoginGoogleController;
 use App\Http\Controllers\clients\UserProfileController;
 use App\Http\Controllers\admin\UserManagementController;
-use App\Http\Controllers\clients\TravelGuidesController;
 use App\Http\Controllers\admin\AdminManagementController;
 use App\Http\Controllers\Client\Airplane\AirplaneBookingController;
 use App\Http\Controllers\Client\Airplane\AirplaneFlightController;
@@ -40,10 +32,8 @@ use App\Http\Controllers\Client\Airplane\AirplanePaymentController;
 */
 
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/about', [AboutController::class, 'index'])->name('about');
-Route::get('/destination', [DestinationController::class, 'index'])->name('destination');
-Route::get('/travel-guides', [TravelGuidesController::class, 'index'])->name('team');
+Route::get('/', [HotelController::class, 'index'])->name('home');
+
 
 //Handle Login Old
 // Route::get('/login', [LoginController::class, 'index'])->name('login');
@@ -105,13 +95,8 @@ Route::get('cancel-transaction', [PayPalController::class, 'cancelTransaction'])
 //Payment with Momo
 Route::post('/create-momo-payment', [BookingController::class, 'createMomoPayment'])->name('createMomoPayment');
 
-//Contact
-Route::get('/contact', [ContactController::class, 'index'])->name('contact');
-Route::post('/create-contact', [ContactController::class, 'createContact'])->name('create-contact');
-
 
 //Search
-Route::get('/search', [SearchController::class, 'index'])->name(name: 'search');
 
 
 //ADMIN

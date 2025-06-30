@@ -1,5 +1,5 @@
-@include('clients.blocks.header_home')
-@include('clients.blocks.banner')
+@include('clients.blocks.header_hotel')
+@include('clients.blocks.banner_hotel')
 
 <section class="airplane-booking-area py-100 rel z-1">
     <div class="container">

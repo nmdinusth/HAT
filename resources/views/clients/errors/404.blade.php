@@ -1,4 +1,4 @@
-@include('clients.blocks.header_home')
+@include('clients.blocks.header_hotel')
 
 <!-- 404 Error Area start -->
 <section class="error-area pt-70 pb-100 rel z-1">
@@ -14,13 +14,6 @@
                         Bạn có thể kiểm tra lại URL hoặc quay về <a href="/">trang chủ</a>.  
                         Nếu cần hỗ trợ, vui lòng liên hệ với chúng tôi.</p>
                         
-                    <form class="newsletter-form mt-40 mb-50" action="{{ route('search-voice-text') }}">
-                        <input  type="text" name="keyword" placeholder="Search" class="searchbox" required>
-                        <button type="submit" class="theme-btn bgc-secondary style-two">
-                            <span data-hover="Search">Tìm kiếm</span>
-                            <i class="fal fa-arrow-right"></i>
-                        </button>
-                    </form>
                     <div class="keywords">
                         <a href="{{ route('about') }}">Giới thiệu</a>
                         
