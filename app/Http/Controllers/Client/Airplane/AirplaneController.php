@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Client;
+namespace App\Http\Controllers\Client\Airplane;
 
 use App\Http\Controllers\Controller;
 use App\Models\AirplaneBooking;
@@ -66,8 +66,11 @@ class AirplaneController extends Controller
 
     public function index()
     {
+        $title = 'Đặt vé máy bay';
+        $this->addBreadcrumb($title, route('airplane'));
+
         return view('clients.partials.Airplane_booking.airplane', [
-            'title' => 'Dịch vụ hàng không'
+            'title' => $title
         ]);
     }
 } 

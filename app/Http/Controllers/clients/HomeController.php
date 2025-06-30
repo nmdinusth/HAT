@@ -18,6 +18,7 @@ class HomeController extends Controller
 
     public function index()
     {
+        session()->forget('breadcrumbs');
         $title = 'Trang chủ';
         return view('clients.home', compact('title'));
     }

@@ -8,8 +8,20 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb justify-content-center mb-20" data-aos="fade-right" data-aos-delay="200"
                     data-aos-duration="1500" data-aos-offset="50">
-                    <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
-                    <li class="breadcrumb-item active">{{ $title }}</li>
+                    @if (session('breadcrumbs'))
+                        @foreach (session('breadcrumbs') as $breadcrumb)
+                            <li class="breadcrumb-item {{ $loop->last ? 'active' : '' }}">
+                                @if ($loop->last)
+                                    {{ $breadcrumb['title'] }}
+                                @else
+                                    <a href="{{ $breadcrumb['url'] }}">{{ $breadcrumb['title'] }}</a>
+                                @endif
+                            </li>
+                        @endforeach
+                    @else
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Trang chủ</a></li>
+                        <li class="breadcrumb-item active">{{ $title }}</li>
+                    @endif
                 </ol>
             </nav>
         </div>

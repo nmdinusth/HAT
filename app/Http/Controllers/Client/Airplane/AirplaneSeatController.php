@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Client;
+namespace App\Http\Controllers\Client\Airplane;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -24,6 +24,7 @@ class AirplaneSeatController extends Controller
         ];
 
         $title = 'Chọn Ghế Máy Bay';
+        $this->addBreadcrumb($title, route('airplane-seat-select', $request->query()));
         return view('clients.partials.Airplane_booking.airplane-seat-select', compact('from', 'to', 'depart', 'return', 'passenger', 'flight_code', 'type', 'seat_prices', 'title'));
     }
 }

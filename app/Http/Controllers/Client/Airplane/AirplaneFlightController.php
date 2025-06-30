@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Client;
+namespace App\Http\Controllers\Client\Airplane;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -50,6 +50,7 @@ class AirplaneFlightController extends Controller
         ];
 
         $title = 'Danh Sách Chuyến Bay';
+        $this->addBreadcrumb($title, route('airplane-flights', $request->query()));
         return view('clients.partials.Airplane_booking.airplane-flights', compact('flights', 'from', 'to', 'depart', 'return', 'passenger', 'title'));
     }
 }

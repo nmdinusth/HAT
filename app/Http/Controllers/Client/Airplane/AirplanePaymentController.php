@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Client;
+namespace App\Http\Controllers\Client\Airplane;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -19,6 +19,8 @@ class AirplanePaymentController extends Controller
         $seats = $request->query('seats');
         $total_price = $request->query('total_price');
         $title = 'Thanh toán vé máy bay';
+
+        $this->addBreadcrumb($title, route('airplane-payment', $request->query()));
 
         return view('clients.partials.Airplane_booking.airplane-payment', compact(
             'from',

@@ -30,7 +30,7 @@
                             <div class="col-md-12">
                                 <label for="airport-select" class="form-label fw-bold">Sân bay <span class="text-danger">*</span></label>
                                 <select id="form-for-select" name="airport" required
-                                    class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
+                                    class="tw-block tw-py-2.5 tw-px-0 tw-w-full tw-text-sm tw-text-gray-500 tw-bg-transparent tw-border-0 tw-border-b-2 tw-border-gray-200 tw-appearance-none dark:tw-text-gray-400 dark:tw-border-gray-700 focus:tw-outline-none focus:tw-ring-0 focus:tw-border-gray-200 peer">
                                     <option value="">Chọn sân bay</option>
                                     <option value="noibai">Sân bay Nội Bài</option>
                                     <option value="tansonnhat">Sân bay Tân Sơn Nhất</option>
@@ -113,7 +113,7 @@
                     <div class="mb-3 mt-3">
                         <label class="form-label">Loại xe <span class="text-danger">*</span></label>
                         <select name="car_type" required
-                            class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
+                            class="tw-block tw-py-2.5 tw-px-0 tw-w-full tw-text-sm tw-text-gray-500 tw-bg-transparent tw-border-0 tw-border-b-2 tw-border-gray-200 tw-appearance-none dark:tw-text-gray-400 dark:tw-border-gray-700 focus:tw-outline-none focus:tw-ring-0 focus:tw-border-gray-200 peer">
                             <option value="5">5 seats (Standard)</option>
                             <option value="7">7 seats</option>
                             <option value="10">10 seats</option>
@@ -550,3 +550,5 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 @include('clients.blocks.footer')
+
+@vite(['resources/css/app.css', 'resources/js/app.js'])

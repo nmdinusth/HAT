@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  prefix: 'tw-',
   content: [
     "./resources/**/*.blade.php",
     "./resources/**/*.js",
@@ -11,7 +12,5 @@ export default {
   plugins: [
     require('tailwind-scrollbar')({ nocompatible: true }),
   ],
-} 
-  plugins: [],
 }
 

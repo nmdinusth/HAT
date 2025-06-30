@@ -7,36 +7,31 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\clients\HomeController;
 use App\Http\Controllers\clients\AboutController;
 use App\Http\Controllers\clients\LoginController;
-use App\Http\Controllers\clients\ToursController;
-use App\Http\Controllers\clients\MyTourController;
 use App\Http\Controllers\clients\PayPalController;
 use App\Http\Controllers\clients\SearchController;
 use App\Http\Controllers\admin\DashboardController;
-use App\Http\Controllers\Client\AirplaneController;
+use App\Http\Controllers\Client\Airplane\AirplaneController;
 use App\Http\Controllers\clients\BookingController;
 use App\Http\Controllers\clients\ContactController;
 use App\Http\Controllers\admin\LoginAdminController;
-use App\Http\Controllers\Client\TransportController;
+use App\Http\Controllers\Client\Transport\TransportController;
 use App\Http\Controllers\clients\ServicesController;
 use App\Http\Controllers\Client\Hotel\HotelController;
-use App\Http\Controllers\clients\TourBookedController;
-use App\Http\Controllers\clients\TourDetailController;
 use App\Http\Controllers\clients\DestinationController;
 use App\Http\Controllers\clients\LoginGoogleController;
 use App\Http\Controllers\clients\UserProfileController;
 use App\Http\Controllers\admin\UserManagementController;
 use App\Http\Controllers\clients\TravelGuidesController;
 use App\Http\Controllers\admin\AdminManagementController;
-use App\Http\Controllers\admin\ToursManagementController;
-use App\Http\Controllers\Client\AirplaneBookingController;
-use App\Http\Controllers\Client\AirplaneFlightController;
-use App\Http\Controllers\Client\AirplaneSeatController;
-use App\Http\Controllers\Client\AirplanePaymentController;
+use App\Http\Controllers\Client\Airplane\AirplaneBookingController;
+use App\Http\Controllers\Client\Airplane\AirplaneFlightController;
+use App\Http\Controllers\Client\Airplane\AirplaneSeatController;
+use App\Http\Controllers\Client\Airplane\AirplanePaymentController;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
-|--------------------------------------------------------------------------
+|-------------------------------------------------------------------------- 
 |
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
@@ -89,10 +84,6 @@ Route::prefix('khach-san')->group( function () {
     
 });
 
-//Handle Get tours , filter Tours
-Route::get('/tours', [ToursController::class, 'index'])->name('tours');
-Route::get('/filter-tours', [ToursController::class, 'filterTours'])->name('filter-tours');
-
 //Handle user profile
 Route::get('/user-profile', [UserProfileController::class, 'index'])->name('user-profile')->middleware('checkLoginClient');
 Route::post('/user-profile', [UserProfileController::class, 'update'])->name('update-user-profile');
@@ -114,19 +105,6 @@ Route::get('cancel-transaction', [PayPalController::class, 'cancelTransaction'])
 //Payment with Momo
 Route::post('/create-momo-payment', [BookingController::class, 'createMomoPayment'])->name('createMomoPayment');
 
-
-//Tour booked
-Route::get('/tour-booked', [TourBookedController::class, 'index'])->name('tour-booked')->middleware('checkLoginClient');
-Route::post('/cancel-booking', [TourBookedController::class, 'cancelBooking'])->name('cancel-booking');
-
-//My tour
-Route::get('/my-tours', [MyTourController::class, 'index'])->name('my-tours')->middleware('checkLoginClient');
-
-//get Tour detail and handle submit reviews
-Route::get('/tour-detail/{id?}', [TourDetailController::class, 'index'])->name('tour-detail');
-Route::post('/checkBooking', [BookingController::class, 'checkBooking'])->name('checkBooking')->middleware('checkLoginClient');
-Route::post('/reviews', [TourDetailController::class, 'reviews'])->name('reviews')->middleware('checkLoginClient');
-
 //Contact
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/create-contact', [ContactController::class, 'createContact'])->name('create-contact');
@@ -134,7 +112,6 @@ Route::post('/create-contact', [ContactController::class, 'createContact'])->nam
 
 //Search
 Route::get('/search', [SearchController::class, 'index'])->name(name: 'search');
-Route::get('/search-voice-text', [SearchController::class, 'searchTours'])->name('search-voice-text');
 
 
 //ADMIN
@@ -158,20 +135,6 @@ Route::prefix('admin')->middleware('admin')->group(function () {
     Route::get('/users', [UserManagementController::class, 'index'])->name('admin.users');
     Route::post('/active-user', [UserManagementController::class, 'activeUser'])->name('admin.active-user');
     Route::post('/status-user', [UserManagementController::class, 'changeStatus'])->name('admin.status-user');
-
-    //Management Tours
-    Route::get('/tours', [ToursManagementController::class, 'index'])->name('admin.tours');
-
-    Route::get('/page-add-tours', [ToursManagementController::class, 'pageAddTours'])->name('admin.page-add-tours');
-    Route::post('/add-tours', [ToursManagementController::class, 'addTours'])->name('admin.add-tours');
-    Route::post('/add-images-tours', [ToursManagementController::class, 'addImagesTours'])->name('admin.add-images-tours');
-    Route::post('/add-timeline', [ToursManagementController::class, 'addTimeline'])->name('admin.add-timeline');
-
-    Route::post('/delete-tour', [ToursManagementController::class, 'deleteTour'])->name('admin.delete-tour');
-
-    Route::get('/tour-edit', [ToursManagementController::class, 'getTourEdit'])->name('admin.tour-edit');
-    Route::post('/edit-tour', [ToursManagementController::class, 'updateTour'])->name('admin.edit-tour');
-    Route::post('/add-temp-images', [ToursManagementController::class, 'uploadTempImagesTours'])->name('admin.add-temp-images');
 
     //Management Booking
     Route::get('/booking', [BookingManagementController::class, 'index'])->name('admin.booking');
@@ -216,4 +179,4 @@ Route::post('/airplane-payment/process', [AirplanePaymentController::class, 'pro
 
 //Transport Booking
 Route::get('/transport', [TransportController::class, 'index'])->name('transport');
-Route::get('/booking/transport', [App\Http\Controllers\Client\TransportController::class, 'bookingForm'])->name('booking.transport');
+Route::get('/booking/transport', [TransportController::class, 'bookingForm'])->name('booking.transport');

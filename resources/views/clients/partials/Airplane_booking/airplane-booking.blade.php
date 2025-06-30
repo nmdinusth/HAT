@@ -31,7 +31,7 @@
                             <div class="form-group">
                                 <label for="fromPlace" class="form-label fw-bold">Từ</label>
                                 <select id="fromPlace" name="from" required
-                                    class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
+                                    class="tw-block tw-py-2.5 tw-px-0 tw-w-full tw-text-sm tw-text-gray-500 tw-bg-transparent tw-border-0 tw-border-b-2 tw-border-gray-200 tw-appearance-none dark:tw-text-gray-400 dark:tw-border-gray-700 focus:tw-outline-none focus:tw-ring-0 focus:tw-border-gray-200 peer">
                                     <option value="" selected disabled hidden>Chọn điểm đi</option>
                                     <option value="hanoi">Hà Nội</option>
                                     <option value="danang">Đà Nẵng</option>
@@ -52,7 +52,7 @@
                             <div class="form-group">
                                 <label for="toPlace" class="form-label fw-bold">Đến</label>
                                 <select id="toPlace" name="to" required
-                                    class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
+                                    class="tw-block tw-py-2.5 tw-px-0 tw-w-full tw-text-sm tw-text-gray-500 tw-bg-transparent tw-border-0 tw-border-b-2 tw-border-gray-200 tw-appearance-none dark:tw-text-gray-400 dark:tw-border-gray-700 focus:tw-outline-none focus:tw-ring-0 focus:tw-border-gray-200 peer">
                                     <option value="" selected disabled hidden>Chọn điểm đến</option>
                                     <option value="hanoi">Hà Nội</option>
                                     <option value="danang">Đà Nẵng</option>
@@ -102,6 +102,8 @@
 
 @include('clients.blocks.new_letter')
 @include('clients.blocks.footer')
+
+@vite(['resources/css/app.css', 'resources/js/app.js'])
 
 <script>
 // Kiểm tra không cho chọn cùng điểm đi và điểm đến

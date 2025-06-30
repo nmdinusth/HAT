@@ -22,37 +22,37 @@ class HotelController extends Controller
     {
         $title = 'Khách sạn';
 
-        return view('clients.hotels.home', compact('title'));
+        return view('clients.partials.Hotel_booking.home', compact('title'));
     }
     public function roomSearchResult()
     {
         // $title = 'Khách sạn';
 
-        return view('clients.hotels.room-search-result');
+        return view('clients.partials.Hotel_booking.room-search-result');
     }
     public function roomSearchResultList()
     {
         // $title = 'Khách sạn';
 
-        return view('clients.hotels.room-search-result-list');
+        return view('clients.partials.Hotel_booking.room-search-result-list');
     }
     public function roomDetail()
     {
         // $title = 'Khách sạn';
 
-        return view('clients.hotels.room-detail');
+        return view('clients.partials.Hotel_booking.room-detail');
     }
     public function cart()
     {
         // $title = 'Khách sạn';
 
-        return view('clients.hotels.cart');
+        return view('clients.partials.Hotel_booking.cart');
     }
     public function checkout()
     {
         // $title = 'Khách sạn';
 
-        return view('clients.hotels.checkout');
+        return view('clients.partials.Hotel_booking.checkout');
     }
 
     public function findHotel(Request $request)
