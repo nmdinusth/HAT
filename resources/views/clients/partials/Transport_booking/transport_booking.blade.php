@@ -34,6 +34,9 @@
                                     <option value="">Chọn sân bay</option>
                                     <option value="noibai">Sân bay Nội Bài</option>
                                     <option value="tansonnhat">Sân bay Tân Sơn Nhất</option>
+                                    <option value="danang">Sân bay Đà Nẵng</option>
+                                    <option value="camranh">Sân bay Cam Ranh</option>
+                                    <option value="phuquoc">Sân bay Phú Quốc</option>
                                 </select>
                             </div>
                         </div>
