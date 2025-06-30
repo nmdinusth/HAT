@@ -23,10 +23,10 @@
                     </form>
                     <div class="keywords">
                         <a href="{{ route('about') }}">Giới thiệu</a>
-                        <a href="{{ route('tours') }}">Tours</a>
+                        
                         <a href="{{ route('destination') }}">Điểm Đến</a>
                         <a href="{{ route('contact') }}">Liên hệ</a>
-                        <a href="{{ route('home') }}">Trang Chủ</a>
+                        <a href="{{ 'home' }}">Trang Chủ</a>
                     </div>
                 </div>
             </div>

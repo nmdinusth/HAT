@@ -47,10 +47,8 @@
                         <div class="footer-title">
                             <h5>Dịch vụ</h5>
                         </div>
-                        <ul class="list-style-three">
-                            <li><a href="{{ route('team') }}">Hướng dẫn viên du lịch tốt nhất</a></li>
-                            <li><a href="{{ route('tours') }}">Đặt tour</a></li>
-                            <li><a href="{{ route('tours') }}">Đặt vé</a></li>
+                        <ul class="list-style-three">                    
+                            <li><a href="#">Đặt vé</a></li>
                         </ul>
                     </div>
                 </div>
@@ -88,7 +86,6 @@
                         </div>
                         <ul class="list-style-three">
                             <li><a href="{{ route('contact') }}">Phiêu lưu</a></li>
-                            <li><a href="{{ route('contact') }}">Tour gia đình</a></li>
                             <li><a href="{{ route('contact') }}">Tour động vật hoang dã</a></li>
                         </ul>
                     </div>

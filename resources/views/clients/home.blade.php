@@ -17,33 +17,6 @@
                 </div>
             </div>
         </div>
-        {{-- <div class="row justify-content-center">
-            @foreach ($tours as $tour)
-                <div class="col-xxl-3 col-xl-4 col-md-6" style="margin-bottom: 30px">
-                    <div class="destination-item block_tours" data-aos="fade-up" data-aos-duration="1500"
-                        data-aos-offset="50">
-                        <div class="image">
-                            <div class="ratting"><i class="fas fa-star"></i> {{ number_format($tour->rating, 1) }}</div>
-                            <a href="#" class="heart"><i class="fas fa-heart"></i></a>
-                            <img src="{{ asset('admin/assets/images/gallery-tours/' . $tour->images[0] . '') }}"
-                                alt="Destination">
-                        </div>
-                        <div class="content">
-                            <span class="location"><i class="fal fa-map-marker-alt"></i>{{ $tour->destination }}</span>
-                            <h5><a href="{{ route('tour-detail', ['id' => $tour->tourID]) }}">{{ $tour->title }}</a>
-                            </h5>
-                            <span class="duration">{{ $tour->duration }}</span>
-                        </div>
-                        <div class="destination-footer">
-                            <span class="price"><span>{{ number_format($tour->priceAdult, 0, ',', '.') }}</span> VND /
-                                người</span>
-                            <a href="{{ route('tour-detail', ['id' => $tour->tourID]) }}" class="read-more">Đặt ngay <i
-                                    class="fal fa-angle-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div> --}}
     </div>
 </section>
 <!-- Destinations Area end -->
@@ -122,41 +95,7 @@
                     </div>
                 </div>
             </div>
-            {{-- <div class="container">
-                <div class="row justify-content-center">
-                    @php $count = 0; @endphp
-                    @foreach ($toursPopular as $tour)
-                        @if ($count == 2 || $count == 3)
-                            <!-- Cột thứ 3 và thứ 4 sẽ là col-md-6 -->
-                            <div class="col-md-6 item ">
-                            @else
-                                <!-- Các cột còn lại sẽ là col-xl-3 col-md-6 -->
-                                <div class="col-xl-3 col-md-6 item ">
-                        @endif
-
-                        <div class="destination-item style-two" data-aos-duration="1500" data-aos-offset="50">
-                            <div class="image" style="max-height: 250px">
-                                <a href="#" class="heart"><i class="fas fa-heart"></i></a>
-                                <img src="{{ asset('admin/assets/images/gallery-tours/' . $tour->images[0]) }}"
-                                    alt="Destination">
-                            </div>
-                            <div class="content">
-                                <h6 class="tour-title"><a
-                                        href="{{ route('tour-detail', ['id' => $tour->tourId]) }}">{{ $tour->title }}</a>
-                                </h6>
-                                <span class="time">{{ $tour->time }}</span>
-                                <a href="{{ route('tour-detail', ['id' => $tour->tourId]) }}" class="more"><i
-                                        class="fas fa-chevron-right"></i></a>
-                            </div>
-                        </div>
-
-                </div> <!-- Đóng div col-md-6 hoặc col-xl-3 col-md-6 -->
-
-                @php $count++; @endphp
-                @endforeach
-            </div>
         </div>
-            </div> --}}
     </div>
 </section>
 <!-- Popular Destinations Area end -->
@@ -201,14 +140,14 @@
                         <div class="feature-item">
                             <div class="icon"><i class="flaticon-tent"></i></div>
                             <div class="content">
-                                <h5><a href="{{ route('tours') }}">Chinh Phục Cảnh Quan Việt Nam</a></h5>
+                                <h5><a href="#">Chinh Phục Cảnh Quan Việt Nam</a></h5>
                                 <p>Khám phá những cảnh đẹp hùng vĩ và tuyệt vời của đất nước Việt Nam.</p>
                             </div>
                         </div>
                         <div class="feature-item">
                             <div class="icon"><i class="flaticon-tent"></i></div>
                             <div class="content">
-                                <h5><a href="{{ route('tours') }}">Trải Nghiệm Đặc Sắc Việt Nam</a></h5>
+                                <h5><a href="#">Trải Nghiệm Đặc Sắc Việt Nam</a></h5>
                                 <p>Trải nghiệm những hoạt động và lễ hội đặc trưng của văn hóa Việt.</p>
                             </div>
                         </div>
@@ -217,14 +156,14 @@
                         <div class="feature-item mt-20">
                             <div class="icon"><i class="flaticon-tent"></i></div>
                             <div class="content">
-                                <h5><a href="{{ route('tours') }}">Khám Phá Di Sản Việt Nam</a></h5>
+                                <h5><a href="#">Khám Phá Di Sản Việt Nam</a></h5>
                                 <p>Khám phá các di sản thế giới và những kỳ quan thiên nhiên nổi tiếng.</p>
                             </div>
                         </div>
                         <div class="feature-item">
                             <div class="icon"><i class="flaticon-tent"></i></div>
                             <div class="content">
-                                <h5><a href="{{ route('tours') }}">Vẻ Đẹp Thiên Nhiên Việt </a></h5>
+                                <h5><a href="#">Vẻ Đẹp Thiên Nhiên Việt </a></h5>
                                 <p>Chinh phục vẻ đẹp tự nhiên hoang sơ và kỳ vĩ của Việt Nam.</p>
                             </div>
                         </div>
@@ -245,7 +184,7 @@
                     style="background-image: url( {{ asset('clients/assets/images/cta/cta1.jpg') }});">
                     <span class="category">Khám Phá Vẻ Đẹp Văn Hóa Việt</span>
                     <h2>Tìm hiểu những giá trị văn hóa độc đáo của các vùng miền Việt Nam.</h2>
-                    <a href="{{ route('tours') }}" class="theme-btn style-two bgc-secondary">
+                    <a href="#" class="theme-btn style-two bgc-secondary">
                         <span data-hover="Khám phá">Khám phá</span>
                         <i class="fal fa-arrow-right"></i>
                     </a>
@@ -255,9 +194,9 @@
                 data-aos-offset="50">
                 <div class="cta-item"
                     style="background-image: url( {{ asset('clients/assets/images/cta/cta2.jpg') }});">
-                    <span class="category">Bãi biển Sea</span>
-                    <h2>Bãi trong xanh dạt dào ở Việt Nam</h2>
-                    <a href="{{ route('tours') }}" class="theme-btn style-two">
+                    <span class="category">Hành Trình Khám Phá Miền Tây</span>
+                    <h2>Trải nghiệm vẻ đẹp bình dị và cuộc sống sông nước miền Tây.</h2>
+                    <a href="#" class="theme-btn style-two bgc-secondary">
                         <span data-hover="Khám phá">Khám phá</span>
                         <i class="fal fa-arrow-right"></i>
                     </a>
@@ -267,9 +206,9 @@
                 data-aos-offset="50">
                 <div class="cta-item"
                     style="background-image: url( {{ asset('clients/assets/images/cta/cta3.jpg') }});">
-                    <span class="category">Thác nước</span>
-                    <h2>Thác nước lớn nhất Việt Nam</h2>
-                    <a href="{{ route('tours') }}" class="theme-btn style-two bgc-secondary">
+                    <span class="category">Chinh Phục Vẻ Đẹp Miền Trung</span>
+                    <h2>Khám phá những bãi biển tuyệt đẹp và di sản văn hóa miền Trung.</h2>
+                    <a href="#" class="theme-btn style-two bgc-secondary">
                         <span data-hover="Khám phá">Khám phá</span>
                         <i class="fal fa-arrow-right"></i>
                     </a>

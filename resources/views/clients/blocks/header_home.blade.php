@@ -60,7 +60,7 @@
         }
     </style>
     <!-- Tailwind css -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    
 
 </head>
 
@@ -112,12 +112,12 @@
                                         <li class="{{ Request::url() == route('about') ? 'active' : '' }}"><a
                                                 href="{{ route('about') }}">Giới thiệu</a></li>
                                         <li
-                                            class="dropdown {{ Request::is('tours') || Request::is('team') || Request::is('tour-detail/*') ? 'active' : '' }}">
+                                            class="dropdown {{ Request::is('team') ? 'active' : '' }}">
                                             <a href="#">Booking</a>
                                             <ul>
                                                 <li><a href="{{ route('transport') }}">Transport</a></li>
                                                 <li><a href="{{ route('airplane') }}">Airplane</a></li>
-                                                <li><a href="{{ route('team') }}">Hotel</a></li>
+                                                <li><a href="{{ route('hotel.home') }}">Hotel</a></li>
                                             </ul>
                                         </li>
 
@@ -135,7 +135,7 @@
                         <!-- Nav Search -->
                         <div class="nav-search">
                             <button class="far fa-search"></button>
-                            <form action="{{ route('search-voice-text') }}" class="hide" method="GET">
+                            <form action="{{ route('search') }}" class="hide" method="GET">
                                 <input type="text" name="keyword" placeholder="Search" class="searchbox" required>
                                 <i class="fa fa-microphone" aria-hidden="true" style="margin: 0 16px"
                                     id="voice-search"></i>
@@ -145,10 +145,6 @@
 
                         <!-- Menu Button -->
                         <div class="menu-btns py-10">
-                            <a href="{{ route('tours') }}" class="theme-btn style-two bgc-secondary">
-                                <span data-hover="Đặt Ngay">Book Now</span>
-                                <i class="fal fa-arrow-right"></i>
-                            </a>
                             <!-- menu sidbar -->
                             <div class="menu-sidebar">
                                 <li class="drop-down">
@@ -169,7 +165,6 @@
                                     <ul class="dropdown-menu" id="dropdownMenu">
                                         @if (session()->has('username'))
                                             <li><a href="{{ route('user-profile') }}">Thông tin cá nhân</a></li>
-                                            <li><a href="{{ route('my-tours') }}">Tour đã đặt</a></li>
                                             <li><a href="{{ route('handle_logout') }}">Đăng xuất</a></li>
                                         @else
                                             <li><a href="{{ route('login') }}">Đăng nhập</a></li>
