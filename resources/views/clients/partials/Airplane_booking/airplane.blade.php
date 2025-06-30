@@ -1,5 +1,5 @@
-@include('clients.blocks.header_home')
-@include('clients.blocks.banner')
+@include('clients.blocks.header_hotel')
+@include('clients.blocks.banner_hotel')
 
 <!-- Airplane Services Area start -->
 <section class="airplane-services-area py-100 rel z-1">
@@ -102,9 +102,6 @@
         </div>
     </div>
 </section>
-
-@include('clients.blocks.new_letter')
-@include('clients.blocks.footer')
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 

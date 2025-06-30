@@ -424,25 +424,10 @@
                         </div>
                       </li>
                       <li>
-                        <a href="#">Flight <i class="la la-angle-down"></i></a>
-                        <ul class="dropdown-menu-item">
-                          <li><a href="flight-grid.html">Flight grid</a></li>
-                          <li><a href="flight-list.html">Flight list</a></li>
-                          <li>
-                            <a href="flight-sidebar.html">Flight sidebar </a>
-                          </li>
-                          <li>
-                            <a href="flight-single.html">Flight details</a>
-                          </li>
-                          <li>
-                            <a href="flight-booking.html">Flight Booking</a>
-                          </li>
-                          <li>
-                            <a href="flight-search-result.html"
-                              >Flight Search Result</a
-                            >
-                          </li>
-                        </ul>
+                        <a href="/airplane">Flight</a>
+                      </li>
+                      <li>
+                        <a href="/transport">Transport</a>
                       </li>
                       <li>
                         <a href="#">Hotel <i class="la la-angle-down"></i></a>

@@ -1,6 +1,5 @@
 <!-- Page Banner Start -->
-<section class="page-banner-area pt-50 pb-35 rel z-1 bgs-cover"
-    style="background-image: url({{ asset('clients/assets/images/banner/banner.jpg')}});">
+<section class="page-banner-area pt-50 pb-35 rel z-1 bgs-cover">
     <div class="container">
         <div class="banner-inner text-white">
             <h2 class="page-title mb-10" data-aos="fade-left" data-aos-duration="1500" data-aos-offset="50">{{ $title }}
@@ -17,7 +16,8 @@
 </section>
 <!-- Page Banner End -->
 
-<form action="{{ route('search') }}" method="GET" id="search_form">
+<form action="{{ route('hotel.find') }}" method="POST" id="search_form">
+    @csrf
     <div class="container container-1400">
         <div class="search-filter-inner" data-aos="zoom-out-down" data-aos-duration="1500" data-aos-offset="50">
             <div class="filter-item clearfix">

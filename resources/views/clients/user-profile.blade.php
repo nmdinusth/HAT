@@ -1,4 +1,4 @@
-@include('clients.blocks.header_home')
+@include('clients.blocks.header_hotel')
 <div class="user-profile">
     <div class="container-xl px-4 mt-4">
         <div class="row">

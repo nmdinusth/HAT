@@ -1,4 +1,5 @@
-@include('clients.blocks.header_home')
+@include('clients.blocks.header_hotel')
+@include('clients.blocks.banner_hotel')
 
 <div class="header-spacer"></div>
 
