@@ -1,8 +1,5 @@
 @include('clients.blocks.header_hotel')
 @include('clients.blocks.banner_hotel')
-@php
-    $type = request('type', 'domestic');
-@endphp
 <div class="container py-5">
     <h2 class="mb-4 text-center">Danh Sách Chuyến Bay</h2>
     <div class="row">
@@ -103,7 +100,7 @@
         </div>
     </div>
 </div>
-@include('clients.blocks.footer')
+@include('clients.blocks.footer_hotel')
 
 <style>
 select.form-select {
