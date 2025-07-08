@@ -31,16 +31,14 @@ class Hotel extends Model
         return trim($slug, '-');
     }
 
-    // Lọc theo khu vực và số lượng khách
-    public function locationCondition($inputLocation, $adults, $children, $totalGuests)
+    public function locationCondition($inputLocation)
     {
         $slug = Str::slug($inputLocation);
 
         // 1. Tìm khách sạn chính xác
         $mainHotel = Hotel::where('slug', $slug)
-                ->where('is_active', true)
-                ->first();
-
+            ->where('is_active', true)
+            ->first();
         if ($mainHotel) {
             // 2. Tìm các khách sạn liên quan (cùng thành phố, nhưng khác khách sạn chính)
             $relatedHotels = Hotel::where('city_id', $mainHotel->city_id)
@@ -57,21 +55,12 @@ class Hotel extends Model
         }
 
         // 3. Nếu không phải tên khách sạn → tìm theo thành phố (slug hóa cached_city_name)
-        $hotelsByCity = Hotel::with([
-            'bookings.bookingRooms.room.roomType',
-            'roomTypes'
-        ])
-            ->where('cached_city_name', $slug)
+        $hotelsByCity = Hotel::where('cached_city_name', $slug)
             ->where('is_active', true)
             ->get();
-        
+
 
         if ($hotelsByCity->count()) {
-
-            // 4. Lọc khách sạn có roomType theo số người 
-            foreach ($hotelsByCity as $hotel) {
-                dd($hotel->roomTypes);
-            }
             return [
                 'type' => 'area',
                 'hotels' => $hotelsByCity, //Có thể xử lý vị trí khách sạn theo đánh giá hoặc yếu tố khác ở đây
@@ -84,12 +73,50 @@ class Hotel extends Model
         ];
     }
 
-    public function dateCondition($checkInDate, $checkOutDate, $hotels)
+    public function guestCondition($hotels, $adultNumber, $childNumber, $totalGuest)
     {
-        foreach ($hotels as $hotel ) {
-            
+        $results = [];
+
+        foreach ($hotels as $hotel) {
+            $perfectMatch = [];
+            $recommended = [];
+            $suggested = [];
+
+            foreach ($hotel->roomTypes as $roomType) {
+                $maxGuest = (int) $roomType->max_guest;
+                $maxAdult = (int) $roomType->max_adult;
+                $maxChildren = is_null($roomType->max_children) ? null : (int) $roomType->max_children;
+
+                if ($totalGuest <= $maxGuest) {
+                    // PERFECT MATCH: tất cả đều nằm trong giới hạn
+                    $isAdultOk = $adultNumber == $maxAdult;
+                    $isChildOk = is_null($maxChildren) || $childNumber == $maxChildren;
+
+                    if ($isAdultOk && $isChildOk) {
+                        $perfectMatch[] = $roomType;
+                    }
+                    // Nếu không perfect, nhưng người lớn vẫn hợp → recommended
+                    elseif ($isAdultOk) {
+                        $recommended[] = $roomType;
+                    }
+                    // Người lớn vượt nhưng tổng người vẫn ok → suggested
+                    else {
+                        $suggested[] = $roomType;
+                    }
+                }
+            }
+
+            if (!empty($perfectMatch) || !empty($recommended) || !empty($suggested)) {
+                $results[] = [
+                    'hotel' => $hotel,
+                    'perfect_match' => $perfectMatch,
+                    'recommended' => $recommended,
+                    'suggested' => $suggested,
+                ];
+            }
         }
-        return 0;
+
+        return $results;
     }
 
     public function bookings()

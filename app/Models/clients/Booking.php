@@ -25,7 +25,7 @@ class Booking extends Model
             return $result;
         }
 
-        $parts = explode(" đến ", $data);
+        $parts = explode(" - ", $data);
 
         if (count($parts) === 2) {
             // Thêm validate ngày tháng

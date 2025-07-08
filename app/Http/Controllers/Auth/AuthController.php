@@ -21,13 +21,31 @@ class AuthController extends Controller
         $this->user = new User();
         $this->user_information = new UserInformation();
     }
-    public function index()
+
+    public function login(Request $request)
     {
-        $title = 'Đăng nhập';
-        return view('clients.login', compact('title'));
+        // dd($request->all());
+        return response()->json([
+            // Success response (successful login)
+            // 'status' => 'success',
+            // 'message' => 'Login successful',
+            // 'redirect' => route('home'), // or any other route
+
+            // Error response (wrong credentials)
+            'status' => 'error',
+            'message' => 'Incorrect username or password'
+        ]);
+
     }
 
-    public function register (Request $request) {
+    // public function index()
+    // {
+    //     $title = 'Đăng nhập';
+    //     return view('clients.login', compact('title'));
+    // }
+
+    public function register(Request $request)
+    {
         $name = $request->name;
         $username = $request->username;
         $email = $request->email;
@@ -38,10 +56,10 @@ class AuthController extends Controller
         if ($checkAccountExist) {
             return response()->json([
                 'debug' => [
-                    'name'      => $name,
-                    'username'  => $username,
-                    'email'     => $email,
-                    'password'  => $password,
+                    'name' => $name,
+                    'username' => $username,
+                    'email' => $email,
+                    'password' => $password,
                     'checkAccountExist' => $checkAccountExist,
                 ],
                 'success' => false,
@@ -54,11 +72,11 @@ class AuthController extends Controller
 
         // Thực hiện đăng ký tài khoản
         $data = [
-            'username'                  => $username,
-            'email'                     => $email,
-            'password'                  => bcrypt($password),
-            'email_verification_token'  => $email_verification_token,
-            'email_verification_expires_at'  => $email_verification_expires_at
+            'username' => $username,
+            'email' => $email,
+            'password' => bcrypt($password),
+            'email_verification_token' => $email_verification_token,
+            'email_verification_expires_at' => $email_verification_expires_at
         ];
         $user = $this->login->registerAcount($data);
 
@@ -71,24 +89,26 @@ class AuthController extends Controller
 
         // Gửi token xác nhận
         $this->login->sendActivationEmail(
-            $email, 
-            $email_verification_token, 
+            $email,
+            $email_verification_token,
             $email_verification_expires_at
         );
         session()->put('email', $email);
 
         return redirect()->route('activate.notification');
-    } 
+    }
 
     // Trang thông báo kích hoạt tài khoản
-    public function showActivateNotification () {
+    public function showActivateNotification()
+    {
         $title = 'Kích hoạt tài khoản';
         $email = session('email');
         return view('clients.token-verification', compact('title', 'email'));
     }
 
     //Xử lý gửi mail xác thực
-    public function sendMailActivate () {
+    public function sendMailActivate()
+    {
         $email = session('email');
         $email_verification_token = Str::random(60); //Tạo token 
         $email_verification_expires_at = now()->addMinutes(15); //Tạo thời gian hết hạn token 
@@ -105,8 +125,8 @@ class AuthController extends Controller
 
         // Gửi token xác nhận
         $this->login->sendActivationEmail(
-            $email, 
-            $email_verification_token, 
+            $email,
+            $email_verification_token,
             $email_verification_expires_at
         );
     }
@@ -125,67 +145,70 @@ class AuthController extends Controller
     }
 
     //Xử lý người dùng đăng nhập
-    public function login (Request $request) {
-        $username = $request->username;
-        $password = $request->password;
+    // public function login (Request $request) {
+    //     $username = $request->username;
+    //     $password = $request->password;
 
-        $data_login = [
-            'username' => $username,
-            'password' => $password,
-        ];
+    //     $data_login = [
+    //         'username' => $username,
+    //         'password' => $password,
+    //     ];
 
-        $user_login = $this->login->login($data_login); //Trả về true: thông tin tài khoản đúng, false tk or mk sai
-        if ($user_login == false) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Thông tin tài khoản không chính xác!',
-            ]);
-        } 
+    //     $user_login = $this->login->login($data_login); //Trả về true: thông tin tài khoản đúng, false tk or mk sai
+    //     if ($user_login == false) {
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'Thông tin tài khoản không chính xác!',
+    //         ]);
+    //     } 
 
-        $status_user = $this->login->checkStatus($user_login);
-        if ($status_user == false) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Tài khoản hiện tại của bạn đang bị khóa!',
-            ]);
-        } 
+    //     $status_user = $this->login->checkStatus($user_login);
+    //     if ($status_user == false) {
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'Tài khoản hiện tại của bạn đang bị khóa!',
+    //         ]);
+    //     } 
 
-        $user_id = $this->user->getUserId($username);
-        $email = $user_login->email;
-        $email_masked = $this->user->maskEmail($email);
-        $is_2fa_enabled = $this->login->checkTwofaEnable($user_login);
-        if($is_2fa_enabled == false) {
-            $request->session()->put('username', $username);
-            $request->session()->put('user_id', $user_id);
-            // $request->session()->put('avatar', $user->avatar);
-            toastr()->success("Đăng nhập thành côngg!",'Thông báo');
-            return redirect()->route('home');
-        } else {
-            $request->session()->put('email', $email);
-            $request->session()->put('email_masked', $email_masked);
-            return redirect()->route('2fa_show'); //->with('email', $email);
-        }
-    }
+    //     $user_id = $this->user->getUserId($username);
+    //     $email = $user_login->email;
+    //     $email_masked = $this->user->maskEmail($email);
+    //     $is_2fa_enabled = $this->login->checkTwofaEnable($user_login);
+    //     if($is_2fa_enabled == false) {
+    //         $request->session()->put('username', $username);
+    //         $request->session()->put('user_id', $user_id);
+    //         // $request->session()->put('avatar', $user->avatar);
+    //         toastr()->success("Đăng nhập thành côngg!",'Thông báo');
+    //         return redirect()->route('home');
+    //     } else {
+    //         $request->session()->put('email', $email);
+    //         $request->session()->put('email_masked', $email_masked);
+    //         return redirect()->route('2fa_show'); //->with('email', $email);
+    //     }
+    // }
 
     // Xử lý người dùng đăng xuất
-    public function logout (Request $request) {
+    public function logout(Request $request)
+    {
         // Xóa session lưu trữ thông tin người dùng đã đăng nhập
         $request->session()->forget('username');
         $request->session()->forget('user_id');
         $request->session()->forget('email');
         $request->session()->forget('email_masked');
-        toastr()->success("Đăng xuất thành côngg!",'Thông báo');
+        toastr()->success("Đăng xuất thành côngg!", 'Thông báo');
         return redirect()->route('home');
     }
 
     // Hiển thị trang xác thực 2 bước
-    public function showOtpForm(Request $request) {
+    public function showOtpForm(Request $request)
+    {
         $email_masked = session('email_masked'); // Lấy email từ session
         return view('clients.otp-verification', compact('email_masked'));
     }
 
     // Xử lý gửi lại otp 2fa
-    public function sendOtp2fa (Request $request) {
+    public function sendOtp2fa(Request $request)
+    {
         $email = session('email');
         $this->login->sendOtp2fa($email);
         // toastr()->success("Đã gửi lại mã OTP!",'Thông báo');
@@ -193,13 +216,14 @@ class AuthController extends Controller
     }
 
     // Xử lý OTP được gửi về
-    public function verifyOtp (Request $request) {
+    public function verifyOtp(Request $request)
+    {
         $request->validate(['otpCode' => 'required|digits:6']); //otp phải đủ 6 số
         // Xử lý, xác nhận otp trong server, xem đã hết hạn chưa,....
         $otpCode = $request->otpCode; //Mã otp được gửi từ user
         $email = $request->email; //Mã email được gửi từ user
-        
-        $user = $this->user->getUserByEmail( $email);
+
+        $user = $this->user->getUserByEmail($email);
         if (!$user) {
             return response()->json([
                 'status' => 'user_not_found',
@@ -210,14 +234,14 @@ class AuthController extends Controller
         $effect = now()->lt($user->otp_expires_at); //true nếu còn hiệu lực
         $effect = now()->gt($user->otp_expires_at); //true nếu hết hạn
         if ($effect || !$user->otp_expires_at) {
-           return response()->json([
+            return response()->json([
                 'status' => 'otp_expired',
                 'message' => 'Mã OTP đã hết hạn.'
             ], 400);
         }
 
         $serveOTP = $user->otp_code; // Mã otp đã gửi cho user
-        $compare =  $otpCode === $serveOTP ;
+        $compare = $otpCode === $serveOTP;
         if (!$compare) {
             return response()->json([
                 'status' => 'otp_invalid',
@@ -236,7 +260,7 @@ class AuthController extends Controller
 
         // toastr()->success('Xác thực OTP và đăng nhập thành công!', 'Thành công');
         // return redirect()->route('home');
-        
+
         return response()->json([
             // 'debug' => [
             //     'serveOTP' => $user->otp_code,
