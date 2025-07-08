@@ -28,8 +28,9 @@
               <!-- end hero-content -->
               <div class="search-fields-container">
                 <div class="contact-form-action">
-                  <form action="#" class="row">
-                    <div class="col-lg-3 pe-0">
+                  <form class="row" method="post" action="{{ route('hotel.find') }}">
+                    @csrf
+                    <div class="col-lg-4 pe-0">
                       <div class="input-box">
                         <label class="label-text"
                           >Destination / Hotel name</label
@@ -39,13 +40,14 @@
                           <input
                             class="form-control"
                             type="text"
+                            name="location"
                             placeholder="Enter City or property"
                           />
                         </div>
                       </div>
                     </div>
                     <!-- end col-lg-3 -->
-                    <div class="col-lg-3 pe-0">
+                    <div class="col-lg-4 pe-0">
                       <div class="input-box">
                         <label class="label-text">Check in - Check out</label>
                         <div class="form-group">
@@ -58,47 +60,7 @@
                         </div>
                       </div>
                     </div>
-                    <!-- end col-lg-3 -->
-                    <div class="col-lg-3 pe-0">
-                      <div class="input-box">
-                        <label class="label-text">Room Type</label>
-                        <div class="form-group select2-container-wrapper">
-                          <div
-                            class="select-contain select-contain-shadow w-auto"
-                          >
-                            <select class="select-contain-select">
-                              <option value="0">Select Type</option>
-                              <option value="1">Single</option>
-                              <option value="2">Double</option>
-                              <option value="3">Triple</option>
-                              <option value="4">Quad</option>
-                              <option value="5">Queen</option>
-                              <option value="6">King</option>
-                              <option value="7">Twin</option>
-                              <option value="8">Double-double</option>
-                              <option value="9">Studio</option>
-                              <option value="10">Suite</option>
-                              <option value="11">Mini Suite</option>
-                              <option value="12">President Suite</option>
-                              <option value="13">President Suite</option>
-                              <option value="14">Apartments</option>
-                              <option value="15">Connecting rooms</option>
-                              <option value="16">Murphy Room</option>
-                              <option value="17">Accessible Room</option>
-                              <option value="18">Cabana</option>
-                              <option value="19">Adjoining rooms</option>
-                              <option value="20">Adjacent rooms</option>
-                              <option value="21">Villa</option>
-                              <option value="22">Executive Floor</option>
-                              <option value="23">Smoking room</option>
-                              <option value="24">Non-Smoking Room</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- end col-lg-3 -->
-                    <div class="col-lg-3">
+                    <div class="col-lg-4">
                       <div class="input-box">
                         <label class="label-text">Guests and Rooms</label>
                         <div class="form-group">
@@ -115,38 +77,24 @@
                                 class="adult"
                                 data-text="Adult"
                                 data-text-multi="Adults"
-                                >0 Adult</span
+                                >2 Adult</span
                               >
                               -
                               <span
                                 class="children"
                                 data-text="Child"
                                 data-text-multi="Children"
-                                >0 Child</span
+                                >1 Child</span
+                              >
+                              -
+                              <span
+                                class="room"
+                                data-text="Room"
+                                data-text-multi="Room"
+                                >1 Room</span
                               >
                             </a>
                             <div class="dropdown-menu dropdown-menu-wrap">
-                              <div class="dropdown-item">
-                                <div
-                                  class="qty-box d-flex align-items-center justify-content-between"
-                                >
-                                  <label>Rooms</label>
-                                  <div class="qtyBtn d-flex align-items-center">
-                                    <div class="qtyDec">
-                                      <i class="la la-minus"></i>
-                                    </div>
-                                    <input
-                                      type="text"
-                                      name="room_number"
-                                      value="0"
-                                      class="qty-input"
-                                    />
-                                    <div class="qtyInc">
-                                      <i class="la la-plus"></i>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
                               <div class="dropdown-item">
                                 <div
                                   class="qty-box d-flex align-items-center justify-content-between"
@@ -157,9 +105,9 @@
                                       <i class="la la-minus"></i>
                                     </div>
                                     <input
-                                      type="text"
+                                      type="number"
                                       name="adult_number"
-                                      value="0"
+                                      value="2"
                                     />
                                     <div class="qtyInc">
                                       <i class="la la-plus"></i>
@@ -177,9 +125,30 @@
                                       <i class="la la-minus"></i>
                                     </div>
                                     <input
-                                      type="text"
+                                      type="number"
                                       name="child_number"
-                                      value="0"
+                                      value="1"
+                                    />
+                                    <div class="qtyInc">
+                                      <i class="la la-plus"></i>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="dropdown-item">
+                                <div
+                                  class="qty-box d-flex align-items-center justify-content-between"
+                                >
+                                  <label>Rooms</label>
+                                  <div class="qtyBtn d-flex align-items-center">
+                                    <div class="qtyDec">
+                                      <i class="la la-minus"></i>
+                                    </div>
+                                    <input
+                                      type="number"
+                                      name="room_number"
+                                      value="1"
+                                      class="qty-input"
                                     />
                                     <div class="qtyInc">
                                       <i class="la la-plus"></i>
@@ -196,7 +165,7 @@
                     <!-- end col-lg-3 -->
                   </form>
                   <div class="btn-box pt-2">
-                    <a href="room-search-result.html" class="theme-btn"
+                    <a class="theme-btn" id="search-button-find-hotel"
                       >Search Now</a
                     >
                   </div>

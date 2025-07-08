@@ -24,17 +24,17 @@ class HotelController extends Controller
 
         return view('clients.partials.Hotel_booking.home', compact('title'));
     }
-    public function roomSearchResult()
+    public function hotelSearchResult()
     {
         // $title = 'Khách sạn';
 
-        return view('clients.partials.Hotel_booking.room-search-result');
+        return view('clients.partials.Hotel_booking.hotel-search-result');
     }
-    public function roomSearchResultList()
+    public function hotelSingle()
     {
         // $title = 'Khách sạn';
 
-        return view('clients.partials.Hotel_booking.room-search-result-list');
+        return view('clients.partials.Hotel_booking.hotel-single');
     }
     public function roomDetail()
     {
@@ -54,37 +54,44 @@ class HotelController extends Controller
 
         return view('clients.partials.Hotel_booking.checkout');
     }
-
-    public function findHotel(Request $request)
+    public function roomSearchResult()
     {
-        // dd($request->all());
-        // (1) : Tên địa điểm như Hà Nội hoặc tên Khách Sạn
-        // (2) : Ngày đến và đi - Tách riêng ra để lưu vào
-        // (3) : Số người và số phòng
-        // Tách sô người thành số và cụ thể 
-        // số phòng để tìm kiếm dựa trên khách sạn nữa - khách sạn nào còn từng đấy phòng yêu cầu
+        // $title = 'Khách sạn';
 
+        return view('clients.partials.Hotel_booking.room-search-result');
+    }
+    public function roomSearchResultList()
+    {
+        // $title = 'Khách sạn';
+
+        return view('clients.partials.Hotel_booking.room-search-result-list');
+    }
+    
+    
+    
+
+    public function findHotel(Request $request) {
+        dd($request->all()); //Kiểm tra dữ liệu đầu vào
         $input_location = $this->hotel->normalizeLocation($request->location); // Đà Nẵng -> da nang
 
-        // Cách sử dụng đúng:
-        $ranger_date = $this->booking->splitDateRange($request->ranger_date);
-        $check_in_date = $ranger_date['check_in_date']; // Truy cập bằng key
-        $check_out_date = $ranger_date['check_out_date'];
+        $date_range = $this->booking->splitDateRange($request->daterange);
+        $check_in_date = $date_range['check_in_date'];
+        $check_out_date = $date_range['check_out_date'];
 
-        $GaR = $this->booking->parseGuestsAndRooms($request->guests_and_rooms);
-        $adults = $GaR['adults']; //Số người lớn
-        $children = $GaR['children']; // Số trẻ em
-        $total_guests = $GaR['total_guests']; // Tổng số người
-        $rooms = $GaR['rooms']; // Tổng số phòng
+        $adult_number = $request->adult_number;
+        $child_number = $request->child_number;
+        $total_guests = $adult_number + $child_number;
+        $room_number = $request->room_number;
 
-        //Ta sẽ tìm theo tên khách sạn trước sau đó nếu không phải thì chắc chắn sẽ là tên khu vực 
-        $hotels = $this->hotel->locationCondition($input_location, $adults, $children, $total_guests);
-        // dd($hotel['type']);
-
+        // 1. Xử lý Danh sách khách sạn theo tên hoặc khu vực 
+        $hotels = $this->hotel->locationCondition($input_location);
+        // dd($hotels); //Ko trả về khách sạn phù hợp sẽ gây lỗi Undefined array key "hotels"
+        // Khách sạn EgLoad với roomType
+        $hotels_roomType = $hotels['hotels']->load('roomTypes.rooms');
         // Xử lý name là khu vực trước 
         if ($hotels['type'] === 'area') {
-            $hotels = $this->hotel->dateCondition($check_in_date, $check_out_date, $hotels['hotels']);
+            $result_guest_condition = $this->hotel->guestCondition($hotels_roomType, $adult_number, $child_number, $total_guests);
         };
-
+        dd($result_guest_condition);
     }
 }

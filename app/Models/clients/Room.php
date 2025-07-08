@@ -11,6 +11,11 @@ class Room extends Model
 
     protected $guarded = [];
 
+    // Hàm kiểm tra lịch sử đặt phòng của phòng bằng id
+    public function getBookingHistoryById () {
+
+    }
+
     public function bookingRooms () {
         return $this->hasMany(BookingRoom::class);
     }

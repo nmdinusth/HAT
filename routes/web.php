@@ -43,10 +43,10 @@ Route::get('/', [HotelController::class, 'index'])->name('home');
 // Route::get('activate-account/{token}', [LoginController::class, 'activateAccount'])->name('activate.account');
 
 //Handle Login New
-Route::get('/dang-nhap', [AuthController::class, 'index'])->name('login');
-Route::get('/dang-ky', [AuthController::class, 'index'])->name('register');
-Route::post('/login', [AuthController::class, 'login'])->name('handle_login');
-Route::post('/register', [AuthController::class, 'register'])->name('handle_register');
+// Route::get('/dang-nhap', [AuthController::class, 'index'])->name('login');
+// Route::get('/dang-ky', [AuthController::class, 'index'])->name('register');
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::get('/logout', [AuthController::class, 'logout'])->name('handle_logout');
 
 Route::get('/xac-thuc-2-buoc', [AuthController::class, 'showOtpForm'])->name('2fa_show');
@@ -62,17 +62,27 @@ Route::get('auth/google', [LoginGoogleController::class, 'redirectToGoogle'])->n
 Route::get('auth/google/callback', [LoginGoogleController::class, 'handleGoogleCallback']);
 
 // Các route liên quan đến xử lý đặt phòng khách sạn
-Route::prefix('khach-san')->group( function () {
-    Route::get('/', [HotelController::class, 'index'])->name('hotel.home');
-    Route::post('/findHotel', [HotelController::class, 'findHotel'])->name('hotel.find');
 
-    Route::get('/ket-qua-tim-phong', [HotelController::class, 'roomSearchResult']);
-    Route::get('/danh-sach-phong', [HotelController::class, 'roomSearchResultList']);
-    Route::get('/chi-tiet-phong', [HotelController::class, 'roomDetail']);
-    Route::get('/gio-hang', [HotelController::class, 'cart']);
-    Route::get('/thanh-toan', [HotelController::class, 'checkout']);
-    
-});
+// Trang chủ tìm khách sạn
+Route::get('/', [HotelController::class, 'index'])->name('hotel.home');
+// Gọi hàm xử lý tìm phòng và trả danh sách phòng kèm khách sạn hiển thị ở homeSearchRestult
+Route::post('/find-hotel', [HotelController::class, 'findHotel'])->name('hotel.find');
+// View hiển thị kết quả tìm kiếm khách sạn 
+Route::get('/hotel-search-result', [HotelController::class, 'hotelSearchResult']);
+// View hiển thị thông tin khách sạn
+Route::get('/hotel-single', [HotelController::class, 'hotelSingle']);
+// View hiển thị thông tin phòng 
+Route::get('/room-detail', [HotelController::class, 'roomDetail']);
+// Hiển thị giỏ hàng phòng đã chọn nếu có
+Route::get('/cart', [HotelController::class, 'cart']);
+//Hiển thị view thanh toán chưa xử lý
+Route::get('/checkout', [HotelController::class, 'checkout']);
+
+// Các view khác nếu cần thiết
+Route::get('/room-search-result', [HotelController::class, 'roomSearchResult']);
+Route::get('/room-search-result-list', [HotelController::class, 'roomSearchResultList']);
+
+
 
 //Handle user profile
 Route::get('/user-profile', [UserProfileController::class, 'index'])->name('user-profile')->middleware('checkLoginClient');
