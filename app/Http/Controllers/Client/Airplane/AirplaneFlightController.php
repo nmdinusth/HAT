@@ -14,6 +14,7 @@ class AirplaneFlightController extends Controller
         $depart = $request->query('depart');
         $return = $request->query('return');
         $passenger = $request->query('passenger');
+        $type = $request->query('type', 'domestic');
 
         // Danh sách chuyến bay giả lập
         $flights = [
@@ -51,6 +52,6 @@ class AirplaneFlightController extends Controller
 
         $title = 'Danh Sách Chuyến Bay';
         $this->addBreadcrumb($title, route('airplane-flights', $request->query()));
-        return view('clients.partials.Airplane_booking.airplane-flights', compact('flights', 'from', 'to', 'depart', 'return', 'passenger', 'title'));
+        return view('clients.partials.Airplane_booking.airplane-flights', compact('flights', 'from', 'to', 'depart', 'return', 'passenger', 'title', 'type'));
     }
 }

@@ -17,12 +17,12 @@
 
     <!-- Booking Form Steps -->
     <div class="booking-step step-1">
-        <div class="row">
-            <div class="col-md-8">
-                <div class="card p-4 mb-3">
-                    <div class="d-flex mb-3">
-                        <button class="btn btn-toggle active-tab me-2" data-target="airport">Đưa đón sân bay</button>
-                        <button class="btn btn-toggle" data-target="fixedpoint">Đưa đón điểm cố định</button>
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
+                <div class="card p-5 mb-4 shadow-lg border-0" style="border-radius:1.5rem;">
+                    <div class="d-flex mb-4 gap-3 justify-content-center">
+                        <button class="btn btn-toggle active-tab px-4 py-2 fw-bold rounded-pill me-2" data-target="airport" style="font-size:1.1rem;">Đưa đón sân bay</button>
+                        <button class="btn btn-toggle px-4 py-2 fw-bold rounded-pill" data-target="fixedpoint" style="font-size:1.1rem;">Đưa đón điểm cố định</button>
                     </div>
 
                     <!-- Đưa đón sân bay -->
@@ -30,8 +30,7 @@
                         <div class="mb-3 row justify-content-center" id="airport-select-row">
                             <div class="col-md-12">
                                 <label for="airport-select" class="form-label fw-bold">Sân bay <span class="text-danger">*</span></label>
-                                <select id="form-for-select" name="airport" required
-                                    class="tw-block tw-py-2.5 tw-px-0 tw-w-full tw-text-sm tw-text-gray-500 tw-bg-transparent tw-border-0 tw-border-b-2 tw-border-gray-200 tw-appearance-none dark:tw-text-gray-400 dark:tw-border-gray-700 focus:tw-outline-none focus:tw-ring-0 focus:tw-border-gray-200 peer">
+                                <select id="form-for-select" name="airport" required class="form-select py-3 rounded-pill">
                                     <option value="">Chọn sân bay</option>
                                     <option value="noibai">Sân bay Nội Bài</option>
                                     <option value="tansonnhat">Sân bay Tân Sơn Nhất</option>
@@ -44,42 +43,38 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <input type="radio" id="airport-dropoff" name="airport_trip_option" class="card-radio" checked hidden>
-                                <label for="airport-dropoff" class="card-radio-label">
-                                    <div class="card-radio-content">
-                                        <div class="card-radio-title-row">
+                                <label for="airport-dropoff" class="card-radio-label w-100">
+                                    <div class="card-radio-content p-3 rounded-3 border" style="background:#fffbe6;">
+                                        <div class="card-radio-title-row mb-2">
                                             <span class="card-radio-check"></span>
                                             <span class="fw-bold text-orange card-radio-title">Đưa khách đến sân bay</span>
                                         </div>
-                                        <div class="mt-3">
-                                            <div class="mb-3">
-                                                <label class="form-label fw-bold">Giờ đón khách tại điểm đón <span class="text-danger">*</span></label>
-                                                <input type="text" id="airport-dropoff-time" class="form-control" placeholder="Chọn ngày và giờ">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label fw-bold">Điểm đón khách <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" name="airport_pickup" placeholder="Nhập địa chỉ điểm đón khách" required>
-                                            </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold">Giờ đón khách tại điểm đón <span class="text-danger">*</span></label>
+                                            <input type="text" id="airport-dropoff-time" class="form-control py-3 rounded-pill" placeholder="Chọn ngày và giờ">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold">Điểm đón khách <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control py-3 rounded-pill" name="airport_pickup" placeholder="Nhập địa chỉ điểm đón khách" required>
                                         </div>
                                     </div>
                                 </label>
                             </div>
                             <div class="col-md-6">
                                 <input type="radio" id="airport-pickup" name="airport_trip_option" class="card-radio" hidden>
-                                <label for="airport-pickup" class="card-radio-label">
-                                    <div class="card-radio-content">
-                                        <div class="card-radio-title-row">
+                                <label for="airport-pickup" class="card-radio-label w-100">
+                                    <div class="card-radio-content p-3 rounded-3 border bg-light">
+                                        <div class="card-radio-title-row mb-2">
                                             <span class="card-radio-check"></span>
                                             <span class="fw-bold text-gray card-radio-title">Trả khách từ sân bay</span>
                                         </div>
-                                        <div class="mt-3">
-                                            <div class="mb-3">
-                                                <label class="form-label fw-bold">Giờ đón khách tại sân bay <span class="text-danger">*</span></label>
-                                                <input type="text" id="airport-pickup-time" class="form-control" placeholder="Chọn ngày và giờ" disabled>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label fw-bold">Điểm trả khách <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" name="airport_dropoff" placeholder="Nhập địa chỉ điểm trả khách" required disabled>
-                                            </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold">Giờ đón khách tại sân bay <span class="text-danger">*</span></label>
+                                            <input type="text" id="airport-pickup-time" class="form-control py-3 rounded-pill" placeholder="Chọn ngày và giờ" disabled>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold">Điểm trả khách <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control py-3 rounded-pill" name="airport_dropoff" placeholder="Nhập địa chỉ điểm trả khách" required disabled>
                                         </div>
                                     </div>
                                 </label>
@@ -89,18 +84,18 @@
 
                     <!-- Đưa đón điểm cố định -->
                     <div class="trip-group-section d-none" id="fixedpoint-section">
-                        <div class="p-3 bg-light rounded">
+                        <div class="p-4 bg-light rounded-3">
                             <div class="mb-3">
                                 <label class="form-label fw-bold">Giờ đón khách <span class="text-danger">*</span></label>
-                                <input type="text" id="fixedpoint-time" class="form-control" placeholder="Chọn ngày và giờ">
+                                <input type="text" id="fixedpoint-time" class="form-control py-3 rounded-pill" placeholder="Chọn ngày và giờ">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label fw-bold">Điểm xuất phát <span class="text-danger">*</span></label>
-                                <input type="text" id="fixedpoint-start" name="fixedpoint_start" class="form-control" placeholder="Nhập địa chỉ điểm xuất phát" required>
+                                <input type="text" id="fixedpoint-start" name="fixedpoint_start" class="form-control py-3 rounded-pill" placeholder="Nhập địa chỉ điểm xuất phát" required>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label fw-bold">Điểm kết thúc <span class="text-danger">*</span></label>
-                                <input type="text" id="fixedpoint-end" name="fixedpoint_end" class="form-control" placeholder="Nhập địa chỉ điểm kết thúc" required>
+                                <input type="text" id="fixedpoint-end" name="fixedpoint_end" class="form-control py-3 rounded-pill" placeholder="Nhập địa chỉ điểm kết thúc" required>
                             </div>
                         </div>
                     </div>
@@ -116,24 +111,18 @@
 
                     <div class="mb-3 mt-3">
                         <label class="form-label">Loại xe <span class="text-danger">*</span></label>
-                        <select name="car_type" required
-                            class="tw-block tw-py-2.5 tw-px-0 tw-w-full tw-text-sm tw-text-gray-500 tw-bg-transparent tw-border-0 tw-border-b-2 tw-border-gray-200 tw-appearance-none dark:tw-text-gray-400 dark:tw-border-gray-700 focus:tw-outline-none focus:tw-ring-0 focus:tw-border-gray-200 peer">
+                        <select name="car_type" required class="form-select py-3 rounded-pill">
                             <option value="5">5 seats (Standard)</option>
                             <option value="7">7 seats</option>
                             <option value="10">10 seats</option>
                         </select>
-                        <div class="mt-2">
-                            <span class="me-3"><i class="fas fa-user-friends"></i> 3</span>
-                            <span><i class="fas fa-suitcase"></i> 3</span>
-                        </div>
                     </div>
 
-                    <button id="find-trip-btn" class="btn btn-warning w-100">Tìm chuyến xe</button>
+                    <button id="find-trip-btn" class="btn btn-warning w-100 py-3 rounded-pill fw-bold" style="font-size:1.2rem;">Tìm chuyến xe</button>
                 </div>
             </div>
-
-            <div class="col-md-4">
-                <div class="card p-3">
+            <div class="col-lg-4 col-md-6 mt-4 mt-lg-0">
+                <div class="card p-4 shadow-sm border-0" style="border-radius:1.2rem;">
                     <div class="fw-bold mb-2">Kết quả tìm kiếm</div>
                     <div id="search-results-list">
                         <!-- Search results will appear here -->
@@ -152,10 +141,13 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/airbnb.css">
 
 <style>
+body, .fw-bold, h1, h2, label, button, input, select {
+    font-family: 'Montserrat', Arial, sans-serif;
+}
 .step {
-    font-size: 14px;
-    width: 80px;
-    height: 80px;
+    font-size: 15px;
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
     background: #fff3cd;
     color: #ff9900;
@@ -167,9 +159,10 @@
     border: 2px solid #ff9900;
     text-align: center;
     line-height: 1.1;
+    margin: 0 8px;
 }
 .step span {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: normal;
     display: block;
     margin-top: 2px;
@@ -189,7 +182,7 @@
     border-radius: 2px;
 }
 .booking-step .card {
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
 }
 .btn-toggle {
     background-color: #fff;
@@ -198,102 +191,29 @@
     font-weight: 600;
     transition: all 0.3s ease-in-out;
 }
-.btn-toggle.active-tab {
-    background-color: #ffc107;
-    color: #000;
+.btn-toggle.active-tab, .btn-toggle:hover {
+    background: #ffc107;
+    color: #fff;
+    border-color: #ffc107;
 }
-.transport-radio-list {
-    list-style: none;
-    border: 2px solid #007bff;
-    border-radius: 12px;
-    background: #fff;
-    overflow: hidden;
-    margin-bottom: 1rem;
-}
-.transport-radio-list li {
-    padding: 0;
-    margin: 0;
-}
-.transport-radio-list .border-end {
-    border-right: 2px solid #007bff;
-}
-.transport-radio {
-    width: 20px;
-    height: 20px;
-    color: #1976d2;
-    accent-color: #1976d2;
-    border: 2px solid #007bff;
-    background: #fff;
-    margin-right: 8px;
-}
-.transport-radio:checked {
-    background: #1976d2;
-    border-color: #1976d2;
-}
-.transport-radio + label {
-    cursor: pointer;
+.form-select, .form-control {
+    font-size: 1.08rem;
+    border-radius: 2rem;
+    padding-left: 1.2rem;
 }
 .card-radio-label {
-    display: block;
-    border: 2px solid #eee;
-    border-radius: 12px;
-    padding: 18px 20px;
-    background: #f8f8f8;
     cursor: pointer;
-    transition: border-color 0.2s, background 0.2s;
-    margin-bottom: 1rem;
-    position: relative;
-    min-height: 180px;
+    width: 100%;
 }
-.card-radio:checked + .card-radio-label,
-.card-radio:checked ~ .card-radio-label {
-    border-color: #ff9900;
-    background: #fffbe6;
-    box-shadow: 0 2px 8px rgba(255, 153, 0, 0.08);
+.card-radio-content {
+    transition: box-shadow 0.2s;
 }
-.card-radio-title-row {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
-    min-height: 32px;
+.card-radio-label:active .card-radio-content, .card-radio-label:focus .card-radio-content {
+    box-shadow: 0 0 0 2px #ffc107;
 }
-.card-radio-check {
-    margin-right: 8px;
-    flex-shrink: 0;
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    border: 2px solid #ff9900;
-    background: #fff;
-    display: inline-block;
-    position: relative;
-}
-.card-radio:checked + .card-radio-label .card-radio-check {
-    background: #ff9900;
-    border-color: #ff9900;
-}
-.card-radio:checked + .card-radio-label .card-radio-check::after {
-    content: '';
-    display: block;
-    width: 10px;
-    height: 10px;
-    background: #fff;
-    border-radius: 50%;
-    position: absolute;
-    top: 5px;
-    left: 5px;
-}
-.card-radio-title {
-    font-size: 1.1em;
-    line-height: 1;
-    white-space: nowrap;
-    display: inline-block;
-}
-.card-radio-label .fw-bold.text-orange {
-    color: #ff9900;
-}
-.card-radio-label .fw-bold.text-gray {
-    color: #888;
+@media (max-width: 991px) {
+    .booking-step .row > div { margin-bottom: 1.5rem; }
+    .card { padding: 1.5rem !important; }
 }
 </style>
 
@@ -517,16 +437,30 @@ function fillConfirmationStep() {
     // Tổng tiền
     let priceEl = document.getElementById('summary-trip-price');
     if (priceEl) totalPrice = priceEl.textContent;
-    // Thông tin liên hệ
-    let contactName = document.getElementById('contact-name').value;
-    let contactPhone = document.getElementById('contact-phone').value;
-    let contactEmail = document.getElementById('contact-email').value;
-    let contactNotes = document.getElementById('contact-notes').value;
+    // Thông tin liên hệ hoặc người được đặt hộ
+    let isBookingForOthers = document.getElementById('is-booking-for-others').checked;
+    let contactName, contactPhone, contactEmail, contactNotes, contactLabel;
+    if (isBookingForOthers) {
+        contactName = document.getElementById('other-name').value;
+        contactPhone = document.getElementById('other-phone').value;
+        contactEmail = '';
+        contactNotes = document.getElementById('contact-notes').value;
+        contactLabel = 'Thông tin liên hệ (Đặt hộ cho người khác)';
+    } else {
+        contactName = document.getElementById('contact-name').value;
+        contactPhone = document.getElementById('contact-phone').value;
+        contactEmail = document.getElementById('contact-email').value;
+        contactNotes = document.getElementById('contact-notes').value;
+        contactLabel = 'Thông tin liên hệ';
+    }
     // Gán dữ liệu sang bước 3
     document.getElementById('confirm-trip-type').textContent = tripType;
     document.getElementById('confirm-pickup-address').textContent = pickupAddress;
     document.getElementById('confirm-car-type').textContent = carType;
     document.getElementById('confirm-total-price').textContent = totalPrice;
+    // Cập nhật label
+    let labelEl = document.querySelector('.booking-step.step-3 .fw-bold.mb-3');
+    if(labelEl) labelEl.textContent = contactLabel;
     document.getElementById('confirm-contact-name').textContent = contactName;
     document.getElementById('confirm-contact-phone').textContent = contactPhone;
     document.getElementById('confirm-contact-email').textContent = contactEmail;
@@ -553,6 +487,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-@include('clients.blocks.footer')
+@include('clients.blocks.footer_hotel')
 
 @vite(['resources/css/app.css', 'resources/js/app.js'])

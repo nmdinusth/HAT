@@ -29,7 +29,7 @@
         </div>
     </div>
 </div>
-@include('clients.blocks.footer')
+@include('clients.blocks.footer_hotel')
 
 <script>
 const seatMap = document.getElementById('seatMap');
@@ -45,13 +45,64 @@ const seatPrice = {
     'economy': {{ $seat_prices['economy'] }},
     'business': {{ $seat_prices['business'] }}
 };
+const flightCode = "{{ $flight_code }}";
+// Tạo user_session tạm thời (1 lần duyệt)
+let userSession = sessionStorage.getItem('airplane_user_session');
+if (!userSession) {
+    userSession = 'sess_' + Math.random().toString(36).substr(2, 9) + Date.now();
+    sessionStorage.setItem('airplane_user_session', userSession);
+}
+// Trạng thái ghế từ server
+let seatStatus = {};
+
+function fetchSeatStatus() {
+    fetch(`/api/airplane/seat-status?flight_code=${flightCode}`)
+        .then(res => res.json())
+        .then(data => {
+            seatStatus = data;
+            // Nếu ghế user đang giữ bị mất (do hết hạn hoặc bị người khác giữ), tự động bỏ chọn
+            selectedSeats = selectedSeats.filter(seatId => {
+                if (!seatStatus[seatId]) return true;
+                if (seatStatus[seatId].status === 'hold' && seatStatus[seatId].user_session === userSession) return true;
+                return false;
+            });
+            renderSeats();
+            updateSelected();
+        });
+}
+
+function holdSeat(seatId, cb) {
+    fetch('/api/airplane/hold-seat', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+            flight_code: flightCode,
+            seat_code: seatId,
+            user_session: userSession
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            selectedSeats.push(seatId);
+            updateSelected();
+            renderSeats();
+            if (cb) cb(true);
+        } else {
+            alert('Ghế này vừa bị người khác giữ hoặc đặt!');
+            if (cb) cb(false);
+        }
+    });
+}
 
 function renderSeats() {
     seatMap.innerHTML = '';
     for (let r = 1; r <= rows; r++) {
         const rowDiv = document.createElement('div');
         rowDiv.className = 'd-flex justify-content-center mb-2';
-
         cols.forEach((col, index) => {
             const seatId = `${r}${col}`;
             const seatDiv = document.createElement('div');
@@ -66,27 +117,48 @@ function renderSeats() {
             seatDiv.style.borderRadius = '8px';
             seatDiv.style.cursor = 'pointer';
             seatDiv.style.margin = '2px';
-             
-            // Tô màu vàng cho 4 hàng đầu
-             if (r <= 3) {
-                seatDiv.style.backgroundColor = selectedSeats.includes(seatId) ? '#17a2b8' : '#ffeb3b';
+            // Trạng thái ghế
+            let isHeld = seatStatus[seatId] && seatStatus[seatId].status === 'hold';
+            let isBooked = seatStatus[seatId] && seatStatus[seatId].status === 'booked';
+            let isMine = seatStatus[seatId] && seatStatus[seatId].user_session === userSession;
+            // Tô màu
+            if (isBooked) {
+                seatDiv.style.backgroundColor = '#aaa'; // Đã đặt
+                seatDiv.style.cursor = 'not-allowed';
+            } else if (isHeld && !isMine) {
+                seatDiv.style.backgroundColor = '#f99'; // Đang bị người khác giữ
+                seatDiv.style.cursor = 'not-allowed';
+            } else if (selectedSeats.includes(seatId)) {
+                seatDiv.style.backgroundColor = '#17a2b8'; // Đang chọn
+            } else if (r <= 3) {
+                seatDiv.style.backgroundColor = '#ffeb3b';
             } else {
-                seatDiv.style.backgroundColor = selectedSeats.includes(seatId) ? '#17a2b8' : '#f8f9fa';
+                seatDiv.style.backgroundColor = '#f8f9fa';
             }
-
-            seatDiv.onclick = function() {
-                if (selectedSeats.includes(seatId)) {
-                    selectedSeats = selectedSeats.filter(s => s !== seatId);
-                } else {
-                    selectedSeats.push(seatId);
-                }
-                updateSelected();
-                renderSeats();
-            };
-
-            // Thêm khoảng trống sau cột B
+            // Disable click nếu đã bị giữ/đặt bởi người khác
+            if ((isHeld && !isMine) || isBooked) {
+                seatDiv.onclick = null;
+                seatDiv.style.pointerEvents = 'none';
+            } else {
+                seatDiv.onclick = function() {
+                    if (selectedSeats.includes(seatId)) {
+                        // Bỏ chọn: chỉ xóa khỏi selectedSeats, không xóa hold trên server (giữ cho đến hết hạn)
+                        selectedSeats = selectedSeats.filter(s => s !== seatId);
+                        updateSelected();
+                        renderSeats();
+                    } else {
+                        // Gửi AJAX giữ ghế
+                        holdSeat(seatId, function(success) {
+                            if (success) {
+                                // Đã xử lý trong holdSeat
+                            } else {
+                                fetchSeatStatus();
+                            }
+                        });
+                    }
+                };
+            }
             if (col === 'B') seatDiv.style.marginRight = '50px';
-
             rowDiv.appendChild(seatDiv);
         });
         seatMap.appendChild(rowDiv);
@@ -97,7 +169,7 @@ function updateSelected() {
     selectedSeatsSpan.textContent = selectedSeats.join(', ');
     let total = 0;
     selectedSeats.forEach(seat => {
-        total += parseInt(seat[0]) <= 3 ? seatPrice.business : seatPrice.economy; // 3 hàng đầu business
+        total += parseInt(seat[0]) <= 3 ? seatPrice.business : seatPrice.economy;
     });
     totalPriceSpan.textContent = total.toLocaleString('vi-VN');
 }
@@ -114,13 +186,11 @@ seatForm.onsubmit = function(e) {
         e.preventDefault();
         return;
     }
-
     const seatsInput = document.createElement('input');
     seatsInput.type = 'hidden';
     seatsInput.name = 'seats';
     seatsInput.value = selectedSeats.join(',');
     seatForm.appendChild(seatsInput);
-
     const total = selectedSeats.reduce((sum, seat) => sum + (parseInt(seat[0]) <= 2 ? seatPrice.business : seatPrice.economy), 0);
     const totalInput = document.createElement('input');
     totalInput.type = 'hidden';
@@ -129,6 +199,9 @@ seatForm.onsubmit = function(e) {
     seatForm.appendChild(totalInput);
 };
 
+// Polling trạng thái ghế mỗi 5s
+fetchSeatStatus();
+setInterval(fetchSeatStatus, 5000);
 renderSeats();
 updateSelected();
 </script>
