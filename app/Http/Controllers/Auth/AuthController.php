@@ -7,6 +7,8 @@ use App\Models\clients\User;
 use Illuminate\Http\Request;
 use App\Models\clients\Login;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Models\clients\UserInformation;
 
 class AuthController extends Controller
@@ -23,20 +25,42 @@ class AuthController extends Controller
     }
 
     public function login(Request $request)
-    {
-        // dd($request->all());
-        return response()->json([
-            // Success response (successful login)
-            // 'status' => 'success',
-            // 'message' => 'Login successful',
-            // 'redirect' => route('home'), // or any other route
+{ // Tự validate thủ công (không dùng $request->validate())
+    $errors = [];
 
-            // Error response (wrong credentials)
-            'status' => 'error',
-            'message' => 'Incorrect username or password'
-        ]);
-
+    if (empty($request->username)) {
+        $errors['username'] = ['Please enter your username'];
     }
+
+    if (empty($request->password)) {
+        $errors['password'] = ['Please enter your password'];
+    }
+
+    // Nếu có lỗi, trả về ngay với status 'warning'
+    if (!empty($errors)) {
+        return response()->json([
+            'status' => 'warning',  // <-- Quan trọng: Dùng status warning
+            // 'message' => 'Thông tin không hợp lệ',
+            'errors' => $errors     // Chi tiết lỗi (có thể dùng để highlight field)
+        ], 422);
+    };
+
+    $user = $this->user::where('username', $request->username)->first();
+    if (!$user || !Hash::check($request->password, $user->password)) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Incorrect username or password',
+            'username' => $request->username // Trả về username để giữ lại trên form
+        ], 401); // 401: Unauthorized
+    }
+
+    Auth::login($user);
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Login successful',
+        'redirect' => '/' // Thêm redirect nếu cần
+    ]);
+}
 
     // public function index()
     // {

@@ -19,7 +19,7 @@
             <div class="col-lg-6">
               <div class="breadcrumb-list text-end">
                 <ul class="list-items">
-                  <li><a href="index.html">Home</a></li>
+                  <li><a href="/">Home</a></li>
                   <li>Hotel</li>
                   <li>Hotel List</li>
                 </ul>
@@ -67,23 +67,6 @@
                     <span class="me-1 pt-1">Book with confidence:</span>No hotel
                     booking fees
                   </p>
-                </div>
-                <div class="layout-view d-flex align-items-center">
-                  <a
-                    href="hotel-grid.html"
-                    data-bs-toggle="tooltip"
-                    data-placement="top"
-                    title="Grid View"
-                    ><i class="la la-th-large"></i
-                  ></a>
-                  <a
-                    href="hotel-list.html"
-                    data-bs-toggle="tooltip"
-                    data-placement="top"
-                    title="List View"
-                    class="active"
-                    ><i class="la la-th-list"></i
-                  ></a>
                 </div>
               </div>
               <!-- end filter-top -->
@@ -449,7 +432,7 @@
                 </div>
                 <!-- end sidebar-widget-item -->
                 <div class="btn-box pt-2">
-                  <a href="hotel-search-result.html" class="theme-btn"
+                  <a href="/hotel-search-result" class="theme-btn"
                     >Search Now</a
                   >
                 </div>
@@ -795,7 +778,7 @@
           <div class="col-lg-8">
             <div class="card-item card-item-list">
               <div class="card-img">
-                <a href="hotel-single.html" class="d-block">
+                <a href="/hotel-single" class="d-block">
                   <img src="{{ asset('ui/images/img1.jpg') }}" alt="hotel-img" />
                 </a>
                 <span class="badge">Bestseller</span>
@@ -810,7 +793,7 @@
               </div>
               <div class="card-body">
                 <h3 class="card-title">
-                  <a href="hotel-single.html">The Millennium Hilton New York</a>
+                  <a href="/hotel-single">The Millennium Hilton New York</a>
                 </h3>
                 <p class="card-meta">124 E Huron St, New york</p>
                 <div class="card-rating">
@@ -826,7 +809,7 @@
                     <span class="price__num">$88.00</span>
                     <span class="price__text">Per night</span>
                   </p>
-                  <a href="hotel-single.html" class="btn-text"
+                  <a href="/hotel-single" class="btn-text"
                     >See details<i class="la la-angle-right"></i
                   ></a>
                 </div>
@@ -835,7 +818,7 @@
             <!-- end card-item -->
             <div class="card-item card-item-list">
               <div class="card-img">
-                <a href="hotel-single.html" class="d-block">
+                <a href="/hotel-single" class="d-block">
                   <img src="{{ asset('ui/images/img2.jpg') }}" alt="hotel-img" />
                 </a>
                 <div
@@ -849,7 +832,7 @@
               </div>
               <div class="card-body">
                 <h3 class="card-title">
-                  <a href="hotel-single.html">Best Western Grant Park Hotel</a>
+                  <a href="/hotel-single">Best Western Grant Park Hotel</a>
                 </h3>
                 <p class="card-meta">124 E Huron St, Chicago</p>
                 <div class="card-rating">
@@ -865,7 +848,7 @@
                     <span class="price__num">$58.00</span>
                     <span class="price__text">Per night</span>
                   </p>
-                  <a href="hotel-single.html" class="btn-text"
+                  <a href="/hotel-single" class="btn-text"
                     >See details<i class="la la-angle-right"></i
                   ></a>
                 </div>
@@ -874,7 +857,7 @@
             <!-- end card-item -->
             <div class="card-item card-item-list">
               <div class="card-img">
-                <a href="hotel-single.html" class="d-block">
+                <a href="/hotel-single" class="d-block">
                   <img src="{{ asset('ui/images/img3.jpg') }}" alt="hotel-img" />
                 </a>
                 <span class="badge">Featured</span>
@@ -889,7 +872,7 @@
               </div>
               <div class="card-body">
                 <h3 class="card-title">
-                  <a href="hotel-single.html"
+                  <a href="/hotel-single"
                     >Hyatt Regency Maui Resort & Spa</a
                   >
                 </h3>
@@ -907,7 +890,7 @@
                     <span class="price__num">$88.00</span>
                     <span class="price__text">Per night</span>
                   </p>
-                  <a href="hotel-single.html" class="btn-text"
+                  <a href="/hotel-single" class="btn-text"
                     >See details<i class="la la-angle-right"></i
                   ></a>
                 </div>
@@ -916,7 +899,7 @@
             <!-- end card-item -->
             <div class="card-item card-item-list">
               <div class="card-img">
-                <a href="hotel-single.html" class="d-block">
+                <a href="/hotel-single" class="d-block">
                   <img src="{{ asset('ui/images/img4.jpg') }}" alt="hotel-img" />
                 </a>
                 <span class="badge">Popular</span>
@@ -931,7 +914,7 @@
               </div>
               <div class="card-body">
                 <h3 class="card-title">
-                  <a href="hotel-single.html"
+                  <a href="/hotel-single"
                     >Four Seasons Resort Maui at Wailea</a
                   >
                 </h3>
@@ -949,7 +932,7 @@
                     <span class="price__num">$88.00</span>
                     <span class="price__text">Per night</span>
                   </p>
-                  <a href="hotel-single.html" class="btn-text"
+                  <a href="/hotel-single" class="btn-text"
                     >See details<i class="la la-angle-right"></i
                   ></a>
                 </div>
@@ -958,7 +941,7 @@
             <!-- end card-item -->
             <div class="card-item card-item-list">
               <div class="card-img">
-                <a href="hotel-single.html" class="d-block">
+                <a href="/hotel-single" class="d-block">
                   <img src="{{ asset('ui/images/img5.jpg') }}" alt="hotel-img" />
                 </a>
                 <div
@@ -972,7 +955,7 @@
               </div>
               <div class="card-body">
                 <h3 class="card-title">
-                  <a href="hotel-single.html">Ibis Styles London Heathrow</a>
+                  <a href="/hotel-single">Ibis Styles London Heathrow</a>
                 </h3>
                 <p class="card-meta">272 Bath Road, Harlington, England</p>
                 <div class="card-rating">
@@ -988,7 +971,7 @@
                     <span class="price__num">$88.00</span>
                     <span class="price__text">Per night</span>
                   </p>
-                  <a href="hotel-single.html" class="btn-text"
+                  <a href="/hotel-single" class="btn-text"
                     >See details<i class="la la-angle-right"></i
                   ></a>
                 </div>
@@ -997,7 +980,7 @@
             <!-- end card-item -->
             <div class="card-item card-item-list">
               <div class="card-img">
-                <a href="hotel-single.html" class="d-block">
+                <a href="/hotel-single" class="d-block">
                   <img src="{{ asset('ui/images/img6.jpg') }}" alt="hotel-img" />
                 </a>
                 <div
@@ -1011,7 +994,7 @@
               </div>
               <div class="card-body">
                 <h3 class="card-title">
-                  <a href="hotel-single.html"
+                  <a href="/hotel-single"
                     >Hotel Europe Saint Severin Paris</a
                   >
                 </h3>
@@ -1029,7 +1012,7 @@
                     <span class="price__num">$88.00</span>
                     <span class="price__text">Per night</span>
                   </p>
-                  <a href="hotel-single.html" class="btn-text"
+                  <a href="/hotel-single" class="btn-text"
                     >See details<i class="la la-angle-right"></i
                   ></a>
                 </div>
@@ -1038,7 +1021,7 @@
             <!-- end card-item -->
             <div class="card-item card-item-list">
               <div class="card-img">
-                <a href="hotel-single.html" class="d-block">
+                <a href="/hotel-single" class="d-block">
                   <img src="{{ asset('ui/images/img5.jpg') }}" alt="hotel-img" />
                 </a>
                 <div
@@ -1052,7 +1035,7 @@
               </div>
               <div class="card-body">
                 <h3 class="card-title">
-                  <a href="hotel-single.html">Grand Desert Resort</a>
+                  <a href="/hotel-single">Grand Desert Resort</a>
                 </h3>
                 <p class="card-meta">Delaware, USA</p>
                 <div class="card-rating">
@@ -1068,7 +1051,7 @@
                     <span class="price__num">$88.00</span>
                     <span class="price__text">Per night</span>
                   </p>
-                  <a href="hotel-single.html" class="btn-text"
+                  <a href="/hotel-single" class="btn-text"
                     >See details<i class="la la-angle-right"></i
                   ></a>
                 </div>

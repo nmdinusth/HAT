@@ -1428,7 +1428,7 @@
                   </div>
                   <!-- end sidebar-widget-item -->
                   <div class="btn-box">
-                    <a href="cart.html" class="theme-btn text-center w-100 mb-2"
+                    <a href="/cart" class="theme-btn text-center w-100 mb-2"
                       >Book Now</a
                     >
                   </div>

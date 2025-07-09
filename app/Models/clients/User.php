@@ -5,10 +5,12 @@ namespace App\Models\clients;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Contracts\Auth\Authenticatable; // Thêm dòng này
+use Illuminate\Auth\Authenticatable as AuthenticatableTrait; // Thêm dòng này
 
-class User extends Model
+class User extends Model implements Authenticatable // Thêm implements Authenticatable
 {
-    use HasFactory;
+    use HasFactory, AuthenticatableTrait; // Thêm AuthenticatableTrait
 
     protected $table = 'users';
 
@@ -27,26 +29,28 @@ class User extends Model
         return $users;
     }
 
-    public function getUserByEmail ($email) {
+    public function getUserByEmail($email)
+    {
         $user = DB::table($this->table)->where('email', $email)->first();
         return $user;
     }
     // Hash 50% cái email này lại nào
-    public function maskEmail($email) {
-   
-    $parts = explode('@', $email); // Tách email thành 2 phần tại ký tự '@'
-    $userName = $parts[0];// Phần trước @ (username)
-    $domain = $parts[1] ?? '';// Phần sau @ (domain), nếu không có thì gán bằng chuỗi rỗng
+    public function maskEmail($email)
+    {
 
-    // Che giấu username:
-    // - Giữ lại 3 ký tự đầu
-    // - Thay các ký tự còn lại bằng dấu *
-    // - Đảm bảo ít nhất 1 dấu * được thêm vào
-    $maskedUsername = substr($userName, 0, 3) . str_repeat('*', max(strlen($userName) - 3, 1));
-    
-    // Ghép username đã che giấu với domain
-    return $maskedUsername . '@' . $domain;
-}
+        $parts = explode('@', $email); // Tách email thành 2 phần tại ký tự '@'
+        $userName = $parts[0];// Phần trước @ (username)
+        $domain = $parts[1] ?? '';// Phần sau @ (domain), nếu không có thì gán bằng chuỗi rỗng
+
+        // Che giấu username:
+        // - Giữ lại 3 ký tự đầu
+        // - Thay các ký tự còn lại bằng dấu *
+        // - Đảm bảo ít nhất 1 dấu * được thêm vào
+        $maskedUsername = substr($userName, 0, 3) . str_repeat('*', max(strlen($userName) - 3, 1));
+
+        // Ghép username đã che giấu với domain
+        return $maskedUsername . '@' . $domain;
+    }
 
     public function updateUser($id, $data)
     {
@@ -59,13 +63,13 @@ class User extends Model
 
     public function getMyTours($id)
     {
-        $myTours =  DB::table('booking')
-        ->join('tours', 'booking.tourID', '=', 'tours.tourID')
-        ->join('checkout', 'booking.bookingID', '=', 'checkout.bookingID')
-        ->where('booking.userID', $id)
-        ->orderByDesc('booking.bookingDate')
-        ->take(3)
-        ->get();
+        $myTours = DB::table('booking')
+            ->join('tours', 'booking.tourID', '=', 'tours.tourID')
+            ->join('checkout', 'booking.bookingID', '=', 'checkout.bookingID')
+            ->where('booking.userID', $id)
+            ->orderByDesc('booking.bookingDate')
+            ->take(3)
+            ->get();
 
         foreach ($myTours as $tour) {
             // Lấy rating từ tbl_reviews cho mỗi tour
