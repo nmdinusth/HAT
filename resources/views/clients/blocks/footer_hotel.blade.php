@@ -250,7 +250,7 @@
                                 <div class="form-group">
                                     <span class="la la-user form-icon"></span>
                                     <input class="form-control" type="text" name="username"
-                                        placeholder="Type your username" />
+                                        placeholder="Type your username" required />
                                 </div>
                             </div>
                             <!-- end input-box -->
@@ -259,7 +259,7 @@
                                 <div class="form-group mb-2">
                                     <span class="la la-lock form-icon"></span>
                                     <input class="form-control" type="password" name="password"
-                                        placeholder="Type your password" />
+                                        placeholder="Type your password" required />
                                 </div>
                                 <div class="d-flex align-items-center justify-content-between">
                                     <div class="custom-checkbox mb-0">
@@ -286,7 +286,7 @@
                                                 class="lab la-facebook-f"></i></a>
                                     </li>
                                     <li>
-                                        <a href="#" class="bg-6 text-white"><i class="lab la-twitter"></i></a>
+                                        <a href="#" class="bg-6 text-white"><i class="lab la-google"></i></a>
                                     </li>
                                     <li>
                                         <a href="#" class="bg-7 text-white"><i
@@ -326,7 +326,7 @@
 <script src=" {{ asset('ui/js/superslider-script.js') }}"></script>
 <script src=" {{ asset('ui/js/main.js') }}"></script>
 
-<script src=" {{ asset('ui/js/custom-js-by-duc.js') }}"></script>
+{{-- <script src=" {{ asset('ui/js/custom-js-by-duc.js') }}"></script> --}}
 
 
 <!-- Toastr JS -->
@@ -385,12 +385,20 @@
                         for (const field in errors) {
                             errorText += errors[field][0] + '<br>';
                         }
-                        toastr.warning(errorText || "Thông tin không hợp lệ");
+                        toastr.warning(errorText || "Thông tin đăng nhập không hợp lệ");
                     } else {
-                        // Lỗi hệ thống
-                        toastr.error(
-                            "Có lỗi xảy ra trong quá trình xử lý. Vui lòng thử lại sau."
-                            );
+                        // Lỗi đăng nhập (vd: sai username/password)
+                        const response = xhr.responseJSON;
+                        if (response && response.status === 'error') {
+                            toastr.error(response.message ||
+                                "Sai tên đăng nhập hoặc mật khẩu");
+
+                            // Giữ lại username, chỉ reset password
+                            $('input[name="password"]').val(''); // Xóa password
+                            // $('input[name="username"]').val(response.username || ''); // Giữ username nếu cần
+                        } else {
+                            toastr.error("Có lỗi xảy ra. Vui lòng thử lại sau.");
+                        }
                     }
                 }
             });
