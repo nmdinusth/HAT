@@ -38,3 +38,5 @@ body, .fw-bold, h1, h3, label, button, input, select {
     font-family: 'Montserrat', Arial, sans-serif;
 }
 </style>
+
+@include('clients.blocks.footer_hotel')
