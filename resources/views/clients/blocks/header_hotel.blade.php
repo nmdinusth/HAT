@@ -36,8 +36,8 @@
         <div>
             <span class="me-3">English US</span>
             <span class="me-3">USD</span>
-            <a href="#" class="btn btn-outline-primary btn-sm me-2">Sign Up</a>
-            <a href="#" class="btn btn-primary btn-sm">Login</a>
+            <a href="#" class="btn btn-outline-primary btn-sm me-2" data-bs-toggle="modal" data-bs-target="#signupPopupForm">Sign Up</a>
+            <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#loginPopupForm">Login</a>
         </div>
     </div>
     <!-- Main Navbar -->

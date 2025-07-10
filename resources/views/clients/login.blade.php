@@ -1,4 +1,4 @@
-@include('clients.blocks.header_home')
+@include('clients.blocks.header_hotel')
 
 {{-- <div class="login-template">
     <div class="main">
@@ -246,4 +246,4 @@
     </div>
 </div>
 
-@include('clients.blocks.footer')
+@include('clients.blocks.footer_hotel')

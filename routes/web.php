@@ -13,7 +13,6 @@ use App\Http\Controllers\Client\Transport\TransportController;
 use App\Http\Controllers\Client\Hotel\HotelController;
 use App\Http\Controllers\clients\LoginGoogleController;
 use App\Http\Controllers\clients\UserProfileController;
-use App\Http\Controllers\admin\UserManagementController;
 use App\Http\Controllers\admin\AdminManagementController;
 use App\Http\Controllers\Client\Airplane\AirplaneBookingController;
 use App\Http\Controllers\Client\Airplane\AirplaneFlightController;
@@ -115,11 +114,6 @@ Route::prefix('admin')->middleware('admin')->group(function () {
     Route::get('/admin', [AdminManagementController::class, 'index'])->name('admin.admin');
     Route::post('/update-admin', [AdminManagementController::class, 'updateAdmin'])->name('admin.update-admin');
     Route::post('/update-avatar', [AdminManagementController::class, 'updateAvatar'])->name('admin.update-avatar');
-
-    //Handler management user
-    Route::get('/users', [UserManagementController::class, 'index'])->name('admin.users');
-    Route::post('/active-user', [UserManagementController::class, 'activeUser'])->name('admin.active-user');
-    Route::post('/status-user', [UserManagementController::class, 'changeStatus'])->name('admin.status-user');
 
     //Management Booking
     Route::get('/booking', [BookingManagementController::class, 'index'])->name('admin.booking');
