@@ -56,7 +56,6 @@ Route::get('auth/google/callback', [LoginGoogleController::class, 'handleGoogleC
 // Các route liên quan đến xử lý đặt phòng khách sạn
 
 // Trang chủ tìm khách sạn
-Route::get('/', [HotelController::class, 'index'])->name('hotel.home');
 // Gọi hàm xử lý tìm phòng và trả danh sách phòng kèm khách sạn hiển thị ở homeSearchRestult
 Route::post('/find-hotel', [HotelController::class, 'findHotel'])->name('hotel.find');
 // View hiển thị kết quả tìm kiếm khách sạn 
