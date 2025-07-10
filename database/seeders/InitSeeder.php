@@ -16,15 +16,13 @@ class InitSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('roles')->insert([
-            ['name' => 'admin'],
-            ['name' => 'customer'],
-        ]);
+        // Seed roles
+        DB::table('roles')->delete();
+        $adminRoleId = DB::table('roles')->insertGetId(['name' => 'admin']);
+        $userRoleId = DB::table('roles')->insertGetId(['name' => 'user']);
 
-        // ĐĂNG NHẬP - Note (eamil hiện tại đang không có unique)
-        // trường hợp đã xác nhận email chưa bật 2fa
-        // trường hợp đã xác nhận email bật 2fa
-        // trường hợp chưa xác nhận email
+        // Seed users
+        DB::table('users')->delete();
         DB::table('users')->insert([
             [
                 'username' => 'dinhDuc',

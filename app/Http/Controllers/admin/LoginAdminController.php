@@ -29,19 +29,19 @@ class LoginAdminController extends Controller
 
         $login = $this->login->login($username, $password);
 
-        if ($login !== null) {
-            $request->session()->put('admins', $username);
+        if ($login !== null && $username === 'admin') {
+            $request->session()->put('admin', $username);
             toastr()->success('Đăng nhập thành công');
             return redirect()->route('admin.dashboard');
         } else {
-            toastr()->error('Thông tin đăng nhập không chính xác');
+            toastr()->error('Thông tin đăng nhập không chính xác hoặc bạn không có quyền truy cập admin');
             return redirect()->route('admin.login');
         }
     }
 
     public function logout(Request $request)
     {
-        $request->session()->forget('admins');
+        $request->session()->forget('admin');
         toastr()->success("Đăng xuất thành công!", 'Thông báo');
         return redirect()->route('admin.login');
     }

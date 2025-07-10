@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Quản lý Transport Booking</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background: #f8fafc; }
+        .table thead { background: #f1f5f9; }
+        .filament-btn { border: none; background: #6366f1; color: #fff; border-radius: 4px; padding: 4px 12px; margin-right: 4px; }
+        .filament-btn-danger { background: #ef4444; }
+        .filament-btn-add { background: #22c55e; float: right; }
+        .filament-search { width: 220px; margin-bottom: 12px; }
+    </style>
+</head>
+<body>
+<div class="container py-5">
+    <h2 class="mb-4">Quản lý Transport Booking</h2>
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <input type="text" class="form-control filament-search" placeholder="Tìm kiếm...">
+        <button class="filament-btn filament-btn-add">+ Thêm mới</button>
+    </div>
+    <table class="table table-bordered align-middle">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>User ID</th>
+                <th>Trip Type</th>
+                <th>Pickup Time</th>
+                <th>Pickup Address</th>
+                <th>Dropoff Address</th>
+                <th>Car Type</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>2</td>
+                <td>airport_pickup</td>
+                <td>2024-07-05 10:00</td>
+                <td>Sân bay Nội Bài</td>
+                <td>123 Lê Lợi</td>
+                <td>7 chỗ</td>
+                <td>500,000</td>
+                <td><span class="badge bg-warning">pending</span></td>
+                <td>
+                    <button class="filament-btn">Sửa</button>
+                    <button class="filament-btn filament-btn-danger">Xóa</button>
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>3</td>
+                <td>fixedpoint</td>
+                <td>2024-07-06 14:00</td>
+                <td>456 Trần Phú</td>
+                <td>789 Nguyễn Huệ</td>
+                <td>4 chỗ</td>
+                <td>300,000</td>
+                <td><span class="badge bg-success">confirmed</span></td>
+                <td>
+                    <button class="filament-btn">Sửa</button>
+                    <button class="filament-btn filament-btn-danger">Xóa</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="filament-btn filament-btn-danger">Xóa đã chọn</button>
+</div>
+</body>
+</html> 
