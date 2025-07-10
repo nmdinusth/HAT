@@ -27,20 +27,6 @@ class ContactModel extends Model
             ->update($data);
     }
 
-    public function countContactsUnread()
-    {
-        $contacts = DB::table($this->table)
-            ->where('isReply', 'n')
-            ->orderBy('contactId', 'desc')
-            ->get();
-
-        $countUnread = $contacts->count(); // Đếm số lượng thư chưa trả lời
-
-        return [
-            'countUnread' => $countUnread,
-            'contacts' => $contacts
-        ];
-    }
-
+    // Đã xóa hàm countContactsUnread và mọi truy vấn bảng contact vì không còn dùng nữa
 
 }
