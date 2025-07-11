@@ -40,6 +40,9 @@ Route::post('/logout', function () {
     Auth::logout();
     return redirect('/'); // hoặc route('home')
 })->name('logout');
+Route::get('/email-active', function () {
+    return view('clients.partials.Hotel_booking.email-active-done');
+});
 
 Route::get('/xac-thuc-2-buoc', [AuthController::class, 'showOtpForm'])->name('2fa_show');
 Route::post('/two-factor-auth', [AuthController::class, 'verifyOtp'])->name('2fa_verify');  
