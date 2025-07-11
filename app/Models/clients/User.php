@@ -13,7 +13,7 @@ class User extends Model implements Authenticatable // Thêm implements Authenti
     use HasFactory, AuthenticatableTrait; // Thêm AuthenticatableTrait
 
     protected $table = 'users';
-
+    protected $guarded = [];
 
     public function getUserId($username)
     {
