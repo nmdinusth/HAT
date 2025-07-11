@@ -68,9 +68,9 @@ Route::get('/hotel-single', [HotelController::class, 'hotelSingle']);
 // View hiển thị thông tin phòng 
 Route::get('/room-detail', [HotelController::class, 'roomDetail']);
 // Hiển thị giỏ hàng phòng đã chọn nếu có
-Route::get('/cart', [HotelController::class, 'cart']);
+Route::get('/cart', [HotelController::class, 'cart'])->middleware('auth');
 //Hiển thị view thanh toán chưa xử lý
-Route::get('/checkout', [HotelController::class, 'checkout']);
+Route::get('/checkout', [HotelController::class, 'checkout'])->middleware('auth');
 
 // Các view khác nếu cần thiết
 Route::get('/room-search-result', [HotelController::class, 'roomSearchResult']);
