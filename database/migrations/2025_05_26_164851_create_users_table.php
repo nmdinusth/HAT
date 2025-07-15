@@ -15,16 +15,20 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('username')->unique(); //Tên người dùng 
+            $table->string('username')->unique()->nullable(); //Tên người dùng 
             $table->string('email')->unique(); 
             // $table->string('email'); 
-            $table->string('password');
+            $table->string('password')->nullable();
 
             $table->string('email_verification_token')->nullable(); // đoạn token xác nhận email được dùng dể gửi đén email đã đăng ký
             $table->timestamp('email_verification_expires_at')->nullable(); // thời gian hết hạn
 
             $table->string('otp_code')->nullable(); //otp xác thực 2 bước
             $table->timestamp('otp_expires_at')->nullable(); //thời gian hết hạn
+
+            $table->string('provider')->nullable(); // vd: google
+            $table->string('provider_id')->nullable(); // id của user trên google
+            // $table->string('google_id')->nullable();
 
             $table->boolean('is_2fa_enabled')->default(false); //bật tắt xác thực 2 bước
             $table->enum('status', ['pending', 'active', 'suspended'])->default('pending'); // tragj thái người dùng

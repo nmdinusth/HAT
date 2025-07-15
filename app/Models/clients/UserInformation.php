@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class UserInformation extends Model
 {
     use HasFactory;
-
-    protected $table = 'user_infomation';
+    protected $guarded = [];
+    protected $table = 'user_information';
 
     public function createNameUser ($data)
     {
