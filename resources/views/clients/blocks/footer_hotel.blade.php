@@ -273,7 +273,7 @@
                                                 class="lab la-facebook-f"></i></a>
                                     </li>
                                     <li>
-                                        <a href="#" class="bg-6 text-white"><i class="lab la-google"></i></a>
+                                        <a href="auth/google" class="bg-6 text-white"><i class="lab la-google"></i></a>
                                     </li>
                                     <li>
                                         <a href="#" class="bg-7 text-white"><i
