@@ -36,10 +36,18 @@
                  <h4 class="fw-bold text-warning mb-0" id="confirm-total-price"></h4>
             </div>
             
-            <div class="mt-3 d-flex justify-content-end">
-                <button class="btn btn-light border me-2">Đặt thêm sản phẩm khác</button>
-                <button class="btn btn-warning">Xác nhận Đặt xe</button>
-            </div>
+            <form method="POST" action="{{ route('booking.transport.store') }}">
+                @csrf
+                <!-- Các input ẩn, sau này sẽ lấy từ JS hoặc backend -->
+                <input type="hidden" name="car_type" value="7 seats">
+                <input type="hidden" name="pickup_address" value="Đón">
+                <input type="hidden" name="pickup_time" value="10/07/2025, 12:00">
+                <input type="hidden" name="contact_name" value="Đức">
+                <input type="hidden" name="contact_phone" value="232145">
+                <input type="hidden" name="contact_email" value="nah@gmail.com">
+                <input type="hidden" name="total_price" value="500000">
+                <button class="btn btn-warning" type="submit">Xác nhận Đặt xe</button>
+            </form>
         </div>
 
         <div class="col-md-4">

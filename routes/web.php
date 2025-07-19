@@ -34,6 +34,7 @@ use App\Http\Controllers\Client\Airplane\AirplanePaymentController;
 Route::get('/', [HotelController::class, 'index'])->name('home');
 
 //Handle Login New
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login.form');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/logout', function () {
@@ -66,8 +67,8 @@ Route::get('/hotel-single', [HotelController::class, 'hotelSingle']);
 Route::get('/room-detail', [HotelController::class, 'roomDetail']);
 // Hiển thị giỏ hàng phòng đã chọn nếu có
 Route::get('/cart', [HotelController::class, 'cart']);
-//Hiển thị view thanh toán chưa xử lý
-Route::get('/checkout', [HotelController::class, 'checkout']);
+//Hanlde confirm & payment
+Route::get('/confirm-payment', [HotelController::class, 'confirmPayment'])->name('confirm-payment');
 
 // Các view khác nếu cần thiết
 Route::get('/room-search-result', [HotelController::class, 'roomSearchResult']);
@@ -76,15 +77,15 @@ Route::get('/room-search-result-list', [HotelController::class, 'roomSearchResul
 
 
 //Handle user profile
-Route::get('/user-profile', [UserProfileController::class, 'index'])->name('user-profile')->middleware('checkLoginClient');
-Route::post('/user-profile', [UserProfileController::class, 'update'])->name('update-user-profile');
-Route::post('/change-password-profile', [UserProfileController::class, 'changePassword'])->name('change-password');
-Route::post('/change-avatar-profile', [UserProfileController::class, 'changeAvatar'])->name('change-avatar');
+Route::get('/user-profile', [UserProfileController::class, 'index'])->name('user-profile')->middleware(['checkLoginClient', 'checkUserRole']);
+Route::post('/user-profile', [UserProfileController::class, 'update'])->name('update-user-profile')->middleware(['checkLoginClient', 'checkUserRole']);
+Route::post('/change-password-profile', [UserProfileController::class, 'changePassword'])->name('change-password')->middleware(['checkLoginClient', 'checkUserRole']);
+Route::post('/change-avatar-profile', [UserProfileController::class, 'changeAvatar'])->name('change-avatar')->middleware(['checkLoginClient', 'checkUserRole']);
 
 
 //Hanlde checkout
-Route::post('/booking/{id?}', [BookingController::class, 'index'])->name('booking')->middleware('checkLoginClient');
-Route::post('/create-booking', [BookingController::class, 'createBooking'])->name('create-booking');
+Route::post('/booking/{id?}', [BookingController::class, 'index'])->name('booking')->middleware(['checkLoginClient', 'checkUserRole']);
+Route::post('/create-booking', [BookingController::class, 'createBooking'])->name('create-booking')->middleware(['checkLoginClient', 'checkUserRole']);
 Route::get('/booking', [BookingController::class, 'handlePaymentMomoCallback'])->name('handlePaymentMomoCallback');
 
 //Payment with paypal
@@ -94,7 +95,7 @@ Route::get('success-transaction', [PayPalController::class, 'successTransaction'
 Route::get('cancel-transaction', [PayPalController::class, 'cancelTransaction'])->name('cancelTransaction');
 
 //Payment with Momo
-Route::post('/create-momo-payment', [BookingController::class, 'createMomoPayment'])->name('createMomoPayment');
+Route::post('/create-momo-payment', [BookingController::class, 'createMomoPayment'])->name('createMomoPayment')->middleware(['checkLoginClient', 'checkUserRole']);
 
 
 //Search
@@ -124,8 +125,6 @@ Route::prefix('admin')->middleware('admin')->group(function () {
     Route::post('/finish-booking', [BookingManagementController::class, 'finishBooking'])->name('admin.finish-booking');
     Route::post('/received-money', [BookingManagementController::class, 'receiviedMoney'])->name('admin.received');
 
-    //Send mail pdf
-    Route::post('/admin/send-pdf', [BookingManagementController::class, 'sendPdf'])->name('admin.send.pdf');
 
     //Contact management
     Route::get('/contact', [ContactManagementController::class, 'index'])->name('admin.contact');
@@ -144,7 +143,7 @@ Route::get('/db-check', function () {
 
 //Airplane Booking
 Route::get('/airplane', [AirplaneController::class, 'index'])->name('airplane');
-Route::post('/airplane-booking', [AirplaneController::class, 'createBooking'])->name('airplane-booking');
+Route::post('/airplane-booking', [AirplaneController::class, 'createBooking'])->name('airplane-booking')->middleware(['checkLoginClient', 'checkUserRole']);
 Route::get('/airplane-booking', [AirplaneBookingController::class, 'showBookingForm'])->name('airplane-booking.form');
 Route::get('/airplane-booking/success', function() 
 {
@@ -155,9 +154,11 @@ Route::get('/airplane-flights', [AirplaneFlightController::class, 'index'])->nam
 Route::get('/airplane-seat-select', [AirplaneSeatController::class, 'index'])->name('airplane-seat-select');
 
 Route::get('/airplane-payment', [AirplanePaymentController::class, 'index'])->name('airplane-payment');
-Route::post('/airplane-payment/process', [AirplanePaymentController::class, 'process'])->name('airplane-payment.process');
+Route::post('/airplane-payment/process', [AirplanePaymentController::class, 'process'])->name('airplane-payment.process')->middleware(['checkLoginClient', 'checkUserRole']);
 
 
 //Transport Booking
 Route::get('/transport', [TransportController::class, 'index'])->name('transport');
 Route::get('/booking/transport', [TransportController::class, 'bookingForm'])->name('booking.transport');
+Route::post('/booking/transport', [\App\Http\Controllers\Client\Transport\TransportController::class, 'storeBooking'])->name('booking.transport.store');
+Route::get('/payment', [\App\Http\Controllers\Client\PaymentController::class, 'show'])->name('payment');
