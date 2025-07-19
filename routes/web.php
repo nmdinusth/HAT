@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\GoogleAuthController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
@@ -41,6 +42,9 @@ Route::post('/logout', function () {
     Auth::logout();
     return redirect('/'); // hoặc route('home')
 })->name('logout');
+Route::get('/email-active', function () {
+    return view('clients.partials.Hotel_booking.email-active-done');
+});
 
 Route::get('/xac-thuc-2-buoc', [AuthController::class, 'showOtpForm'])->name('2fa_show');
 Route::post('/two-factor-auth', [AuthController::class, 'verifyOtp'])->name('2fa_verify');  
@@ -51,8 +55,8 @@ Route::get('/kich-hoat-tai-khoan', [AuthController::class, 'showActivateNotifica
 Route::post('/send-mail-activate', [AuthController::class, 'sendMailActivate'])->name('send_mail_activate'); 
 
 
-Route::get('auth/google', [LoginGoogleController::class, 'redirectToGoogle'])->name('login-google');
-Route::get('auth/google/callback', [LoginGoogleController::class, 'handleGoogleCallback']);
+Route::get('auth/google', [GoogleAuthController::class, 'redirect']);
+Route::get('auth/google/callback', [GoogleAuthController::class, 'callbackGoogle']);
 
 // Các route liên quan đến xử lý đặt phòng khách sạn
 

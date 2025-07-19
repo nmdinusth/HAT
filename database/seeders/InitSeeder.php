@@ -41,6 +41,16 @@ class InitSeeder extends Seeder
             //     'role_id' => CUSTOMER_ROLE_ID,
             // ],
         ]);
+        DB::table('user_information')->insert([
+            'user_id' => 1, // ID của user tương ứng trong bảng users
+            'name' => 'Nguyễn Văn A',
+            'avatar' => 'https://example.com/avatar.jpg',
+            'gender' => 'male',
+            'dob' => '1990-01-15',
+            'phone' => '0987654321',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
 
         DB::table('cities')->insert([
             ['id' => 1, 'name' => 'ha-noi', 'slug' => 'ha-noi'],

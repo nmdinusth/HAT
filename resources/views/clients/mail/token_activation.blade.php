@@ -19,6 +19,9 @@
         <p class="text-gray-600 mb-4">
             Cảm ơn bạn đã đăng ký tài khoản tại <strong>HAT</strong>. Vui lòng nhấn vào nút bên dưới để kích hoạt tài khoản của bạn.
         </p>
+        <p class="text-gray-600 mb-4">
+            SAU KHI NHẬN THÔNG BÁO KÍCH HOẠT THÀNH CÔNG, HÃY ĐĂNG NHẬP ĐỂ TIẾP TỤC SỬ DỤNG DỊCH VỤ!
+        </p>
 
         <div class="text-center my-6">
             <a href="{{ $link }}" class="inline-block bg-teal-500 text-white px-6 py-2 rounded-md font-semibold hover:bg-teal-600 transition duration-200">

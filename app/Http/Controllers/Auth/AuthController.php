@@ -9,6 +9,7 @@ use App\Models\clients\Login;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use App\Models\clients\UserInformation;
 
 class AuthController extends Controller
@@ -25,42 +26,139 @@ class AuthController extends Controller
     }
 
     public function login(Request $request)
-{ // Tự validate thủ công (không dùng $request->validate())
-    $errors = [];
+    {
+        $errors = [];
 
-    if (empty($request->username)) {
-        $errors['username'] = ['Please enter your username'];
-    }
+        if (empty($request->username)) {
+            $errors['username'] = ['Please enter your username'];
+        }
 
-    if (empty($request->password)) {
-        $errors['password'] = ['Please enter your password'];
-    }
+        if (empty($request->password)) {
+            $errors['password'] = ['Please enter your password'];
+        }
 
-    // Nếu có lỗi, trả về ngay với status 'warning'
-    if (!empty($errors)) {
+        if (!empty($errors)) {
+            return response()->json([
+                'status' => 'warning',
+                'errors' => $errors
+            ], 422);
+        }
+
+        $user = $this->user::where('username', $request->username)->first();
+
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Incorrect username or password',
+                'username' => $request->username
+            ], 401);
+        }
+
+        if ($user->status === 'pending') {
+            $email_verification_token = Str::random(40);
+            $email_verification_expires_at = now()->addMinutes(15);
+
+            $user->update([
+                'email_verification_token' => $email_verification_token,
+                'email_verification_expires_at' => $email_verification_expires_at
+            ]);
+
+            $this->login->sendActivationEmail($user->email, $email_verification_token, $email_verification_expires_at);
+            
+            return response()->json([
+                'status' => 'info',
+                'message' => 'Your account has not been activated yet. Please check your email to verify your account.'
+            ]);
+        }
+
+        Auth::login($user);
+
+        // Kiểm tra role
+        $redirectUrl = $user->role_id === 1 ? '/admin' : '/';
+
         return response()->json([
-            'status' => 'warning',  // <-- Quan trọng: Dùng status warning
-            // 'message' => 'Thông tin không hợp lệ',
-            'errors' => $errors     // Chi tiết lỗi (có thể dùng để highlight field)
-        ], 422);
-    };
-
-    $user = $this->user::where('username', $request->username)->first();
-    if (!$user || !Hash::check($request->password, $user->password)) {
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Incorrect username or password',
-            'username' => $request->username // Trả về username để giữ lại trên form
-        ], 401); // 401: Unauthorized
+            'status' => 'success',
+            'message' => 'Login successful',
+            'redirect' => $redirectUrl
+        ]);
     }
 
-    Auth::login($user);
-    return response()->json([
-        'status' => 'success',
-        'message' => 'Login successful',
-        'redirect' => '/' // Thêm redirect nếu cần
-    ]);
-}
+    public function register(Request $request)
+    {
+        $errors = [];
+
+        if (empty($request->username)) {
+            $errors['username'] = ['Please enter your username'];
+        }
+
+        if (empty($request->email)) {
+            $errors['email'] = ['Please enter your email'];
+        } elseif (!filter_var($request->email, FILTER_VALIDATE_EMAIL)) {
+            $errors['email'] = ['Invalid email format'];
+        }
+
+        if (empty($request->password)) {
+            $errors['password'] = ['Please enter your password'];
+        }
+
+        if ($request->password !== $request->password_confirmation) {
+            $errors['password_confirmation'] = ['Passwords do not match'];
+        }
+
+        if (!empty($errors)) {
+            return response()->json([
+                'status' => 'warning',
+                'errors' => $errors
+            ], 422);
+        }
+
+        // Check if username or email already exists
+        if (User::where('username', $request->username)->exists()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Username already exists'
+            ], 409); // Conflict
+        }
+
+        if (User::where('email', $request->email)->exists()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Email already exists'
+            ], 409); // Conflict
+        }
+
+        // Tạo user mới
+        $token = Str::random(40);
+        $user = User::create([
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'email_verification_token' => $token,
+            'email_verification_expires_at' => now()->addMinutes(15),
+        ]);
+
+        // Gửi email xác thực
+        $this->login->sendActivationEmail($user->email, $user->email_verification_token, $user->email_verification_expires_at);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Registration successful. Please check your email to verify your account.',
+            'showLoginModal' => true,  // <-- thêm flag này
+        ]);
+    }
+
+    // Xác nhận lại token
+    public function activateAccount($token)
+    {
+        $user = $this->login->getUserByToken($token);
+        if ($user) {
+            $this->login->activateUserAccount($token);
+
+            return redirect('/email-active')->with('message', 'Tài khoản của bạn đã được kích hoạt!');
+        } else {
+            return redirect('/')->with('error', 'Mã kích hoạt không hợp lệ!');
+        }
+    }
 
     // public function index()
     // {
@@ -68,59 +166,59 @@ class AuthController extends Controller
     //     return view('clients.login', compact('title'));
     // }
 
-    public function register(Request $request)
-    {
-        $name = $request->name;
-        $username = $request->username;
-        $email = $request->email;
-        $password = $request->password;
+    // public function register(Request $request)
+    // {
+    //     $name = $request->name;
+    //     $username = $request->username;
+    //     $email = $request->email;
+    //     $password = $request->password;
 
-        // Kiểm tra tên người dùng hoặc email đã tồn tại hay chưa
-        $checkAccountExist = $this->login->checkUserExist($username, $email);
-        if ($checkAccountExist) {
-            return response()->json([
-                'debug' => [
-                    'name' => $name,
-                    'username' => $username,
-                    'email' => $email,
-                    'password' => $password,
-                    'checkAccountExist' => $checkAccountExist,
-                ],
-                'success' => false,
-                'message' => 'Tên người dùng hoặc email đã tồn tại!'
-            ]);
-        }
+    //     // Kiểm tra tên người dùng hoặc email đã tồn tại hay chưa
+    //     $checkAccountExist = $this->login->checkUserExist($username, $email);
+    //     if ($checkAccountExist) {
+    //         return response()->json([
+    //             'debug' => [
+    //                 'name' => $name,
+    //                 'username' => $username,
+    //                 'email' => $email,
+    //                 'password' => $password,
+    //                 'checkAccountExist' => $checkAccountExist,
+    //             ],
+    //             'success' => false,
+    //             'message' => 'Tên người dùng hoặc email đã tồn tại!'
+    //         ]);
+    //     }
 
-        $email_verification_token = Str::random(60); //Tạo token 
-        $email_verification_expires_at = now()->addMinutes(15); //Tạo thời gian hết hạn token 
+    //     $email_verification_token = Str::random(60); //Tạo token 
+    //     $email_verification_expires_at = now()->addMinutes(15); //Tạo thời gian hết hạn token 
 
-        // Thực hiện đăng ký tài khoản
-        $data = [
-            'username' => $username,
-            'email' => $email,
-            'password' => bcrypt($password),
-            'email_verification_token' => $email_verification_token,
-            'email_verification_expires_at' => $email_verification_expires_at
-        ];
-        $user = $this->login->registerAcount($data);
+    //     // Thực hiện đăng ký tài khoản
+    //     $data = [
+    //         'username' => $username,
+    //         'email' => $email,
+    //         'password' => bcrypt($password),
+    //         'email_verification_token' => $email_verification_token,
+    //         'email_verification_expires_at' => $email_verification_expires_at
+    //     ];
+    //     $user = $this->login->registerAcount($data);
 
-        if (!$user) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Có lỗi xảy ra khi tạo người dùng',
-            ]);
-        }
+    //     if (!$user) {
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'Có lỗi xảy ra khi tạo người dùng',
+    //         ]);
+    //     }
 
-        // Gửi token xác nhận
-        $this->login->sendActivationEmail(
-            $email,
-            $email_verification_token,
-            $email_verification_expires_at
-        );
-        session()->put('email', $email);
+    //     // Gửi token xác nhận
+    //     $this->login->sendActivationEmail(
+    //         $email,
+    //         $email_verification_token,
+    //         $email_verification_expires_at
+    //     );
+    //     session()->put('email', $email);
 
-        return redirect()->route('activate.notification');
-    }
+    //     return redirect()->route('activate.notification');
+    // }
 
     // Trang thông báo kích hoạt tài khoản
     public function showActivateNotification()
@@ -155,18 +253,7 @@ class AuthController extends Controller
         );
     }
 
-    // Xác nhận lại token
-    public function activateAccount($token)
-    {
-        $user = $this->login->getUserByToken($token);
-        if ($user) {
-            $this->login->activateUserAccount($token);
-
-            return redirect('/dang-nhap')->with('message', 'Tài khoản của bạn đã được kích hoạt!');
-        } else {
-            return redirect('/dang-nhap')->with('error', 'Mã kích hoạt không hợp lệ!');
-        }
-    }
+    
 
     //Xử lý người dùng đăng nhập
     // public function login (Request $request) {

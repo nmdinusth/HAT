@@ -1,6 +1,12 @@
 <!-- ================================
        START FOOTER AREA
 ================================= -->
+ @if (session('message'))
+    toastr.success({{ json_encode(session('message')) }});
+@endif
+@if (session('error'))
+    toastr.error({{ json_encode(session('error')) }});
+@endif
 <section class="footer-area section-bg padding-top-40px padding-bottom-30px">
     <div class="container">
         <div class="row align-items-center">
@@ -154,69 +160,49 @@
                 </div>
                 <div class="modal-body">
                     <div class="contact-form-action">
-                        <form method="post">
+                        <form id="register-form" method="post">
+                            @csrf
                             <div class="input-box">
                                 <label class="label-text">Username</label>
                                 <div class="form-group">
                                     <span class="la la-user form-icon"></span>
-                                    <input class="form-control" type="text" name="text"
+                                    <input class="form-control" type="text" name="username"
                                         placeholder="Type your username" />
                                 </div>
                             </div>
-                            <!-- end input-box -->
+
                             <div class="input-box">
                                 <label class="label-text">Email Address</label>
                                 <div class="form-group">
                                     <span class="la la-envelope form-icon"></span>
-                                    <input class="form-control" type="text" name="text"
+                                    <input class="form-control" type="email" name="email"
                                         placeholder="Type your email" />
                                 </div>
                             </div>
-                            <!-- end input-box -->
+
                             <div class="input-box">
                                 <label class="label-text">Password</label>
                                 <div class="form-group">
                                     <span class="la la-lock form-icon"></span>
-                                    <input class="form-control" type="text" name="text"
+                                    <input class="form-control" type="password" name="password"
                                         placeholder="Type password" />
                                 </div>
                             </div>
-                            <!-- end input-box -->
+
                             <div class="input-box">
                                 <label class="label-text">Repeat Password</label>
                                 <div class="form-group">
                                     <span class="la la-lock form-icon"></span>
-                                    <input class="form-control" type="text" name="text"
+                                    <input class="form-control" type="password" name="password_confirmation"
                                         placeholder="Type again password" />
                                 </div>
                             </div>
-                            <!-- end input-box -->
+
                             <div class="btn-box pt-3 pb-4">
-                                <button type="button" class="theme-btn w-100">
-                                    Register Account
-                                </button>
-                            </div>
-                            <div class="action-box text-center">
-                                <p class="font-size-14">Or Sign up Using</p>
-                                <ul class="social-profile py-3">
-                                    <li>
-                                        <a href="#" class="bg-5 text-white"><i
-                                                class="lab la-facebook-f"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="bg-6 text-white"><i class="lab la-twitter"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="bg-7 text-white"><i
-                                                class="lab la-instagram"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="bg-5 text-white"><i
-                                                class="lab la-linkedin-in"></i></a>
-                                    </li>
-                                </ul>
+                                <button type="submit" class="theme-btn w-100">Register Account</button>
                             </div>
                         </form>
+
                     </div>
                     <!-- end contact-form-action -->
                 </div>
@@ -245,6 +231,7 @@
                 <div class="modal-body">
                     <div class="contact-form-action">
                         <form method="post" action="{{ route('login') }}">
+                            @csrf
                             <div class="input-box">
                                 <label class="label-text">Username</label>
                                 <div class="form-group">
@@ -286,7 +273,7 @@
                                                 class="lab la-facebook-f"></i></a>
                                     </li>
                                     <li>
-                                        <a href="#" class="bg-6 text-white"><i class="lab la-google"></i></a>
+                                        <a href="auth/google" class="bg-6 text-white"><i class="lab la-google"></i></a>
                                     </li>
                                     <li>
                                         <a href="#" class="bg-7 text-white"><i
@@ -352,60 +339,96 @@
     }
 
     $(document).ready(function() {
-        $('#btn-login').on('click', function(e) {
-            e.preventDefault();
+    $('#btn-login').on('click', function(e) {
+        e.preventDefault();
 
-            const formData = {
-                username: $('input[name="username"]').val(),
-                password: $('input[name="password"]').val(),
-                remember: $('#rememberchb').is(':checked') ? 1 : 0,
-                _token: '{{ csrf_token() }}'
-            };
+        const form = $(this).closest('form');
+        const formData = form.serialize();
 
-            $.ajax({
-                url: "{{ route('login') }}",
-                type: 'POST',
-                data: formData,
-                success: function(response) {
-                    // Giả sử API trả về: { status: 'success', message: 'Đăng nhập thành công' }
-                    if (response.status === 'success') {
-                        toastr.success(response.message || "Đăng nhập thành công");
-                        // Redirect nếu cần
-                        setTimeout(() => window.location.href = response.redirect || '/',
-                            2000);
-                    } else {
-                        toastr.error(response.message || "Đăng nhập thất bại");
+        $.ajax({
+            url: form.attr('action'),
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                if (response.status === 'success') {
+                    toastr.success(response.message || "Login successful");
+                    setTimeout(() => window.location.href = response.redirect || '/', 2000);
+                } else {
+                    toastr.error(response.message || "Login failed");
+                }
+            },
+            error: function(xhr) {
+                if (xhr.status === 422) {
+                    const errors = xhr.responseJSON.errors;
+                    let errorText = '';
+                    for (const field in errors) {
+                        errorText += errors[field][0] + '<br>';
                     }
-                },
-                error: function(xhr) {
-                    if (xhr.status === 422) {
-                        // Lỗi validate
-                        const errors = xhr.responseJSON.errors;
-                        let errorText = '';
-                        for (const field in errors) {
-                            errorText += errors[field][0] + '<br>';
-                        }
-                        toastr.warning(errorText || "Thông tin đăng nhập không hợp lệ");
+                    toastr.warning(errorText || "Invalid login info");
+                } else {
+                    const response = xhr.responseJSON;
+                    if (response && response.status === 'error') {
+                        toastr.error(response.message || "Wrong username or password");
+                        form.find('input[name="password"]').val('');
                     } else {
-                        // Lỗi đăng nhập (vd: sai username/password)
-                        const response = xhr.responseJSON;
-                        if (response && response.status === 'error') {
-                            toastr.error(response.message ||
-                                "Sai tên đăng nhập hoặc mật khẩu");
-
-                            // Giữ lại username, chỉ reset password
-                            $('input[name="password"]').val(''); // Xóa password
-                            // $('input[name="username"]').val(response.username || ''); // Giữ username nếu cần
-                        } else {
-                            toastr.error("Có lỗi xảy ra. Vui lòng thử lại sau.");
-                        }
+                        toastr.error("An error occurred. Please try again.");
                     }
                 }
-            });
+            }
         });
     });
-</script>
+});
 
+    $('#register-form').on('submit', function (e) {
+    e.preventDefault();
+
+    const form = $(this);
+    const data = {
+        username: form.find('[name="username"]').val(),
+        email: form.find('[name="email"]').val(),
+        password: form.find('[name="password"]').val(),
+        password_confirmation: form.find('[name="password_confirmation"]').val(),
+    };
+
+    $.ajax({
+        url: '/register',
+        method: 'POST',
+        data: data,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (res) {
+            toastr.success(res.message);
+
+            // 1. Ẩn popup đăng ký
+            const registerModalEl = document.getElementById('registerPopupForm');
+            const registerModal = bootstrap.Modal.getInstance(registerModalEl);
+            if (registerModal) {
+                registerModal.hide();
+            }
+        },
+        error: function (xhr) {
+            // 1. Xóa password
+            form.find('[name="password"]').val('');
+            form.find('[name="password_confirmation"]').val('');
+
+            // 2. Hiển thị lỗi
+            if (xhr.status === 422) {
+                const errors = xhr.responseJSON.errors;
+                for (const field in errors) {
+                    toastr.warning(errors[field][0]);
+                }
+            } else if (xhr.status === 409) {
+                toastr.error(xhr.responseJSON.message);
+            } else {
+                toastr.error('Something went wrong. Please try again.');
+            }
+        }
+    });
+});
+        
+
+</script>
 
 </body>
 
