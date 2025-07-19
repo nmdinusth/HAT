@@ -48,11 +48,9 @@ class HotelController extends Controller
 
         return view('clients.partials.Hotel_booking.cart');
     }
-    public function checkout()
+    public function confirmPayment()
     {
-        // $title = 'Khách sạn';
-
-        return view('clients.partials.Hotel_booking.checkout');
+        return view('clients.partials.Hotel_booking.confirm_payment');
     }
     public function roomSearchResult()
     {

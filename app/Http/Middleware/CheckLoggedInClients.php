@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CheckLoggedInClients
 {
@@ -17,8 +18,7 @@ class CheckLoggedInClients
     public function handle(Request $request, Closure $next)
     {
         
-        if(!$request->session()->has('username'))
-        {
+        if (!Auth::check()) {
             toastr()->error('Vui lòng đăng nhập để thực hiện.', "Thông báo");
             return redirect()->route('login');
         }

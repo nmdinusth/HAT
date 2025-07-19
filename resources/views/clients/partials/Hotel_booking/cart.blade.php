@@ -185,8 +185,8 @@
                     </table>
                     <div class="section-block"></div>
                     <div class="btn-box text-end pt-4">
-                      <a href="/checkout" class="theme-btn"
-                        >Proceed to Checkout</a
+                      <a href="/confirm-payment" class="theme-btn"
+                        >Proceed to Confirm & Payment</a
                       >
                     </div>
                   </div>
