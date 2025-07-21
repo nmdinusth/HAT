@@ -1,8 +1,5 @@
 <x-filament::widget>
     <x-filament::card>
-        <form wire:submit.prevent="submit">
-            {{ $this->form }}
-        </form>
         <canvas
             id="bookingRevenueChart"
             style="height: 300px; width: 100%;"

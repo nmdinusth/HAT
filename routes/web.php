@@ -105,46 +105,6 @@ Route::post('/create-momo-payment', [BookingController::class, 'createMomoPaymen
 //Search
 
 
-//ADMIN
-// Routes without middleware
-Route::prefix('admin')->group(function () {
-    Route::get('/login', [LoginAdminController::class, 'index'])->name('admin.login');
-    Route::post('/login-account', [LoginAdminController::class, 'loginAdmin'])->name('admin.login-account');
-    Route::get('/logout', [LoginAdminController::class, 'logout'])->name('admin.logout');
-
-});
-
-Route::prefix('admin')->middleware('admin')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
-
-    //Management admin
-    Route::get('/admin', [AdminManagementController::class, 'index'])->name('admin.admin');
-    Route::post('/update-admin', [AdminManagementController::class, 'updateAdmin'])->name('admin.update-admin');
-    Route::post('/update-avatar', [AdminManagementController::class, 'updateAvatar'])->name('admin.update-avatar');
-
-    //Management Booking
-    Route::get('/booking', [BookingManagementController::class, 'index'])->name('admin.booking');
-    Route::post('/confirm-booking', [BookingManagementController::class, 'confirmBooking'])->name('admin.confirm-booking');
-    Route::get('/booking-detail/{id?}', [BookingManagementController::class, 'showDetail'])->name('admin.booking-detail');
-    Route::post('/finish-booking', [BookingManagementController::class, 'finishBooking'])->name('admin.finish-booking');
-    Route::post('/received-money', [BookingManagementController::class, 'receiviedMoney'])->name('admin.received');
-
-
-    //Contact management
-    Route::get('/contact', [ContactManagementController::class, 'index'])->name('admin.contact');
-    Route::post('/reply-contact', [ContactManagementController::class, 'replyContact'])->name('admin.reply-contact');
-
-});
-
-Route::get('/db-check', function () {
-    try {
-        DB::connection()->getPdo();
-        return '✅ Database connection is successful!';
-    } catch (\Exception $e) {
-        return '❌ Connection failed: ' . $e->getMessage();
-    }
-});
-
 //Airplane Booking
 Route::get('/airplane', [AirplaneController::class, 'index'])->name('airplane');
 Route::post('/airplane-booking', [AirplaneController::class, 'createBooking'])->name('airplane-booking')->middleware(['checkLoginClient', 'checkUserRole']);
