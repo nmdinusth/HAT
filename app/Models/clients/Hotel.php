@@ -15,6 +15,12 @@ class Hotel extends Model
 
     protected $table = 'hotels';
 
+    protected $casts = [
+        'images' => 'array',
+        'cover_image' => 'string',
+        'is_active' => 'boolean',
+    ];
+
     // chuẩn lại tên 
     public function normalizeLocation($location)
     {
@@ -126,5 +132,10 @@ class Hotel extends Model
     public function roomTypes()
     {
         return $this->hasMany(RoomType::class);
+    }
+
+    public function amenities()
+    {
+        return $this->belongsToMany(\App\Models\clients\Amenity::class, 'amenity_hotel');
     }
 }

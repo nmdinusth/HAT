@@ -12,12 +12,14 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('hotel_amenities', function (Blueprint $table) {
-            $table->foreignId('hotel_id')->constrained()->onDelete('cascade');
-            $table->foreignId('amenity_id')->constrained()->onDelete('cascade');
-            $table->primary(['hotel_id', 'amenity_id']); // Tránh trùng
+        Schema::create('amenity_hotel', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('hotel_id');
+            $table->unsignedBigInteger('amenity_id');
+            $table->foreign('hotel_id')->references('id')->on('hotels')->onDelete('cascade');
+            $table->foreign('amenity_id')->references('id')->on('amenities')->onDelete('cascade');
+            $table->timestamps();
         });
-
     }
 
     /**
@@ -27,6 +29,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('hotel_amenities');
+        Schema::dropIfExists('amenity_hotel');
     }
 };

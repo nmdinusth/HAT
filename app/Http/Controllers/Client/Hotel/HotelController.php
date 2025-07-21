@@ -26,15 +26,14 @@ class HotelController extends Controller
     }
     public function hotelSearchResult()
     {
-        // $title = 'Khách sạn';
-
-        return view('clients.partials.Hotel_booking.hotel-search-result');
+        $hotels = Hotel::where('is_active', true)->get();
+        return view('clients.partials.Hotel_booking.hotel-search-result', compact('hotels'));
     }
-    public function hotelSingle()
+    public function hotelSingle(Request $request)
     {
-        // $title = 'Khách sạn';
-
-        return view('clients.partials.Hotel_booking.hotel-single');
+        $hotelId = $request->get('hotel_id');
+        $hotel = Hotel::with(['amenities'])->findOrFail($hotelId);
+        return view('clients.partials.Hotel_booking.hotel-single', compact('hotel'));
     }
     public function roomDetail()
     {

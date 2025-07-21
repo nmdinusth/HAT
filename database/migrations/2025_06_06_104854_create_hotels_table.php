@@ -14,7 +14,7 @@ return new class extends Migration {
     {
         Schema::create('hotels', function (Blueprint $table) {
             $table->id();
-            $table->string('hotel_name'); // Tên khách sạn
+            $table->string('name'); // Tên khách sạn
             $table->string('slug')->unique(); // Slug để tạo URL thân thiện
             $table->text('description')->nullable(); // Mô tả khách sạn
             $table->json('images')->nullable(); // Danh sách ảnh (JSON)
@@ -26,9 +26,11 @@ return new class extends Migration {
             $table->decimal('longitude', 10, 7)->nullable(); // Kinh độ
             $table->string('phone_number'); // Số điện thoại
             $table->string('email')->nullable(); // Email liên hệ
-            $table->time('check_in_time')->default('14:00:00'); // Giờ check-in mặc định
-            $table->time('check_out_time')->default('12:00:00'); // Giờ check-out mặc định
+            $table->time('check_in_time')->nullable(); // Giờ check-in mặc định
+            $table->time('check_out_time')->nullable(); // Giờ check-out mặc định
             $table->boolean('is_active')->default(true); // Trạng thái hoạt động
+            $table->string('cover_image')->nullable();
+            $table->string('video_url')->nullable();
             $table->timestamps();
         });
     }

@@ -23,7 +23,7 @@
     <link href="{{ asset('admin/build/css/custom.min.css') }}" rel="stylesheet">
         <!-- Import CSS for Toastr -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
-    {{-- Custom css by DevDien  --}}
+   
     <link href="{{ asset('admin/assets/css/custom-css.css') }}" rel="stylesheet" />
 </head>
 
